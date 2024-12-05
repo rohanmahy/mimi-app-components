@@ -65,17 +65,30 @@ struct {
 } UserRolePair;
 
 struct {
+  uint32 user_index;
+  int role_index;
+} UserindexRolePair
+
+struct {
   UserRolePair participants<V>;
 } ParticipantListData;
 
 struct {
   uint32 removedIndices<V>;
+  UserindexRolePair changedRoleParticipants<V>
   UserRolePair addedParticipants<V>;
 } ParticipantListUpdate;
 ~~~
 
+ParticipantListUpdate is the contents of an ApplicationDataUpdate Proposal with the component ID for the participant list.
+
+
 # Role-Based Access Control
 
+
+
+
+RoleData is the format of the `data` field inside the ComponentData struct for the Role-Based Access Control component in the `application_data` GroupContext extension.
 
 ~~~ tls
 /* See MIMI Capability Types IANA registry */
@@ -96,13 +109,16 @@ struct {
   Role roles<V>;
 } RoleData;
 
-struct {
-  Role roles<V>;
-} RoleUpdate
+RoleData RoleUpdate;
 ~~~
 
-# Preauthorized participants
+RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Role-Based Access Control component.
+If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
+# Preauthorized Participants
+
+
+PreAuthData is the format of the `data` field inside the ComponentData struct for the Preauthorized Participants component in the `application_data` GroupContext extension.
 
 ~~~ tls
 struct {
@@ -141,9 +157,14 @@ struct {
 PreAuthData PreAuthUpdate;
 ~~~
 
+PreAuthUpdate (which has the same format as PreAuthData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Preauthorized Participants component.
+If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 # Room Metadata
 
+Room Metadata is data about a room which might be displayed as human-readable information about a room, such as the name of a room, its
+
+RoomMetaData is the format of the `data` field inside the ComponentData struct for the Room Metadata component in the `application_data` GroupContext extension.
 
 ~~~ tls
 /* a valid URI (ex: MIMI URI) */
@@ -165,9 +186,11 @@ struct {
   UTF8String room_mood;
 } RoomMetaData;
 
-RoomMetaData RoomMetaDataUpdate;
+RoomMetaData RoomMetaUpdate;
 ~~~
 
+RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Room Metadata component.
+If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 # Security Considerations
 
