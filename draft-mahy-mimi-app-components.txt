@@ -4,8 +4,8 @@
 
 More Instant Messaging Interoperability                          R. Mahy
 Internet-Draft                             Rohan Mahy Consulting Service
-Intended status: Informational                           5 December 2024
-Expires: 8 June 2025
+Intended status: Informational                          16 December 2024
+Expires: 19 June 2025
 
 
 Application State Components for More Instant Messaging Interoperability
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 June 2025.
+   This Internet-Draft will expire on 19 June 2025.
 
 Copyright Notice
 
@@ -156,7 +156,7 @@ Table of Contents
    application_data GroupContext extension.
 
    struct {
-     Role target_role;
+     int target_role_index;
      /* preauth_domain consists of ASCII letters, digits, and hyphens */
      opaque preauth_domain<V>;
      /* the remaining fields are in the form of a URI */
