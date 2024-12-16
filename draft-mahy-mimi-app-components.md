@@ -122,7 +122,7 @@ PreAuthData is the format of the `data` field inside the ComponentData struct fo
 
 ~~~ tls
 struct {
-  Role target_role;
+  int target_role_index;
   /* preauth_domain consists of ASCII letters, digits, and hyphens */
   opaque preauth_domain<V>;
   /* the remaining fields are in the form of a URI */
