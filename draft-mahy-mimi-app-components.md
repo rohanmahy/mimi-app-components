@@ -52,41 +52,48 @@ TODO Introduction
 
 {::boilerplate bcp14-tagged}
 
+# Room Metadata
 
+The Room Metadata component contains data about a room which might be displayed as human-readable information for the room, such as the name of a room and its room image/avatar.
 
-
-# Participant List
-
+RoomMetaData is the format of the `data` field inside the ComponentData struct for the Room Metadata component in the `application_data` GroupContext extension.
 
 ~~~ tls
+/* a valid URI (ex: MIMI URI) */
 struct {
-  opaque user<V>;
-  int role_index;
-} UserRolePair;
+  opaque uri<V>;
+} Uri;
+
+/* a sequence of valid UTF8 without nulls */
+struct {
+  opaque string<V>;
+} UTF8String;
 
 struct {
-  uint32 user_index;
-  int role_index;
-} UserindexRolePair
+  Uri room_uri;
+  UTF8String room_name;
+  /* an https URI resolving to an avatar image */
+  Uri room_avatar;
+  UTF8String room_subject;
+  UTF8String room_mood;
+} RoomMetaData;
 
-struct {
-  UserRolePair participants<V>;
-} ParticipantListData;
-
-struct {
-  uint32 removedIndices<V>;
-  UserindexRolePair changedRoleParticipants<V>
-  UserRolePair addedParticipants<V>;
-} ParticipantListUpdate;
+RoomMetaData RoomMetaUpdate;
 ~~~
 
-ParticipantListUpdate is the contents of an ApplicationDataUpdate Proposal with the component ID for the participant list.
-
+RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Room Metadata component.
+If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 # Role-Based Access Control
 
+The Role-Based Access Control component contains a list of all the roles in the room, and the capabilities associated with them.
+It contains a role_index, which is used to refer to the role elsewhere.
+It also contains a role_name (a human readable text string name for the
+role), and a role_description (another string, which can have zero length).
 
-
+Each Role also can contain constraints on the minimum and maximum number of participants, and the minimum and maximum number of active participants.
+If the minimum number is zero, there is no minimum number of participants for that particular role.
+If there is no maximum number of participants for a particular role, that parameter is absent.
 
 RoleData is the format of the `data` field inside the ComponentData struct for the Role-Based Access Control component in the `application_data` GroupContext extension.
 
@@ -115,8 +122,42 @@ RoleData RoleUpdate;
 RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Role-Based Access Control component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
+
+# Participant List
+
+The participant list is a list of "users" in a room. Each user is assigned one
+role (expressed as the role_index) in the room.
+
+~~~ tls
+struct {
+  opaque user<V>;
+  int role_index;
+} UserRolePair;
+
+struct {
+  uint32 user_index;
+  int role_index;
+} UserindexRolePair
+
+struct {
+  UserRolePair participants<V>;
+} ParticipantListData;
+
+struct {
+  uint32 removedIndices<V>;
+  UserindexRolePair changedRoleParticipants<V>
+  UserRolePair addedParticipants<V>;
+} ParticipantListUpdate;
+~~~
+
+ParticipantListUpdate is the contents of an ApplicationDataUpdate Proposal with the component ID for the participant list.
+
+
+
 # Preauthorized Participants
 
+Preauthorized Participants are MIMI users who have authorization to adopt a role in a room by virtue of certain credential claims or properties, as opposed to being individually enumerated in the participant list.
+For example, a room for employee benefits might be available to join with the regular participant role to all employees with a residence in a specific country; anyone working in the human resources department might be able to join the same room as a moderator.
 
 PreAuthData is the format of the `data` field inside the ComponentData struct for the Preauthorized Participants component in the `application_data` GroupContext extension.
 
@@ -160,37 +201,6 @@ PreAuthData PreAuthUpdate;
 PreAuthUpdate (which has the same format as PreAuthData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Preauthorized Participants component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
-# Room Metadata
-
-Room Metadata is data about a room which might be displayed as human-readable information about a room, such as the name of a room, its
-
-RoomMetaData is the format of the `data` field inside the ComponentData struct for the Room Metadata component in the `application_data` GroupContext extension.
-
-~~~ tls
-/* a valid URI (ex: MIMI URI) */
-struct {
-  opaque uri<V>;
-} Uri;
-
-/* a sequence of valid UTF8 without nulls */
-struct {
-  opaque string<V>;
-} UTF8String;
-
-struct {
-  Uri room_uri;
-  UTF8String room_name;
-  /* an https URI resolving to an avatar image */
-  Uri room_avatar;
-  UTF8String room_subject;
-  UTF8String room_mood;
-} RoomMetaData;
-
-RoomMetaData RoomMetaUpdate;
-~~~
-
-RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Room Metadata component.
-If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 # Security Considerations
 
