@@ -70,8 +70,15 @@ struct {
 } UTF8String;
 
 struct {
+  /* an empty media_type is equivalent to text/plain;charset=utf-8 */
+  opaque media_type<V>;
+  opaque content<V>;
+} RichDescription
+
+struct {
   Uri room_uri;
   UTF8String room_name;
+  RichDescription room_description;
   /* an https URI resolving to an avatar image */
   Uri room_avatar;
   UTF8String room_subject;
