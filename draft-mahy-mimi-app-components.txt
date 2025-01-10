@@ -4,8 +4,8 @@
 
 More Instant Messaging Interoperability                          R. Mahy
 Internet-Draft                             Rohan Mahy Consulting Service
-Intended status: Informational                          31 December 2024
-Expires: 4 July 2025
+Intended status: Informational                           10 January 2025
+Expires: 14 July 2025
 
 
 Application State Components for More Instant Messaging Interoperability
@@ -14,7 +14,10 @@ Application State Components for More Instant Messaging Interoperability
 
 Abstract
 
-   TODO Abstract
+   This document presents structures for room metadata, role-based
+   access control, participant lists, and pre-authorized roles for
+   future participants intended for use in MIMI (More Instant Messaging
+   Interoperability).
 
 About This Document
 
@@ -48,11 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 July 2025.
+   This Internet-Draft will expire on 14 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -71,17 +74,25 @@ Table of Contents
    3.  Room Metadata
    4.  Role-Based Access Control
    5.  Participant List
-   6.  Preauthorized Participants
+   6.  Preauthorized Users
    7.  Security Considerations
    8.  IANA Considerations
      8.1.  New MIMI Role Capabilities registry
    9.  Normative References
+   Appendix A.  Role examples
    Acknowledgments
    Author's Address
 
 1.  Introduction
 
-   TODO Introduction
+   This document is provided as a standalone document as it is short and
+   easy to receive early review in its short format.  The goal is to
+   incorporate the contents of this draft into
+   [I-D.ietf-mimi-room-policy].
+
+   While this work is intended for use with MIMI, it is suitable for use
+   with other systems using MLS (for example, non-authority-based
+   messaging systems) that require similar functionality.
 
 2.  Conventions and Definitions
 
@@ -95,7 +106,12 @@ Table of Contents
 
    The Room Metadata component contains data about a room which might be
    displayed as human-readable information for the room, such as the
-   name of a room and its room image/avatar.
+   name of a room and URL point to its room image/avatar.
+
+   It can contain a list of room_descriptions, each of which can have a
+   specific language_tag and media_type along with the
+   description_content.  An empty media_type implies text/
+   plain;charset=utf-8.
 
    RoomMetaData is the format of the data field inside the ComponentData
    struct for the Room Metadata component in the application_data
@@ -114,13 +130,14 @@ Table of Contents
    struct {
      /* an empty media_type is equivalent to text/plain;charset=utf-8 */
      opaque media_type<V>;
-     opaque content<V>;
+     opaque language_tag<V>;
+     opaque description_content<V>;
    } RichDescription
 
    struct {
      Uri room_uri;
      UTF8String room_name;
-     RichDescription room_description;
+     RichDescription room_descriptions<V>;
      /* an https URI resolving to an avatar image */
      Uri room_avatar;
      UTF8String room_subject;
@@ -152,12 +169,33 @@ Table of Contents
    maximum number of participants for a particular role, that parameter
    is absent.
 
+   A party with a particular Role which has the canAddParticipant
+   capability is authorized to add the new participant with any of the
+   target roles in add_participant_role_indexes.  A party with a
+   particular Role which has the canChangeUserRole capability is
+   authorized to change the role of a participant from a role
+   represented by authorized_role_changes.from_role_index to any of the
+   target_role_indexes in the same element of authorized_role_changes.
+
+      This design results in each participant only having a single role
+      at a time, with a single list of capabilities and an explicit list
+      of allowed role transitions.  It makes the authorization process
+      for a verifier consistent regardless of the complexity of the set
+      of authorization rules.
+
+   Some examples are provided in Appendix A.
+
    RoleData is the format of the data field inside the ComponentData
    struct for the Role-Based Access Control component in the
    application_data GroupContext extension.
 
    /* See MIMI Capability Types IANA registry */
    uint16 CapablityType;
+
+   struct {
+      int from_role_index;
+      int target_role_indexes<V>;
+   } SingleSourceRoleChangeTargets;
 
    struct {
      int role_index;
@@ -168,6 +206,8 @@ Table of Contents
      optional int maximum_participants_constraint;
      int minimum_active_participants_constraint;
      optional int maximum_active_participants_constraint;
+     int add_participant_role_indexes<V>;
+     SingleSourceRoleChangeTargets authorized_role_changes<V>;
    } Role;
 
    struct {
@@ -183,10 +223,27 @@ Table of Contents
    proposer is authorized to generate such an update, the value of the
    update field completely replaces the value of the data field.
 
+      Note that in the MIMI environment, changing the definitions of
+      roles is anticipated to be very rare over the lifetime of a room
+      (for example changing a room which has grown dramatically from
+      cooperatively moderated to explicitly moderated).
+
 5.  Participant List
 
    The participant list is a list of "users" in a room.  Each user is
-   assigned one role (expressed as the role_index) in the room.
+   assigned one role (expressed as the role_index) in the room.  In a
+   room that has multiple MLS clients per "user", the identifier for
+   each user in participants.user is the same across all that user's
+   clients in the room.  Note that each user has a single role at any
+   point in time.
+
+   The participant list may include inactive participants, which
+   currently do not have any clients in the corresponding MLS group, for
+   example if their clients do not have available KeyPackages or if all
+   of their clients are temporarily "kicked" out of the group.  The
+   participant list can also contain participants that are explicitly
+   banned, by assigning them a suitable role which does not have any
+   capabilities.
 
    struct {
      opaque user<V>;
@@ -211,20 +268,34 @@ Table of Contents
    ParticipantListUpdate is the contents of an ApplicationDataUpdate
    Proposal with the component ID for the participant list.
 
-6.  Preauthorized Participants
+6.  Preauthorized Users
 
-   Preauthorized Participants are MIMI users who have authorization to
-   adopt a role in a room by virtue of certain credential claims or
-   properties, as opposed to being individually enumerated in the
-   participant list.  For example, a room for employee benefits might be
-   available to join with the regular participant role to all employees
-   with a residence in a specific country; anyone working in the human
-   resources department might be able to join the same room as a
-   moderator.
+   Preauthorized users are MIMI users and external senders that have
+   authorization to adopt a role in a room by virtue of certain
+   credential claims or properties, as opposed to being individually
+   enumerated in the participant list.  For example, a room for employee
+   benefits might be available to join with the regular participant role
+   to all employees with a residence in a specific country; anyone
+   working in the human resources department might be able to join the
+   same room as a moderator.
 
    PreAuthData is the format of the data field inside the ComponentData
    struct for the Preauthorized Participants component in the
    application_data GroupContext extension.
+
+   The Preauthorized users data structure is used to authorize external
+   joins (external commits) and external proposals, and only when the
+   requester does not already appear in the participant list.  This
+   prevents an explicitly banned user from rejoining a group based on a
+   preauthorization.
+
+   When the rules in a Preauthorized users struct permit the requester
+   multiple roles, the requesting client may choose any of those roles
+   according to local policy.  That policy may simply select whichever
+   role has the most capabilities or the more "desirable" capabilities
+   according to its policy.  Alternatively, the client could allow the
+   end-user to select which (authorized) role to adopt in a particular
+   room.
 
    struct {
      int target_role_index;
@@ -267,6 +338,11 @@ Table of Contents
    component.  If the contents of the update field are valid and if the
    proposer is authorized to generate such an update, the value of the
    update field completely replaces the value of the data field.
+
+      As with the definition of roles, in MIMI it is not expected that
+      the definition of Preauthorized users would change frequently.
+      Instead the claims in the underlying credentials would be modified
+      without modifying the preauthorization policy.
 
 7.  Security Considerations
 
@@ -315,12 +391,15 @@ Table of Contents
    canSendLink
    canSendLinkPreview
    canFollowLink
-   canChangeRoomSubject
+   canChangeRoomName
+   canChangeRoomDescription
    canChangeRoomAvatar
+   canChangeRoomSubject
+   canChangeRoomMood
    canChangeOwnName
+   canChangeOwnAvatar
    canChangeOwnPresence
    canChangeOwnMood
-   canChangeOwnAvatar
    canJoinCall
    canSendAudio
    canReceiveAudio
@@ -338,6 +417,13 @@ Table of Contents
 
 9.  Normative References
 
+   [I-D.ietf-mimi-room-policy]
+              Mahy, R., "Room Policy for the More Instant Messaging
+              Interoperability (MIMI) Protocol", Work in Progress,
+              Internet-Draft, draft-ietf-mimi-room-policy-00, 15
+              November 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-mimi-room-policy-00>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -346,6 +432,10 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+Appendix A.  Role examples
+
+   TODO
 
 Acknowledgments
 
