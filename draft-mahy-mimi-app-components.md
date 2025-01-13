@@ -239,6 +239,107 @@ If the contents of the `update` field are valid and if the proposer is authorize
 
 >As with the definition of roles, in MIMI it is not expected that the definition of Preauthorized users would change frequently. Instead the claims in the underlying credentials would be modified without modifying the preauthorization policy.
 
+# Role Capabilities
+
+When we say that the holder of this capability can take some action, we mean that the whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific role already pre-assigned in the Participant List struct, or is pre-authorized to take action with a specific role in the Preauthorized Users struct.
+
+Unless otherwise specified, capabilities apply both to sending a set of consistent MLS proposals that could be committed by any member of the corresponding MLS group, and to sending an MLS commit containing a set of consistent MLS proposals.
+
+## Membership Capabilities
+
+
+
+- `canAddParticipant` - the holder of this capability can add another user to the participant list. (This capability does not apply to the holder adding itself.) The holder may assign the target user any role in the `add_participant_role_indexes` list of the holder's Role. The proposed action is only authorized if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
+- `canRemoveParticipant` - the holder of this capability can propose the removal of another user (excluding itself) from the participant list and any of their clients. There MUST NOT be any clients of the removed user in the MLS group after the corresponding commit. The proposed action is only authorized if the action respects both the `minimum_participants_constraint` and `minimum_active_participants_constraint` for the removed user's role. **TODO**: users can be removed with which roles? can you remove a banned user or a superadmin.
+- `canAddOwnClient` - the holder of this capability can add its own client (via an external commit or external proposal) and may add other clients that share the same user identity (via Add proposals) if the corresponding user is already in the participant list. **TODO**: consider if multiple clients per user are allowed; client replacements.
+- `canRemoveSelf` - the holder of this capability can propose to remove itself from (i.e. leave) the participant list; it MUST simultaneously propose to remove all of its remaining clients from the corresponding MLS group. Due to restrictions in MLS which insure the consistency of the group, this action cannot be committed by the leaving user.
+- `canAddSelf` - the holder of this capability can use an external commit or external proposal to add itself to the participant list, and to the room, when none of it's clients are present. The proposed action is only authorized if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
+- `canCreateJoinCode` - the holder of this capability can
+- `canUseJoinCode` - the holder of this capability can join a room using a valid join code for that room, provided the join code is valid, and the rest of its constraints are satisfied.
+
+
+## Moderation Capabilities
+
+- `canKick` - the holder of this capability can remove all the clients of a user (excluding itself), without removing the user from the participation list.
+- `canChangeUserRole` - the holder of this capability can change the role of another user from
+- `canBan` - the holder of this capability can
+- `canUnBan` - the holder of this capability can
+- `canRevokeVoice` - the holder of this capability can
+- `canGrantVoice` - the holder of this capability can
+- `canKnock` - the holder of this capability can
+- `canAcceptKnock` - the holder of this capability can
+- `canCreateSubgroup` - the holder of this capability can
+
+These actions are subject to role constraints described below.
+
+## Message Capabilities
+
+- canSendMessage
+- canReceiveMessage
+- canReportAbuse
+- canReactToMessage
+- canEditReaction
+- canDeleteReaction
+- canEditOwnMessage
+- canDeleteOwnMessage
+- canDeleteAnyMessage
+- canStartTopic
+- canReplyInTopic
+- canSendDirectMessage
+- canTargetMessage
+
+The Hub can enforce whether a member can send a message. It can also withhold fanout of application messages to clients of a user. The other capabilities in this section can only be enforced by other clients.
+
+
+## Asset Capabilities
+
+- canUploadImage
+- canUploadVideo
+- canUploadAttachment
+- canDownloadImage
+- canDownloadVideo
+- canDownloadAttachment
+- canSendLink
+- canSendLinkPreview
+- canFollowLink
+
+## Adjust metadata
+
+- canChangeRoomName
+- canChangeRoomDescription
+- canChangeRoomAvatar
+- canChangeRoomSubject
+- canChangeRoomMood
+- canChangeOwnName
+- canChangeOwnPresence
+- canChangeOwnMood
+- canChangeOwnAvatar
+
+## Real-time media
+
+- canStartCall
+- canJoinCall
+- canSendAudio
+- canReceiveAudio
+- canSendVideo
+- canReceiveVideo
+- canShareScreen
+- canViewSharedScreen
+
+## Disruptive Policy Changes
+
+- canChangeRoomMembershipStyle
+- canChangeRoleDefinitions
+- canChangePreauthorizedUserList
+- canChangeOtherPolicyAttribute
+- canDestroyRoom
+- MLS specific
+  - update
+  - reinit
+  - PSK
+  - external proposal
+  - external commit
+
 
 # Security Considerations
 
@@ -257,8 +358,9 @@ canRemoveParticipant
 canAddOwnClient
 canRemoveSelf
 canAddSelf
-canCreateJoinLink
-canUseJoinLink
+canCreateJoinCode - reserved for future use
+canUseJoinCode
+canBan
 canUnBan
 canKick
 canRevokeVoice
@@ -267,7 +369,7 @@ canKnock
 canAcceptKnock
 canChangeUserRole
 canCreateSubgroup
-canTargetMessage
+canSendMessage
 canReceiveMessage
 canReportAbuse
 canReactToMessage
@@ -278,8 +380,10 @@ canDeleteOwnMessage
 canDeleteAnyMessage
 canStartTopic
 canReplyInTopic
+canEditTopic
 canSendDirectMessage
 canTargetMessage
+canUploadImage
 canUploadVideo
 canUploadAttachment
 canDownloadImage
@@ -294,9 +398,10 @@ canChangeRoomAvatar
 canChangeRoomSubject
 canChangeRoomMood
 canChangeOwnName
-canChangeOwnAvatar
 canChangeOwnPresence
 canChangeOwnMood
+canChangeOwnAvatar
+canStartCall
 canJoinCall
 canSendAudio
 canReceiveAudio
@@ -304,10 +409,13 @@ canSendVideo
 canReceiveVideo
 canShareScreen
 canViewSharedScreen
+canChangeRoomMembershipStyle
+canChangeRoleDefinitions
+canChangePreauthorizedUserList
 canChangeOtherPolicyAttribute
 canDestroyRoom
 canSendMLSUpdateProposal
-cansendMLSReinitProposal
+canSendMLSReinitProposal
 canSendMLSPSKProposal
 canSendMLSExternalProposal
 canSendMLSExternalCommit
@@ -317,7 +425,154 @@ canSendMLSExternalCommit
 
 # Role examples
 
-TODO
+## Cooperatively administered room
+
+This is an example set of role policies, which is suitable for friends and family rooms and small groups of peers in a workgroup or club.
+
+- no_role
+   - role_index = 0
+   - no capabilities
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - add_participant_role_indexes = []
+      - authorized_role_changes = []
+
+- banned
+   - role_index = 1
+   - no capabilities
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - add_participant_role_indexes = []
+      - authorized_role_changes = []
+
+- ordinary_user
+   - role_index = 2
+   - authorized capabilities
+      - canAddParticipant
+      - canRemoveParticipant
+      - canAddOwnClient
+      - canRemoveSelf
+      - canAddSelf
+      - canCreateJoinCode - reserved for future use
+      - canUseJoinCode
+      - canKnock
+      - canSendMessage
+      - canReceiveMessage
+      - canReportAbuse
+      - canReactToMessage
+      - canEditReaction
+      - canDeleteReaction
+      - canEditOwnMessage
+      - canDeleteOwnMessage
+      - canStartTopic
+      - canReplyInTopic
+      - canUploadImage
+      - canUploadVideo
+      - canUploadAttachment
+      - canDownloadImage
+      - canDownloadVideo
+      - canDownloadAttachment
+      - canSendLink
+      - canSendLinkPreview
+      - canFollowLink
+      - canChangeRoomName
+      - canChangeRoomAvatar
+      - canChangeRoomSubject
+      - canChangeRoomMood
+      - canChangeOwnName
+      - canChangeOwnPresence
+      - canChangeOwnMood
+      - canChangeOwnAvatar
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - add_participant_role_indexes = [ 2 ]
+      - authorized_role_changes = [(0,[2]), (2,[0])]
+
+- group_admin
+   - role_index = 3
+   - authorized capabilities
+      - (include all the capabilities authorized for an ordinary_user)
+      - canBan
+      - canUnBan
+      - canKick
+      - canRevokeVoice
+      - canGrantVoice
+      - canAcceptKnock
+      - canChangeUserRole
+      - canDeleteAnyMessage
+      - canEditTopic
+      - (canDeleteUpload)
+      - canChangeRoomDescription
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - add_participant_role_indexes = [ 1, 2, 3 ]
+      - authorized_role_changes = [(0,[1,2,3]), (1,[0,2,3]), (2,[0,1,3]), (3,[0,1,2])]
+
+- super_admin
+   - role_index = 4
+   - authorized capabilities
+      - (include all the capabilities authorized for a group_admin)
+      - canChangeRoomMembershipStyle
+      - canChangePreauthorizedUserList
+      - canChangeOtherPolicyAttribute
+      - canDestroyRoom
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - add_participant_role_indexes = [ 1, 2, 3, 4 ]
+      - authorized_role_changes = [(0,[1,2,3,4]), (1,[0,2,3,4]), (2,[0,1,3,4]), (3,[0,1,2,4]), (4,[0,1,2,3])]
+
+
+- policy_enforcer
+   - role_index = 5
+   - capabilities
+      - (does not include any other capabilities)
+      - canRemoveParticipant
+      - canChangeUserRole
+      - canBan
+      - canUnban ??
+      - canChangeRoomMembershipStyle
+      - canChangeRoleDefinitions
+      - canChangePreauthorizedUserList
+      - canChangeOtherPolicyAttribute
+      - canDestroyRoom
+      - canSendMLSReinitProposal
+      - canSendMLSExternalProposal
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = 2
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - add_participant_role_indexes = []
+      - authorized_role_changes = [(0,[1]), (1,[0]), (2,[0,1]), (3,[0,1]), (4,[0,1])]
+   - Notes: can remove a banned user from the list (cleanup) but not restore them
+
+
+
+## Strictly administered room
+
+
+## Moderated room
+
+
+## Multi-organization administered room
+
+
+
 
 # Acknowledgments
 {:numbered="false"}
