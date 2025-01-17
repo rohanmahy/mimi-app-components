@@ -96,7 +96,7 @@ RoomMetaData RoomMetaUpdate;
 RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Room Metadata component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
-# Role-Based Access Control
+# Role-Based Access Control {#roles}
 
 The Role-Based Access Control component contains a list of all the roles in the room, and the capabilities associated with them.
 It contains a `role_index`, which is used to refer to the role elsewhere. (Note that role indexes might not be contiguous.)
@@ -161,9 +161,9 @@ If the contents of the `update` field are valid and if the proposer is authorize
 # Participant List
 
 The participant list is a list of "users" in a room.
-Each user is assigned one role (expressed as the role_index) in the room.
+Within a room, each user is assigned exactly one *role* (expressed with a `role_index` and described in {{roles}}) at any given time (specifically within any MLS epoch).
 In a room that has multiple MLS clients per "user", the identifier for each user in `participants.user` is the same across all that user's clients in the room.
-Note that each user has a single role at any point in time.
+Note that each user has a single role at any point in time, and therefore all clients of the same user also have the same role.
 
 The participant list may include inactive participants, which currently do not have any clients in the corresponding MLS group, for example if their clients do not have available KeyPackages or if all of their clients are temporarily "kicked" out of the group.
 The participant list can also contain participants that are explicitly banned, by assigning them a suitable role which does not have any capabilities.
@@ -200,7 +200,7 @@ For example, a room for employee benefits might be available to join with the re
 
 PreAuthData is the format of the `data` field inside the ComponentData struct for the Preauthorized Participants component in the `application_data` GroupContext extension.
 
-The Preauthorized users data structure is used to authorize external joins (external commits) and external proposals, and only when the requester does not already appear in the participant list. This prevents an explicitly banned user from rejoining a group based on a preauthorization.
+The Preauthorized users data structure is used to authorize external joins (external commits) and external proposals when the requester does not already appear in the participant list, or when a member explicitly tries to change its own role. This prevents an explicitly banned user from rejoining a group based on a preauthorization.
 
 When the rules in a Preauthorized users struct match multiple roles, the requesting client receives the first role which matches its claims.
 
@@ -238,9 +238,11 @@ If the contents of the `update` field are valid and if the proposer is authorize
 
 >As with the definition of roles, in MIMI it is not expected that the definition of Preauthorized users would change frequently. Instead the claims in the underlying credentials would be modified without modifying the preauthorization policy.
 
+Because the Preauthorized users component usually authorizes non-members, it is also a natural choice for providing concrete authorization for policy enforcing systems incorporated into or which run in coordination with the MIMI Hub provider or specific MLS Distribution Services. For example, a preauthorized role could allow the Hub to remove participants and to ban them, but not to add any users or devices. This unifies the authorization model for members and non-members.
+
 # Role Capabilities
 
-When we say that the holder of this capability can take some action, we mean that the whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific role already pre-assigned in the Participant List struct, or is pre-authorized to take action with a specific role in the Preauthorized Users struct.
+When we say that the holder of this capability can take some action, we mean that the whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific role already pre-assigned in the Participant List struct, or is preauthorized to take action with a specific role in the Preauthorized Users struct.
 
 Unless otherwise specified, capabilities apply both to sending a set of consistent MLS proposals that could be committed by any member of the corresponding MLS group, and to sending an MLS commit containing a set of consistent MLS proposals.
 
