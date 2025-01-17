@@ -96,67 +96,6 @@ RoomMetaData RoomMetaUpdate;
 RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Room Metadata component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
-# Role-Based Access Control {#roles}
-
-The Role-Based Access Control component contains a list of all the roles in the room, and the capabilities associated with them.
-It contains a `role_index`, which is used to refer to the role elsewhere. (Note that role indexes might not be contiguous.)
-The `role_index` zero is reserved to refer to a participant that does not (yet) or no longer appears (or will no longer appear) in the participant list.
-
-The component also contains a `role_name` (a human-readable text string name for the
-role), and a `role_description` (another string, which can have zero length).
-
-Each Role also can contain constraints on the minimum and maximum number of participants, and the minimum and maximum number of active participants.
-If the minimum number is zero, there is no minimum number of participants for that particular role.
-If there is no maximum number of participants for a particular role, that parameter is absent.
-
->If the maximum number of active participants is zero, then no participants are allowed to have clients in the room's MLS group.
-
-A party with a particular Role which has the `canAddParticipant` capability is authorized to add another (new) participant with any of the `target_role_indexes` in an `authorized_role_changes` entry where the `authorized_role_changes.from_role_index` equals zero. It is also authorized to add any MLS clients matching an authorized added user to the room's MLS group.
-A party with a particular Role which has the `canRemoveParticipant` capability is authorized to remove another participant when the target user's role matching `authorized_role_changes.from_role_index` contains zero in the `target_role_indexes`. It MUST also remove any and all clients belonging to a removed user in the same commit.
-
-A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of another participant (but not itself) from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
-
-A party with a particular Role which has the `canChangeOwnRole` can change its own role to the first role matching in the Preauthorized users component (see {{preauthorized-users}}).
-
-
->This design results in each participant only having a single role at a time, with a single list of capabilities and an explicit list of allowed role transitions. It makes the authorization process for a verifier consistent regardless of the complexity of the set of authorization rules.
-
-Some examples are provided in {{role-examples}.
-
-RoleData is the format of the `data` field inside the ComponentData struct for the Role-Based Access Control component in the `application_data` GroupContext extension.
-
-~~~ tls
-/* See MIMI Capability Types IANA registry */
-uint16 CapablityType;
-
-struct {
-   uint32 from_role_index;
-   uint32 target_role_indexes<V>;
-} SingleSourceRoleChangeTargets;
-
-struct {
-  int role_index;
-  opaque role_name<V>;
-  opaque role_description<V>;
-  CapabilityType role_capabilities<V>;
-  int minimum_participants_constraint;
-  optional int maximum_participants_constraint;
-  int minimum_active_participants_constraint;
-  optional int maximum_active_participants_constraint;
-  SingleSourceRoleChangeTargets authorized_role_changes<V>;
-} Role;
-
-struct {
-  Role roles<V>;
-} RoleData;
-
-RoleData RoleUpdate;
-~~~
-
-RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Role-Based Access Control component.
-If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
-
->Note that in the MIMI environment, changing the definitions of roles is anticipated to be very rare over the lifetime of a room (for example changing a room which has grown dramatically from cooperatively managed by all participants to explicitly moderated or administered).
 
 # Participant List
 
@@ -239,6 +178,70 @@ If the contents of the `update` field are valid and if the proposer is authorize
 >As with the definition of roles, in MIMI it is not expected that the definition of Preauthorized users would change frequently. Instead the claims in the underlying credentials would be modified without modifying the preauthorization policy.
 
 Because the Preauthorized users component usually authorizes non-members, it is also a natural choice for providing concrete authorization for policy enforcing systems incorporated into or which run in coordination with the MIMI Hub provider or specific MLS Distribution Services. For example, a preauthorized role could allow the Hub to remove participants and to ban them, but not to add any users or devices. This unifies the authorization model for members and non-members.
+
+
+# Role-Based Access Control {#roles}
+
+The Role-Based Access Control component contains a list of all the roles in the room, and the capabilities associated with them.
+It contains a `role_index`, which is used to refer to the role elsewhere. (Note that role indexes might not be contiguous.)
+The `role_index` zero is reserved to refer to a participant that does not (yet) or no longer appears (or will no longer appear) in the participant list.
+
+The component also contains a `role_name` (a human-readable text string name for the
+role), and a `role_description` (another string, which can have zero length).
+
+Each Role also can contain constraints on the minimum and maximum number of participants, and the minimum and maximum number of active participants.
+If the minimum number is zero, there is no minimum number of participants for that particular role.
+If there is no maximum number of participants for a particular role, that parameter is absent.
+
+>If the maximum number of active participants is zero, then no participants are allowed to have clients in the room's MLS group.
+
+A party with a particular Role which has the `canAddParticipant` capability is authorized to add another (new) participant with any of the `target_role_indexes` in an `authorized_role_changes` entry where the `authorized_role_changes.from_role_index` equals zero. It is also authorized to add any MLS clients matching an authorized added user to the room's MLS group.
+A party with a particular Role which has the `canRemoveParticipant` capability is authorized to remove another participant when the target user's role matching `authorized_role_changes.from_role_index` contains zero in the `target_role_indexes`. It MUST also remove any and all clients belonging to a removed user in the same commit.
+
+A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of another participant (but not itself) from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
+
+A party with a particular Role which has the `canChangeOwnRole` can change its own role to the first role matching in the Preauthorized users component (see {{preauthorized-users}}).
+
+
+>This design results in each participant only having a single role at a time, with a single list of capabilities and an explicit list of allowed role transitions. It makes the authorization process for a verifier consistent regardless of the complexity of the set of authorization rules.
+
+Some examples are provided in {{role-examples}.
+
+RoleData is the format of the `data` field inside the ComponentData struct for the Role-Based Access Control component in the `application_data` GroupContext extension.
+
+~~~ tls
+/* See MIMI Capability Types IANA registry */
+uint16 CapablityType;
+
+struct {
+   uint32 from_role_index;
+   uint32 target_role_indexes<V>;
+} SingleSourceRoleChangeTargets;
+
+struct {
+  int role_index;
+  opaque role_name<V>;
+  opaque role_description<V>;
+  CapabilityType role_capabilities<V>;
+  int minimum_participants_constraint;
+  optional int maximum_participants_constraint;
+  int minimum_active_participants_constraint;
+  optional int maximum_active_participants_constraint;
+  SingleSourceRoleChangeTargets authorized_role_changes<V>;
+} Role;
+
+struct {
+  Role roles<V>;
+} RoleData;
+
+RoleData RoleUpdate;
+~~~
+
+RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Role-Based Access Control component.
+If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
+
+>Note that in the MIMI environment, changing the definitions of roles is anticipated to be very rare over the lifetime of a room (for example changing a room which has grown dramatically from cooperatively managed by all participants to explicitly moderated or administered).
+
 
 # Role Capabilities
 
