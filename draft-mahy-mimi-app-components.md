@@ -195,12 +195,10 @@ If there is no maximum number of participants for a particular role, that parame
 
 >If the maximum number of active participants is zero, then no participants are allowed to have clients in the room's MLS group.
 
-A party with a particular Role which has the `canAddParticipant` capability is authorized to add another (new) participant with any of the `target_role_indexes` in an `authorized_role_changes` entry where the `authorized_role_changes.from_role_index` equals zero. It is also authorized to add any MLS clients matching an authorized added user to the room's MLS group.
-A party with a particular Role which has the `canRemoveParticipant` capability is authorized to remove another participant when the target user's role matching `authorized_role_changes.from_role_index` contains zero in the `target_role_indexes`. It MUST also remove any and all clients belonging to a removed user in the same commit.
+The `authorized_role_changes` field is used to provide fine-grained control about which transitions are allowed when adding and removing participants and when moving participants to new roles, including banning/unbanning, and promoting/demoting to/from roles with moderator or administrator privileges.
+A more detailed discussion is in the description of the specific capabilities in the next section.
 
-A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of another participant (but not itself) from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
 
-A party with a particular Role which has the `canChangeOwnRole` can change its own role to the first role matching in the Preauthorized users component (see {{preauthorized-users}}).
 
 
 >This design results in each participant only having a single role at a time, with a single list of capabilities and an explicit list of allowed role transitions. It makes the authorization process for a verifier consistent regardless of the complexity of the set of authorization rules.
@@ -245,13 +243,20 @@ If the contents of the `update` field are valid and if the proposer is authorize
 
 # Role Capabilities
 
-When we say that the holder of this capability can take some action, we mean that the whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific role already pre-assigned in the Participant List struct, or is preauthorized to take action with a specific role in the Preauthorized Users struct.
+When we say that the holder of this capability can take some action, we mean that whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific entry in the Participant List struct and a corresponding role, or is preauthorized to take action with a specific role in the Preauthorized Users struct.
 
 Unless otherwise specified, capabilities apply both to sending a set of consistent MLS proposals that could be committed by any member of the corresponding MLS group, and to sending an MLS commit containing a set of consistent MLS proposals.
 
 ## Membership Capabilities
 
+A party with a particular Role which has the `canAddParticipant` capability is authorized to add another (new) participant with any of the `target_role_indexes` in an `authorized_role_changes` entry where the `authorized_role_changes.from_role_index` equals zero. It is also authorized to add any MLS clients matching an authorized added user to the room's MLS group.
+A party with a particular Role which has the `canRemoveParticipant` capability is authorized to remove another participant when the target user's role matching `authorized_role_changes.from_role_index` contains zero in the `target_role_indexes`. It MUST also remove any and all clients belonging to a removed user in the same commit.
 
+A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of another participant (but not itself) from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
+
+A party with a particular Role which has the `canChangeOwnRole` can change its own role to the first role matching in the Preauthorized users component (see {{preauthorized-users}}).
+
+>**TODO**: fix the stuff below this point
 
 - `canAddParticipant` - the holder of this capability can add another user to the participant list. (This capability does not apply to the holder adding itself.) The holder may assign the target user any role in the `add_participant_role_indexes` list of the holder's Role. The proposed action is only authorized if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
 - `canRemoveParticipant` - the holder of this capability can propose the removal of another user (excluding itself) from the participant list and any of their clients. There MUST NOT be any clients of the removed user in the MLS group after the corresponding commit. The proposed action is only authorized if the action respects both the `minimum_participants_constraint` and `minimum_active_participants_constraint` for the removed user's role. **TODO**: users can be removed with which roles? can you remove a banned user or a superadmin.
