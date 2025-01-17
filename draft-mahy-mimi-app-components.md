@@ -99,16 +99,25 @@ If the contents of the `update` field are valid and if the proposer is authorize
 # Role-Based Access Control
 
 The Role-Based Access Control component contains a list of all the roles in the room, and the capabilities associated with them.
-It contains a role_index, which is used to refer to the role elsewhere.
-It also contains a role_name (a human readable text string name for the
-role), and a role_description (another string, which can have zero length).
+It contains a `role_index`, which is used to refer to the role elsewhere. (Note that role indexes might not be contiguous.)
+The `role_index` zero is reserved to refer to a participant that does not (yet) or no longer appears (or will no longer appear) in the participant list.
+
+The component also contains a `role_name` (a human-readable text string name for the
+role), and a `role_description` (another string, which can have zero length).
 
 Each Role also can contain constraints on the minimum and maximum number of participants, and the minimum and maximum number of active participants.
 If the minimum number is zero, there is no minimum number of participants for that particular role.
 If there is no maximum number of participants for a particular role, that parameter is absent.
 
-A party with a particular Role which has the `canAddParticipant` capability is authorized to add the new participant with any of the target roles in `add_participant_role_indexes`.
-A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of a participant from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
+>If the maximum number of active participants is zero, then no participants are allowed to have clients in the room's MLS group.
+
+A party with a particular Role which has the `canAddParticipant` capability is authorized to add another (new) participant with any of the `target_role_indexes` in an `authorized_role_changes` entry where the `authorized_role_changes.from_role_index` equals zero. It is also authorized to add any MLS clients matching an authorized added user to the room's MLS group.
+A party with a particular Role which has the `canRemoveParticipant` capability is authorized to remove another participant when the target user's role matching `authorized_role_changes.from_role_index` contains zero in the `target_role_indexes`. It MUST also remove any and all clients belonging to a removed user in the same commit.
+
+A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of another participant (but not itself) from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
+
+A party with a particular Role which has the `canChangeOwnRole` can change its own role to the first role matching in the Preauthorized users component (see {{preauthorized-users}}).
+
 
 >This design results in each participant only having a single role at a time, with a single list of capabilities and an explicit list of allowed role transitions. It makes the authorization process for a verifier consistent regardless of the complexity of the set of authorization rules.
 
@@ -121,8 +130,8 @@ RoleData is the format of the `data` field inside the ComponentData struct for t
 uint16 CapablityType;
 
 struct {
-   int from_role_index;
-   int target_role_indexes<V>;
+   uint32 from_role_index;
+   uint32 target_role_indexes<V>;
 } SingleSourceRoleChangeTargets;
 
 struct {
@@ -134,7 +143,6 @@ struct {
   optional int maximum_participants_constraint;
   int minimum_active_participants_constraint;
   optional int maximum_active_participants_constraint;
-  int add_participant_role_indexes<V>;
   SingleSourceRoleChangeTargets authorized_role_changes<V>;
 } Role;
 
@@ -148,7 +156,7 @@ RoleData RoleUpdate;
 RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Role-Based Access Control component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
->Note that in the MIMI environment, changing the definitions of roles is anticipated to be very rare over the lifetime of a room (for example changing a room which has grown dramatically from cooperatively moderated to explicitly moderated).
+>Note that in the MIMI environment, changing the definitions of roles is anticipated to be very rare over the lifetime of a room (for example changing a room which has grown dramatically from cooperatively managed by all participants to explicitly moderated or administered).
 
 # Participant List
 
@@ -194,25 +202,15 @@ PreAuthData is the format of the `data` field inside the ComponentData struct fo
 
 The Preauthorized users data structure is used to authorize external joins (external commits) and external proposals, and only when the requester does not already appear in the participant list. This prevents an explicitly banned user from rejoining a group based on a preauthorization.
 
-When the rules in a Preauthorized users struct permit the requester multiple roles, the requesting client may choose any of those roles according to local policy.
-That policy may simply select whichever role has the most capabilities or the more "desirable" capabilities according to its policy. Alternatively, the client could allow the end-user to select which (authorized) role to adopt in a particular room.
+When the rules in a Preauthorized users struct match multiple roles, the requesting client receives the first role which matches its claims.
 
 ~~~ tls
 struct {
-  int target_role_index;
-  /* preauth_domain consists of ASCII letters, digits, and hyphens */
-  opaque preauth_domain<V>;
-  /* the remaining fields are in the form of a URI */
-  opaque preauth_workgroup<V>;
-  opaque preauth_group<V>;
-  opaque preauth_user<V>;
-} PreAuthPerRoleList;
-
-struct {
   /* MLS Credential Type of the "claim"  */
   CredentialType credential_type;
-  /* the binary representation of an X.509 OID, a JWT claim name string, */
-  /* or the CBOR representation of a CWT claim (an int or tstr) */
+  /* the binary representation of an X.509 OID, a JWT claim name  */
+  /* string, or the value inside the CBOR representation of a CWT */
+  /* claim (an int or tstr) */
   opaque id<V>;
 } ClaimId;
 
@@ -222,7 +220,8 @@ struct {
 } Claim;
 
 struct {
-  /* when all claims in the claimset are satisfied, claimset is satisfied */
+  /* when all claims in the claimset are satisfied, the claimset */
+  */ is satisfied */
   Claim claimset<V>;
   Role target_role;
 } PreAuthRoleEntry;
@@ -437,8 +436,7 @@ This is an example set of role policies, which is suitable for friends and famil
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
       - maximum_active_participants_constraint = null
-      - add_participant_role_indexes = []
-      - authorized_role_changes = []
+      - authorized_role_changes = `[]`
 
 - banned
    - role_index = 1
@@ -448,8 +446,7 @@ This is an example set of role policies, which is suitable for friends and famil
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
       - maximum_active_participants_constraint = null
-      - add_participant_role_indexes = []
-      - authorized_role_changes = []
+      - authorized_role_changes = `[]`
 
 - ordinary_user
    - role_index = 2
@@ -494,8 +491,7 @@ This is an example set of role policies, which is suitable for friends and famil
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
       - maximum_active_participants_constraint = null
-      - add_participant_role_indexes = [ 2 ]
-      - authorized_role_changes = [(0,[2]), (2,[0])]
+      - authorized_role_changes = `[(0,[2]), (2,[0])]`
 
 - group_admin
    - role_index = 3
@@ -517,8 +513,7 @@ This is an example set of role policies, which is suitable for friends and famil
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
       - maximum_active_participants_constraint = null
-      - add_participant_role_indexes = [ 1, 2, 3 ]
-      - authorized_role_changes = [(0,[1,2,3]), (1,[0,2,3]), (2,[0,1,3]), (3,[0,1,2])]
+      - authorized_role_changes = `[(0,[1,2,3]), (1,[0,2,3]), (2,[0,1,3]), (3,[0,1,2])]`
 
 - super_admin
    - role_index = 4
@@ -533,8 +528,7 @@ This is an example set of role policies, which is suitable for friends and famil
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
       - maximum_active_participants_constraint = null
-      - add_participant_role_indexes = [ 1, 2, 3, 4 ]
-      - authorized_role_changes = [(0,[1,2,3,4]), (1,[0,2,3,4]), (2,[0,1,3,4]), (3,[0,1,2,4]), (4,[0,1,2,3])]
+      - authorized_role_changes = `[(0,[1,2,3,4]), (1,[0,2,3,4]), (2,[0,1,3,4]), (3,[0,1,2,4]), (4,[0,1,2,3])]`
 
 
 - policy_enforcer
@@ -557,8 +551,7 @@ This is an example set of role policies, which is suitable for friends and famil
       - maximum_participants_constraint = 2
       - minimum_active_participants_constraint = 0
       - maximum_active_participants_constraint = 0
-      - add_participant_role_indexes = []
-      - authorized_role_changes = [(0,[1]), (1,[0]), (2,[0,1]), (3,[0,1]), (4,[0,1])]
+      - authorized_role_changes = `[(0,[1]), (1,[0]), (2,[0,1]), (3,[0,1]), (4,[0,1])]`
    - Notes: can remove a banned user from the list (cleanup) but not restore them
 
 
