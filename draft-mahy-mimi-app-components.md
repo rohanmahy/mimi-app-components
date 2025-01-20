@@ -38,11 +38,15 @@ informative:
 
 --- abstract
 
-This document presents structures for room metadata, role-based access control, participant lists, and pre-authorized roles for future participants intended for use in MIMI (More Instant Messaging Interoperability).
+This document presents structures for room metadata, participant lists, pre-authorized roles for future participants, and role-based access control, all of which are intended for use in MIMI (More Instant Messaging Interoperability).
 
 --- middle
 
 # Introduction
+
+This document introduces specific structures to carry room metadata, the room participant list (introduced conceptually in {{!I-D.ietf-mimi-arch}}), room policy for preauthorizing users into the room based on identity-based attributes, and per-room role definitions.
+Each of these structures is represented as an MLS application component as defined in {{!I-D.barnes-mls-appsync}} (soon to be merged into {{!I-D.ietf-mls-extensions}}).
+Each component is represented in the MLS GroupContext for the room.
 
 This document is provided as a standalone document as it is short and easy to receive early review in its short format. The goal is to incorporate the contents of this draft into {{!I-D.ietf-mimi-room-policy}}.
 
@@ -56,13 +60,13 @@ other systems using MLS (for example, non-authority-based messaging systems) tha
 
 # Room Metadata
 
-The Room Metadata component contains data about a room which might be displayed as human-readable information for the room, such as the name of a room and URL point to its room image/avatar.
+The Room Metadata component contains data about a room which might be displayed as human-readable information for the room, such as the name of the room and a URL pointing to its room image/avatar.
 
 It can contain a list of `room_descriptions`, each of which can have a specific `language_tag` and `media_type` along with the `description_content`. An empty `media_type` implies `text/plain;charset=utf-8`.
 
 RoomMetaData is the format of the `data` field inside the ComponentData struct for the Room Metadata component in the `application_data` GroupContext extension.
 
-~~~ tls
+~~~ tls-presentation
 /* a valid URI (ex: MIMI URI) */
 struct {
   opaque uri<V>;
@@ -78,7 +82,7 @@ struct {
   opaque media_type<V>;
   opaque language_tag<V>;
   opaque description_content<V>;
-} RichDescription
+} RichDescription;
 
 struct {
   Uri room_uri;
@@ -93,7 +97,7 @@ struct {
 RoomMetaData RoomMetaUpdate;
 ~~~
 
-RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Room Metadata component.
+RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the AppDataUpdate struct in an AppDataUpdate Proposal for the Room Metadata component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 
@@ -107,49 +111,62 @@ Note that each user has a single role at any point in time, and therefore all cl
 The participant list may include inactive participants, which currently do not have any clients in the corresponding MLS group, for example if their clients do not have available KeyPackages or if all of their clients are temporarily "kicked" out of the group.
 The participant list can also contain participants that are explicitly banned, by assigning them a suitable role which does not have any capabilities.
 
-~~~ tls
+~~~ tls-presentation
 struct {
   opaque user<V>;
-  int role_index;
+  uint32 role_index;
 } UserRolePair;
-
-struct {
-  uint32 user_index;
-  int role_index;
-} UserindexRolePair
 
 struct {
   UserRolePair participants<V>;
 } ParticipantListData;
+~~~
+
+ParticipantListData is the format of the `data` field inside the ComponentData struct for the Participant list Metadata component in the `application_data` GroupContext extension.
+
+~~~ tls-presentation
+struct {
+  uint32 user_index;
+  uint32 role_index;
+} UserindexRolePair;
 
 struct {
-  uint32 removedIndices<V>;
   UserindexRolePair changedRoleParticipants<V>
+  uint32 removedIndices<V>;
   UserRolePair addedParticipants<V>;
 } ParticipantListUpdate;
 ~~~
 
-ParticipantListUpdate is the contents of an ApplicationDataUpdate Proposal with the component ID for the participant list.
+ParticipantListUpdate is the contents of an AppDataUpdate Proposal with the component ID for the participant list.
+The index of the `participants` vector in the current `ParticipantListData` struct is referenced as the `user_index ` when making changes.
+First the `changedRoleParticipants` list contains `UserindexRolePair`s with the index of a user who changed roles and their new role.
+Next is the `removedIndices` list which has a list of users to remove completely from the participant list.
+Finally there is a list of `addedParticipants` (which contains a user and role) that is appended to the end of the `ParticipantListData`.
+
+Each of these actions (modifying a user's role, removing a user, and adding a user) is authorized separately according to the rules specified in {{membership-capabilities}}. If all the changes are authorized, the `ParticipantListData` is modified accordingly.
 
 
 # Preauthorized Users
 
 Preauthorized users are MIMI users and external senders that have authorization to adopt a role in a room by virtue of certain credential claims or properties, as opposed to being individually enumerated in the participant list.
-For example, a room for employee benefits might be available to join with the regular participant role to all employees with a residence in a specific country; anyone working in the human resources department might be able to join the same room as a moderator.
+For example, a room for employee benefits might be available to join with the regular participant role to all full-time employees with a residence in a specific country; while anyone working in the human resources department might be able to join the same room as a moderator.
+This data structure is consulted in two situations: for external joins (external commits) and external proposals when the requester does not already appear in the participant list; and separately when an existing participant explicitly tries to change its *own* role.
+
+>Only consulting Preauthorized users in these cases prevents several attacks. For example, it prevents an explicitly banned user from rejoining a group based on a preauthorization.
 
 PreAuthData is the format of the `data` field inside the ComponentData struct for the Preauthorized Participants component in the `application_data` GroupContext extension.
 
-The Preauthorized users data structure is used to authorize external joins (external commits) and external proposals when the requester does not already appear in the participant list, or when a member explicitly tries to change its own role. This prevents an explicitly banned user from rejoining a group based on a preauthorization.
-
+The individual `PreAuthRoleEntry` rules in `PreAuthData` are consulted one at a time.
+A `PreAuthRoleEntry` matches for a requester when every `Claim.claim_id` has a corresponding claim in the requester's MLS Credential which exactly matches the corresponding `claim_value`.
 When the rules in a Preauthorized users struct match multiple roles, the requesting client receives the first role which matches its claims.
 
-~~~ tls
+
+~~~ tls-presentation
 struct {
   /* MLS Credential Type of the "claim"  */
   CredentialType credential_type;
   /* the binary representation of an X.509 OID, a JWT claim name  */
-  /* string, or the value inside the CBOR representation of a CWT */
-  /* claim (an int or tstr) */
+  /* string, or the CBOR map claim key in a CWT (an int or tstr)  */
   opaque id<V>;
 } ClaimId;
 
@@ -172,7 +189,34 @@ struct {
 PreAuthData PreAuthUpdate;
 ~~~
 
-PreAuthUpdate (which has the same format as PreAuthData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Preauthorized Participants component.
+<!--
+struct {
+  select (Credential.credential_type) {
+    case basic:
+        struct {}; /* only identity */
+    case x509:
+        /* ex: subjectAltName (2.5.29.17) = hex 06 03 55 1d 1e */
+        opaque oid<V>;
+        /* for sequence or set types, the specific item (1-based) */
+        /* in the collection. zero means any item in a collection */
+        uint8 ordinal;
+    case jwt:
+        opaque json_path<V>;
+    case cwt:
+        CborKeyNameOrArrayIndex cbor_path<V>;
+  };
+} Claim;
+
+struct {
+    /* a CBOR CDE encoded integer, tstr, bstr, or tagged version of */
+    /* any of those map key types. Ex: -1 = 0x20, "hi" = 0x626869,  */
+    /* 1(3600) = 0xC1190E10 */
+    opaque cbor_encoded_claim<V>;
+    optional uint array_index;
+} CborKeyNameOrArrayIndex;
+-->
+
+PreAuthUpdate (which has the same format as PreAuthData) is the format of the `update` field inside the AppDataUpdate struct in an AppDataUpdate Proposal for the Preauthorized Participants component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 >As with the definition of roles, in MIMI it is not expected that the definition of Preauthorized users would change frequently. Instead the claims in the underlying credentials would be modified without modifying the preauthorization policy.
@@ -195,19 +239,16 @@ If there is no maximum number of participants for a particular role, that parame
 
 >If the maximum number of active participants is zero, then no participants are allowed to have clients in the room's MLS group.
 
-The `authorized_role_changes` field is used to provide fine-grained control about which transitions are allowed when adding and removing participants and when moving participants to new roles, including banning/unbanning, and promoting/demoting to/from roles with moderator or administrator privileges.
+The `authorized_role_changes` field is used to provide fine-grained control about which transitions are allowed when adding and removing participants and when moving participants to new roles, including banning/unbanning, and promoting/demoting to or from roles with moderator or administrator privileges.
 A more detailed discussion is in the description of the specific capabilities in the next section.
-
-
-
 
 >This design results in each participant only having a single role at a time, with a single list of capabilities and an explicit list of allowed role transitions. It makes the authorization process for a verifier consistent regardless of the complexity of the set of authorization rules.
 
-Some examples are provided in {{role-examples}.
+Some examples are provided in {{role-examples}}.
 
 RoleData is the format of the `data` field inside the ComponentData struct for the Role-Based Access Control component in the `application_data` GroupContext extension.
 
-~~~ tls
+~~~ tls-presentation
 /* See MIMI Capability Types IANA registry */
 uint16 CapablityType;
 
@@ -217,14 +258,14 @@ struct {
 } SingleSourceRoleChangeTargets;
 
 struct {
-  int role_index;
+  uint32 role_index;
   opaque role_name<V>;
   opaque role_description<V>;
   CapabilityType role_capabilities<V>;
-  int minimum_participants_constraint;
-  optional int maximum_participants_constraint;
-  int minimum_active_participants_constraint;
-  optional int maximum_active_participants_constraint;
+  uint32 minimum_participants_constraint;
+  optional uint32 maximum_participants_constraint;
+  uint32 minimum_active_participants_constraint;
+  optional uint32 maximum_active_participants_constraint;
   SingleSourceRoleChangeTargets authorized_role_changes<V>;
 } Role;
 
@@ -235,7 +276,7 @@ struct {
 RoleData RoleUpdate;
 ~~~
 
-RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the ApplicationDataUpdate struct in an ApplicationDataUpdate Proposal for the Role-Based Access Control component.
+RoleUpdate (which has the same format as RoleData) is the format of the `update` field inside the AppDataUpdate struct in an AppDataUpdate Proposal for the Role-Based Access Control component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
 >Note that in the MIMI environment, changing the definitions of roles is anticipated to be very rare over the lifetime of a room (for example changing a room which has grown dramatically from cooperatively managed by all participants to explicitly moderated or administered).
