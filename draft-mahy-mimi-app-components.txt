@@ -4,8 +4,8 @@
 
 More Instant Messaging Interoperability                          R. Mahy
 Internet-Draft                             Rohan Mahy Consulting Service
-Intended status: Informational                           17 January 2025
-Expires: 21 July 2025
+Intended status: Informational                           20 January 2025
+Expires: 24 July 2025
 
 
 Application State Components for More Instant Messaging Interoperability
@@ -14,10 +14,10 @@ Application State Components for More Instant Messaging Interoperability
 
 Abstract
 
-   This document presents structures for room metadata, role-based
-   access control, participant lists, and pre-authorized roles for
-   future participants intended for use in MIMI (More Instant Messaging
-   Interoperability).
+   This document presents structures for room metadata, participant
+   lists, pre-authorized roles for future participants, and role-based
+   access control, all of which are intended for use in MIMI (More
+   Instant Messaging Interoperability).
 
 About This Document
 
@@ -51,7 +51,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 July 2025.
+   This Internet-Draft will expire on 24 July 2025.
 
 Copyright Notice
 
@@ -97,6 +97,15 @@ Table of Contents
 
 1.  Introduction
 
+   This document introduces specific structures to carry room metadata,
+   the room participant list (introduced conceptually in
+   [I-D.ietf-mimi-arch]), room policy for preauthorizing users into the
+   room based on identity-based attributes, and per-room role
+   definitions.  Each of these structures is represented as an MLS
+   application component as defined in [I-D.barnes-mls-appsync] (soon to
+   be merged into [I-D.ietf-mls-extensions]).  Each component is
+   represented in the MLS GroupContext for the room.
+
    This document is provided as a standalone document as it is short and
    easy to receive early review in its short format.  The goal is to
    incorporate the contents of this draft into
@@ -118,7 +127,7 @@ Table of Contents
 
    The Room Metadata component contains data about a room which might be
    displayed as human-readable information for the room, such as the
-   name of a room and URL point to its room image/avatar.
+   name of the room and a URL pointing to its room image/avatar.
 
    It can contain a list of room_descriptions, each of which can have a
    specific language_tag and media_type along with the
@@ -144,7 +153,7 @@ Table of Contents
      opaque media_type<V>;
      opaque language_tag<V>;
      opaque description_content<V>;
-   } RichDescription
+   } RichDescription;
 
    struct {
      Uri room_uri;
@@ -159,9 +168,9 @@ Table of Contents
    RoomMetaData RoomMetaUpdate;
 
    RoomMetaUpdate (which has the same format as RoomMetaData) is the
-   format of the update field inside the ApplicationDataUpdate struct in
-   an ApplicationDataUpdate Proposal for the Room Metadata component.
-   If the contents of the update field are valid and if the proposer is
+   format of the update field inside the AppDataUpdate struct in an
+   AppDataUpdate Proposal for the Room Metadata component.  If the
+   contents of the update field are valid and if the proposer is
    authorized to generate such an update, the value of the update field
    completely replaces the value of the data field.
 
@@ -186,26 +195,43 @@ Table of Contents
 
    struct {
      opaque user<V>;
-     int role_index;
+     uint32 role_index;
    } UserRolePair;
-
-   struct {
-     uint32 user_index;
-     int role_index;
-   } UserindexRolePair
 
    struct {
      UserRolePair participants<V>;
    } ParticipantListData;
 
+   ParticipantListData is the format of the data field inside the
+   ComponentData struct for the Participant list Metadata component in
+   the application_data GroupContext extension.
+
    struct {
-     uint32 removedIndices<V>;
+     uint32 user_index;
+     uint32 role_index;
+   } UserindexRolePair;
+
+   struct {
      UserindexRolePair changedRoleParticipants<V>
+     uint32 removedIndices<V>;
      UserRolePair addedParticipants<V>;
    } ParticipantListUpdate;
 
-   ParticipantListUpdate is the contents of an ApplicationDataUpdate
-   Proposal with the component ID for the participant list.
+   ParticipantListUpdate is the contents of an AppDataUpdate Proposal
+   with the component ID for the participant list.  The index of the
+   participants vector in the current ParticipantListData struct is
+   referenced as the user_index when making changes.  First the
+   changedRoleParticipants list contains UserindexRolePairs with the
+   index of a user who changed roles and their new role.  Next is the
+   removedIndices list which has a list of users to remove completely
+   from the participant list.  Finally there is a list of
+   addedParticipants (which contains a user and role) that is appended
+   to the end of the ParticipantListData.
+
+   Each of these actions (modifying a user's role, removing a user, and
+   adding a user) is authorized separately according to the rules
+   specified in Section 7.1.  If all the changes are authorized, the
+   ParticipantListData is modified accordingly.
 
 5.  Preauthorized Users
 
@@ -214,30 +240,34 @@ Table of Contents
    credential claims or properties, as opposed to being individually
    enumerated in the participant list.  For example, a room for employee
    benefits might be available to join with the regular participant role
-   to all employees with a residence in a specific country; anyone
-   working in the human resources department might be able to join the
-   same room as a moderator.
+   to all full-time employees with a residence in a specific country;
+   while anyone working in the human resources department might be able
+   to join the same room as a moderator.  This data structure is
+   consulted in two situations: for external joins (external commits)
+   and external proposals when the requester does not already appear in
+   the participant list; and separately when an existing participant
+   explicitly tries to change its _own_ role.
+
+      Only consulting Preauthorized users in these cases prevents
+      several attacks.  For example, it prevents an explicitly banned
+      user from rejoining a group based on a preauthorization.
 
    PreAuthData is the format of the data field inside the ComponentData
    struct for the Preauthorized Participants component in the
    application_data GroupContext extension.
 
-   The Preauthorized users data structure is used to authorize external
-   joins (external commits) and external proposals when the requester
-   does not already appear in the participant list, or when a member
-   explicitly tries to change its own role.  This prevents an explicitly
-   banned user from rejoining a group based on a preauthorization.
-
-   When the rules in a Preauthorized users struct match multiple roles,
-   the requesting client receives the first role which matches its
-   claims.
+   The individual PreAuthRoleEntry rules in PreAuthData are consulted
+   one at a time.  A PreAuthRoleEntry matches for a requester when every
+   Claim.claim_id has a corresponding claim in the requester's MLS
+   Credential which exactly matches the corresponding claim_value.  When
+   the rules in a Preauthorized users struct match multiple roles, the
+   requesting client receives the first role which matches its claims.
 
    struct {
      /* MLS Credential Type of the "claim"  */
      CredentialType credential_type;
      /* the binary representation of an X.509 OID, a JWT claim name  */
-     /* string, or the value inside the CBOR representation of a CWT */
-     /* claim (an int or tstr) */
+     /* string, or the CBOR map claim key in a CWT (an int or tstr)  */
      opaque id<V>;
    } ClaimId;
 
@@ -260,11 +290,11 @@ Table of Contents
    PreAuthData PreAuthUpdate;
 
    PreAuthUpdate (which has the same format as PreAuthData) is the
-   format of the update field inside the ApplicationDataUpdate struct in
-   an ApplicationDataUpdate Proposal for the Preauthorized Participants
-   component.  If the contents of the update field are valid and if the
-   proposer is authorized to generate such an update, the value of the
-   update field completely replaces the value of the data field.
+   format of the update field inside the AppDataUpdate struct in an
+   AppDataUpdate Proposal for the Preauthorized Participants component.
+   If the contents of the update field are valid and if the proposer is
+   authorized to generate such an update, the value of the update field
+   completely replaces the value of the data field.
 
       As with the definition of roles, in MIMI it is not expected that
       the definition of Preauthorized users would change frequently.
@@ -306,7 +336,7 @@ Table of Contents
    The authorized_role_changes field is used to provide fine-grained
    control about which transitions are allowed when adding and removing
    participants and when moving participants to new roles, including
-   banning/unbanning, and promoting/demoting to/from roles with
+   banning/unbanning, and promoting/demoting to or from roles with
    moderator or administrator privileges.  A more detailed discussion is
    in the description of the specific capabilities in the next section.
 
@@ -331,14 +361,14 @@ Table of Contents
    } SingleSourceRoleChangeTargets;
 
    struct {
-     int role_index;
+     uint32 role_index;
      opaque role_name<V>;
      opaque role_description<V>;
      CapabilityType role_capabilities<V>;
-     int minimum_participants_constraint;
-     optional int maximum_participants_constraint;
-     int minimum_active_participants_constraint;
-     optional int maximum_active_participants_constraint;
+     uint32 minimum_participants_constraint;
+     optional uint32 maximum_participants_constraint;
+     uint32 minimum_active_participants_constraint;
+     optional uint32 maximum_active_participants_constraint;
      SingleSourceRoleChangeTargets authorized_role_changes<V>;
    } Role;
 
@@ -349,11 +379,11 @@ Table of Contents
    RoleData RoleUpdate;
 
    RoleUpdate (which has the same format as RoleData) is the format of
-   the update field inside the ApplicationDataUpdate struct in an
-   ApplicationDataUpdate Proposal for the Role-Based Access Control
-   component.  If the contents of the update field are valid and if the
-   proposer is authorized to generate such an update, the value of the
-   update field completely replaces the value of the data field.
+   the update field inside the AppDataUpdate struct in an AppDataUpdate
+   Proposal for the Role-Based Access Control component.  If the
+   contents of the update field are valid and if the proposer is
+   authorized to generate such an update, the value of the update field
+   completely replaces the value of the data field.
 
       Note that in the MIMI environment, changing the definitions of
       roles is anticipated to be very rare over the lifetime of a room
@@ -668,12 +698,33 @@ Table of Contents
 
 10.  Normative References
 
+   [I-D.barnes-mls-appsync]
+              Joël, Barnes, R., Mahy, R., and M. Mularczyk, "A Safe
+              Application Interface to Messaging Layer Security", Work
+              in Progress, Internet-Draft, draft-barnes-mls-appsync-01,
+              12 December 2024, <https://datatracker.ietf.org/doc/html/
+              draft-barnes-mls-appsync-01>.
+
+   [I-D.ietf-mimi-arch]
+              Barnes, R., "An Architecture for More Instant Messaging
+              Interoperability (MIMI)", Work in Progress, Internet-
+              Draft, draft-ietf-mimi-arch-01, 21 November 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-mimi-
+              arch-01>.
+
    [I-D.ietf-mimi-room-policy]
               Mahy, R., "Room Policy for the More Instant Messaging
               Interoperability (MIMI) Protocol", Work in Progress,
               Internet-Draft, draft-ietf-mimi-room-policy-00, 15
               November 2024, <https://datatracker.ietf.org/doc/html/
               draft-ietf-mimi-room-policy-00>.
+
+   [I-D.ietf-mls-extensions]
+              Robert, R., "The Messaging Layer Security (MLS)
+              Extensions", Work in Progress, Internet-Draft, draft-ietf-
+              mls-extensions-05, 21 October 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-mls-
+              extensions-05>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
