@@ -145,6 +145,8 @@ Finally there is a list of `addedParticipants` (which contains a user and role) 
 
 Each of these actions (modifying a user's role, removing a user, and adding a user) is authorized separately according to the rules specified in {{membership-capabilities}}. If all the changes are authorized, the `ParticipantListData` is modified accordingly.
 
+A single commit is not valid if it contain any combination of Participant list updates that operate on (add, remove, or change the role of) the same user in the participant list more than once.
+
 
 # Preauthorized Users
 
@@ -221,6 +223,8 @@ If the contents of the `update` field are valid and if the proposer is authorize
 
 >As with the definition of roles, in MIMI it is not expected that the definition of Preauthorized users would change frequently. Instead the claims in the underlying credentials would be modified without modifying the preauthorization policy.
 
+Changing Preauthorized user definitions is sufficiently disruptive, that an update to this component is not valid if it appears in the same commit as any Participant List change, except for user removals.
+
 Because the Preauthorized users component usually authorizes non-members, it is also a natural choice for providing concrete authorization for policy enforcing systems incorporated into or which run in coordination with the MIMI Hub provider or specific MLS Distribution Services. For example, a preauthorized role could allow the Hub to remove participants and to ban them, but not to add any users or devices. This unifies the authorization model for members and non-members.
 
 
@@ -281,6 +285,7 @@ If the contents of the `update` field are valid and if the proposer is authorize
 
 >Note that in the MIMI environment, changing the definitions of roles is anticipated to be very rare over the lifetime of a room (for example changing a room which has grown dramatically from cooperatively managed by all participants to explicitly moderated or administered).
 
+Changing Role definitions is sufficiently disruptive, that an update to this component is not valid if it appear in the same commit as any Participant List change.
 
 # Role Capabilities
 
