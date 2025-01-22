@@ -284,74 +284,75 @@ If the contents of the `update` field are valid and if the proposer is authorize
 
 # Role Capabilities
 
-When we say that the holder of this capability can take some action, we mean that whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific entry in the Participant List struct and a corresponding role, or is preauthorized to take action with a specific role in the Preauthorized Users struct.
+As described in the previous section, each role has a list of capabilities, which in rare cases could be empty.
+When we say that the holder of a capability can take some action, we mean that whatever entity is taking the action (a participant, a potential future participant, or an external party) has a specific entry in the Participant List struct and a corresponding role--or is preauthorized to take action with a specific role via the Preauthorized Users struct--and that the `role_capabilities` list contains the relevant capability.
 
 Unless otherwise specified, capabilities apply both to sending a set of consistent MLS proposals that could be committed by any member of the corresponding MLS group, and to sending an MLS commit containing a set of consistent MLS proposals.
 
 ## Membership Capabilities
 
-A party with a particular Role which has the `canAddParticipant` capability is authorized to add another (new) participant with any of the `target_role_indexes` in an `authorized_role_changes` entry where the `authorized_role_changes.from_role_index` equals zero. It is also authorized to add any MLS clients matching an authorized added user to the room's MLS group.
-A party with a particular Role which has the `canRemoveParticipant` capability is authorized to remove another participant when the target user's role matching `authorized_role_changes.from_role_index` contains zero in the `target_role_indexes`. It MUST also remove any and all clients belonging to a removed user in the same commit.
+The membership capabilities below allow authorized holders to update the Participant list, or change the active participants (by removing and adding MLS clients corresponding to those participants), or both.
 
-A party with a particular Role which has the `canChangeUserRole` capability is authorized to change the role of another participant (but not itself) from a role represented by `authorized_role_changes.from_role_index` to any of the `target_role_indexes` in the same element of `authorized_role_changes`.
+- `canAddParticipant` - the holder of this capability can add another user, that is not already in the participant list, to the participant list.
+  (This capability does not apply to the holder adding itself.)
+  The `authorized_role_changes` list in the holder's role is consulted to authorize the added user's target role.
+  The `authorized_role_changes` list MUST have an entry where the `authorized_role_changes.from_role_index` equals zero, and that entry's `target_role_indexes` list includes the target role.
+  The proposed action is only authorized if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
+  When the participant list addition for the target role is authorized, the holder is also authorized to add any MLS clients matching the added user to the room's MLS group .
 
-A party with a particular Role which has the `canChangeOwnRole` can change its own role to the first role matching in the Preauthorized users component (see {{preauthorized-users}}).
+- `canAddOwnClient` - a holder of this capability that is in the participant list, can add its own client (via an external commit or external proposal); and can add other clients that share the same user identity (via Add proposals) if the holder's client is already a member of the corresponding MLS group.
 
->**TODO**: fix the stuff below this point
+  >**TODO**: consider if multiple clients per user are allowed; client replacements.
 
-- `canAddParticipant` - the holder of this capability can add another user to the participant list. (This capability does not apply to the holder adding itself.) The holder may assign the target user any role in the `add_participant_role_indexes` list of the holder's Role. The proposed action is only authorized if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
-- `canRemoveParticipant` - the holder of this capability can propose the removal of another user (excluding itself) from the participant list and any of their clients. There MUST NOT be any clients of the removed user in the MLS group after the corresponding commit. The proposed action is only authorized if the action respects both the `minimum_participants_constraint` and `minimum_active_participants_constraint` for the removed user's role. **TODO**: users can be removed with which roles? can you remove a banned user or a superadmin.
-- `canAddOwnClient` - the holder of this capability can add its own client (via an external commit or external proposal) and may add other clients that share the same user identity (via Add proposals) if the corresponding user is already in the participant list. **TODO**: consider if multiple clients per user are allowed; client replacements.
-- `canRemoveSelf` - the holder of this capability can propose to remove itself from (i.e. leave) the participant list; it MUST simultaneously propose to remove all of its remaining clients from the corresponding MLS group. Due to restrictions in MLS which insure the consistency of the group, this action cannot be committed by the leaving user.
-- `canAddSelf` - the holder of this capability can use an external commit or external proposal to add itself to the participant list, and to the room, when none of it's clients are present. The proposed action is only authorized if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
-- `canCreateJoinCode` - the holder of this capability can
-- `canUseJoinCode` - the holder of this capability can join a room using a valid join code for that room, provided the join code is valid, and the rest of its constraints are satisfied.
+- `canAddSelf` - the holder of this capability can use an external commit or external proposal to add itself to the participant list.
+  (The holder MUST NOT already appear in the participant list).
+  Its usage differs slightly based on in which role it appears.
+  - When `canAddSelf` appears on role zero, any user who is not already in the participant list can add itself, with certain provisions. The holder consults the `authorized_role_changes` list for an entry with `from_role_index` equal to zero. The holder can add itself with any non-zero `target_role_indexes` from that entry, if the action respects both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
+  - When `canAddSelf` appears on a non-zero role, a client can only become the holder of this capability via the Preauthorized users mechanism.
+    The `authorized_role_changes` list in the target role MUST have an entry where the `from_role_index` is zero and the `target_role_indexes` contains the target role.
+    In addition, the action MUST respect both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the added user's target role.
 
-
-## Moderation Capabilities
-
-- `canKick` - the holder of this capability can remove all the clients of a user (excluding itself), without removing the user from the participation list.
-- `canChangeUserRole` - the holder of this capability can change the role of another user from
-- `canBan` - the holder of this capability can
-- `canUnBan` - the holder of this capability can
-- `canRevokeVoice` - the holder of this capability can
-- `canGrantVoice` - the holder of this capability can
-- `canKnock` - the holder of this capability can
-- `canAcceptKnock` - the holder of this capability can
-- `canCreateSubgroup` - the holder of this capability can
-
-These actions are subject to role constraints described below.
-
-## Message Capabilities
-
-- canSendMessage
-- canReceiveMessage
-- canReportAbuse
-- canReactToMessage
-- canEditReaction
-- canDeleteReaction
-- canEditOwnMessage
-- canDeleteOwnMessage
-- canDeleteAnyMessage
-- canStartTopic
-- canReplyInTopic
-- canSendDirectMessage
-- canTargetMessage
-
-The Hub can enforce whether a member can send a message. It can also withhold fanout of application messages to clients of a user. The other capabilities in this section can only be enforced by other clients.
+- `canUseJoinCode` - the holder of this capability can externally join a room using a join code for that room, provided the join code is valid, the join code refers to a valid target role, and both the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) constraints are respected.
 
 
-## Asset Capabilities
+- `canRemoveParticipant` - the holder of this capability can propose a) the removal of another user (excluding itself) from the participant list, and b) removal of all of that user's clients, as a single action.
+  There MUST NOT be any clients of the removed user in the MLS group after the corresponding commit.
+  A proposer holding this capability consults its role's `authorized_role_changes` entries for an entry where `from_role_index` matches the target user's current role; if the `target_role_indexes` for that entry contains zero, and the `minimum_participants_constraint` and `minimum_active_participants_constraint` are satisfied, the proposal is authorized.
 
-- canUploadImage
-- canUploadVideo
-- canUploadAttachment
-- canDownloadImage
-- canDownloadVideo
-- canDownloadAttachment
-- canSendLink
-- canSendLinkPreview
-- canFollowLink
+- `canRemoveOwnClient` - the holder of this capability can propose to remove its own client using an MLS Remove or SelfRemove proposal without changing the Participant list.
+  Due to restrictions in MLS which insure the consistency of the group, this action cannot be committed by the leaving user.
+  If the `minimum_active_participants_constraint` is satisfied, the proposal is authorized.
+
+- `canRemoveSelf` - the holder of this capability can propose to remove itself from (i.e. leave) the participant list; it MUST simultaneously propose to remove all of its remaining clients from the corresponding MLS group.
+  Due to restrictions in MLS which insure the consistency of the group, this action cannot be committed by the leaving user.
+  A proposer holding this capability consults its role's `authorized_role_changes` entries for an entry where `from_role_index` matches its current role; if the `target_role_indexes` for that entry contains zero, and the `minimum_participants_constraint` and `minimum_active_participants_constraint` are satisfied, the proposal is authorized.
+
+- `canKick` - the holder of this capability can propose removal of another participant's clients, without changing the Participant List.
+  If the `minimum_active_participants_constraint` is satisfied, the proposal is authorized.
+
+
+- `canChangeUserRole` - the holder of this capability is authorized to change the role of another participant (but not itself), according to the holder's `authorized_role_changes` list, from a role represented by an entry where the target's current role matches `from_role_index` to any of the non-zero `target_role_indexes` in the same element of `authorized_role_changes`.
+  The `minimum_participants_constraint` and `minimum_active_participants_constraint` for the target user's current role, and the `maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the target user's target role must also be satisfied.
+
+- `canChangeOwnRole` - the holder of this capability is authorized to change its own role to the first non-zero role it matches in the Preauthorized users component (see {{preauthorized-users}}).
+  The `authorized_role_changes` list is *not* consulted.
+  The `minimum_participants_constraint` and `minimum_active_participants_constraint` for the holder's original role, and the
+`maximum_participants_constraint` (if present) and `maximum_active_participants_constraint` (if present) for the holder's target role must also be satisfied.
+
+- `canBan` - the holder of this capability can propose to "ban" another user.
+  Specifically, a successful ban changes the target user's role to a special "banned" role (if it exists), and removes all the banned user's clients.
+  The "banned" role always has `role_index` = 1 and `role_name` = "banned" (without quotes).
+
+  > A "banned" role does not have to exist in a room, but to use the `canBan` and `canUnban` capabilities, the role needs to exist exactly as described above.
+  > While holding `canChangeUserRole` and `canKick` capabilities would allow the same action, it could potentially allow the holder other actions which might be undesirable in some contexts, such as kicking clients without banning.
+
+  A proposer holding this capability consults its role's `authorized_role_changes` entries for an entry where `from_role_index` matches the target user's current role; if the `target_role_indexes` for that entry contains the `role_index` 1; that `role_name` = "banned" for the role with role_index = 1, and the `minimum_participants_constraint` and `minimum_active_participants_constraint` are satisfied, the proposal is authorized.
+
+- `canUnban` - the holder of this capability can propose to "unban" another user.
+  Specifically, a successful unban changes the target user's role from `role_index` = 1 to another non-zero `role_index` allowed by the holder's `authorized_role_changes` list.
+  Adding clients for that unbanned user is *not* authorized by this capability.
+  The authorization of this capability is identical to the `canChangeUserRole` capability, except that the `from_role_index` for the unbanned user MUST be 1, and the `role_name` of role 1 MUST be "banned".
+
 
 ## Adjust metadata
 
@@ -364,6 +365,42 @@ The Hub can enforce whether a member can send a message. It can also withhold fa
 - canChangeOwnPresence
 - canChangeOwnMood
 - canChangeOwnAvatar
+
+
+## Message Capabilities
+
+The capabilities below refer to functionality related to the instant messages, for example sent using the MIMI content format {{!I-D.ietf-mimi-content}}.
+
+- canSendMessage
+- canReceiveMessage
+- canReportAbuse
+- canReactToMessage
+- canEditReaction
+- canDeleteReaction
+- canEditOwnMessage
+- canDeleteOwnMessage
+- canDeleteAnyMessage
+- canStartTopic
+- canReplyInTopic
+- canEditTopic
+- canSendLink
+- canSendLinkPreview
+- canFollowLink
+
+The Hub can enforce whether a member can send a message. It can also withhold fanout of application messages to clients of a user. The other capabilities in this section can only be enforced by other clients.
+
+
+## Asset Capabilities
+
+- canUploadImage
+- canDownloadImage
+- canUploadVideo
+- canDownloadVideo
+- canUploadSound
+- canDownloadSound
+- canUploadAttachment
+- canDownloadAttachment
+
 
 ## Real-time media
 
@@ -382,13 +419,26 @@ The Hub can enforce whether a member can send a message. It can also withhold fa
 - canChangeRoleDefinitions
 - canChangePreauthorizedUserList
 - canChangeOtherPolicyAttribute
+- canCreateRoom - reserved
 - canDestroyRoom
+- canReinitGroup
+
+
+## Reserved Capabilities
+
+The following capability names are reserved for possible future use
+
+- `canCreateJoinCode`
+- `canKnock`
+- `canAcceptKnock`
+- `canCreateSubgroup`
+- `canSendDirectMessage`
+- `canTargetMessage`
 - MLS specific
-  - update
-  - reinit
-  - PSK
-  - external proposal
-  - external commit
+  - update - update policy
+  - PSK - psk policy
+  - external proposal - general operational policy rules
+  - external commit - general operational policy rules
 
 
 # Security Considerations
@@ -413,11 +463,10 @@ canUseJoinCode
 canBan
 canUnBan
 canKick
-canRevokeVoice
-canGrantVoice
 canKnock
 canAcceptKnock
 canChangeUserRole
+canChangeOwnRole
 canCreateSubgroup
 canSendMessage
 canReceiveMessage
