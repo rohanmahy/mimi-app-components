@@ -100,6 +100,8 @@ RoomMetaData RoomMetaUpdate;
 RoomMetaUpdate (which has the same format as RoomMetaData) is the format of the `update` field inside the AppDataUpdate struct in an AppDataUpdate Proposal for the Room Metadata component.
 If the contents of the `update` field are valid and if the proposer is authorized to generate such an update, the value of the `update` field completely replaces the value of the `data` field.
 
+Only a single Room metadata update is valid per commit.
+
 
 # Participant List
 
@@ -361,72 +363,71 @@ The membership capabilities below allow authorized holders to update the Partici
 
 ## Adjust metadata
 
-- canChangeRoomName
-- canChangeRoomDescription
-- canChangeRoomAvatar
-- canChangeRoomSubject
-- canChangeRoomMood
-- canChangeOwnName
-- canChangeOwnPresence
-- canChangeOwnMood
-- canChangeOwnAvatar
+The holder of each of the following capabilities is authorized to update the Room metadata, changing the relevant field:
+
+- `canChangeRoomName`
+- `canChangeRoomDescription`
+- `canChangeRoomAvatar`
+- `canChangeRoomSubject`
+- `canChangeRoomMood`
 
 
 ## Message Capabilities
 
 The capabilities below refer to functionality related to the instant messages, for example sent using the MIMI content format {{!I-D.ietf-mimi-content}}.
 
-- canSendMessage
-- canReceiveMessage
-- canReportAbuse
-- canReactToMessage
-- canEditReaction
-- canDeleteReaction
-- canEditOwnMessage
-- canDeleteOwnMessage
-- canDeleteAnyMessage
-- canStartTopic
-- canReplyInTopic
-- canEditTopic
-- canSendLink
-- canSendLinkPreview
-- canFollowLink
+- `canSendMessage` - the holder can send instant messages to the room. Setting specific message fields may require additional capabilities.
+- `canReceiveMessage` - the holder can receive instant messages from the room.
+- `canReportAbuse` - the holder can report a franked and received instant message as abusive.
+- `canReplyToMessage` - the holder can send a message replying to another message.
+- `canReactToMessage` - the holder can send a reaction, replying to another message, and using the "reaction" disposition.
+- `canDeleteOwnReaction` - the holder can retract (unlike) it own previous reaction.
+- `canDeleteOtherReaction` - the holder can delete the reaction of another user's previous reaction
+- `canEditOwnMessage` - the holder can edit the content of one of its own previously sent messages
+- `canDeleteOwnMessage` - the holder can retract one of its own previously sent messages
+- `canDeleteOtherMessage` - the holder can retract messages for other users.
+- `canStartTopic` - the holder can set the topic for a message
+- `canReplyInTopic` - the holder can send a message replying to a previous message, using the same topic as the original sender.
+- `canEditOwnTopic` - the holder can change the topic of a previously sent message
+- `canEditOtherTopic` - the holder can change the topic of a message previously sent by another user.
+- `canSendLink` -
+- `canSendLinkPreview`
+- `canFollowLink`
 
 The Hub can enforce whether a member can send a message. It can also withhold fanout of application messages to clients of a user. The other capabilities in this section can only be enforced by other clients.
 
 
 ## Asset Capabilities
 
-- canUploadImage
-- canDownloadImage
-- canUploadVideo
-- canDownloadVideo
-- canUploadSound
-- canDownloadSound
-- canUploadAttachment
-- canDownloadAttachment
+- `canUploadImage`
+- `canDownloadImage`
+- `canUploadVideo`
+- `canDownloadVideo`
+- `canUploadSound`
+- `canDownloadSound`
+- `canUploadAttachment`
+- `canDownloadAttachment`
 
 
 ## Real-time media
 
-- canStartCall
-- canJoinCall
-- canSendAudio
-- canReceiveAudio
-- canSendVideo
-- canReceiveVideo
-- canShareScreen
-- canViewSharedScreen
+- `canStartCall`
+- `canJoinCall`
+- `canSendAudio`
+- `canReceiveAudio`
+- `canSendVideo`
+- `canReceiveVideo`
+- `canShareScreen`
+- `canViewSharedScreen`
 
 ## Disruptive Policy Changes
 
-- canChangeRoomMembershipStyle
-- canChangeRoleDefinitions
-- canChangePreauthorizedUserList
-- canChangeOtherPolicyAttribute
-- canCreateRoom - reserved
-- canDestroyRoom
-- canReinitGroup
+- `canChangeRoomMembershipStyle`
+- `canChangeRoleDefinitions`
+- `canChangePreauthorizedUserList`
+- `canChangeOtherPolicyAttribute`
+- `canDestroyRoom`
+- `canReinitGroup`
 
 
 ## Reserved Capabilities
@@ -439,6 +440,11 @@ The following capability names are reserved for possible future use
 - `canCreateSubgroup`
 - `canSendDirectMessage`
 - `canTargetMessage`
+- `canChangeOwnName`
+- `canChangeOwnPresence`
+- `canChangeOwnMood`
+- `canChangeOwnAvatar`
+- `canCreateRoom`
 - MLS specific
   - update - update policy
   - PSK - psk policy
