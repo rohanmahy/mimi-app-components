@@ -551,7 +551,8 @@ This is an example set of role policies, which is suitable for friends and famil
 
 - banned
    - role_index = 1
-   - no capabilities
+   - authorized capabilities
+      - canJoinWithLink
    - constraints
       - minimum_participants_constraint = 0
       - maximum_participants_constraint = null
@@ -668,6 +669,132 @@ This is an example set of role policies, which is suitable for friends and famil
 
 
 ## Strictly administered room
+
+This is an example set of role policies, which is suitable for friends and family rooms and small groups of peers in a workgroup or club.
+
+- no_role
+   - role_index = 0
+   - authorized capabilities
+      - canUseJoinCode
+      - canKnock
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[2])]`
+
+- banned
+   - role_index = 1
+   - authorized capabilities
+      - canRemoveOwnClient
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[]`
+
+- ordinary_user
+   - role_index = 2
+   - authorized capabilities
+      - canAddOwnClient
+      - canRemoveSelf
+      - canAddSelf
+      - canSendMessage
+      - canReceiveMessage
+      - canReportAbuse
+      - canReactToMessage
+      - canEditReaction
+      - canDeleteReaction
+      - canEditOwnMessage
+      - canDeleteOwnMessage
+      - canStartTopic
+      - canReplyInTopic
+      - canUploadImage
+      - canUploadVideo
+      - canUploadAttachment
+      - canDownloadImage
+      - canDownloadVideo
+      - canDownloadAttachment
+      - canSendLink
+      - canSendLinkPreview
+      - canFollowLink
+      - canChangeRoomName
+      - canChangeRoomAvatar
+      - canChangeRoomSubject
+      - canChangeRoomMood
+      - canChangeOwnName
+      - canChangeOwnPresence
+      - canChangeOwnMood
+      - canChangeOwnAvatar
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[2]), (2,[0])]`
+
+- group_admin
+   - role_index = 3
+   - authorized capabilities
+      - (include all the capabilities authorized for an ordinary_user)
+      - canAddParticipant
+      - canRemoveParticipant
+      - canBan
+      - canUnBan
+      - canKick
+      - canChangeUserRole
+      - canCreateJoinCode - reserved for future use
+      - canDeleteAnyMessage
+      - canEditTopic
+      - (canDeleteUpload)
+      - canChangeRoomDescription
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[1,2,3]), (1,[0,2,3]), (2,[0,1,3]), (3,[0,1,2])]`
+
+- super_admin
+   - role_index = 4
+   - authorized capabilities
+      - (include all the capabilities authorized for a group_admin)
+      - canChangeRoomMembershipStyle
+      - canChangePreauthorizedUserList
+      - canChangeOtherPolicyAttribute
+      - canDestroyRoom
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[1,2,3,4]), (1,[0,2,3,4]), (2,[0,1,3,4]), (3,[0,1,2,4]), (4,[0,1,2,3])]`
+
+
+- policy_enforcer
+   - role_index = 5
+   - capabilities
+      - (does not include any other capabilities)
+      - canRemoveParticipant
+      - canChangeUserRole
+      - canBan
+      - canUnban ??
+      - canChangeRoomMembershipStyle
+      - canChangeRoleDefinitions
+      - canChangePreauthorizedUserList
+      - canChangeOtherPolicyAttribute
+      - canDestroyRoom
+      - canSendMLSReinitProposal
+      - canSendMLSExternalProposal
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = 2
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - authorized_role_changes = `[(0,[1]), (1,[0]), (2,[0,1]), (3,[0,1]), (4,[0,1])]`
+   - Notes: can remove a banned user from the list (cleanup) but not restore them
 
 
 ## Moderated room
