@@ -309,8 +309,6 @@ The membership capabilities below allow authorized holders to update the Partici
 
 - `canAddOwnClient` - a holder of this capability that is in the participant list, can add its own client (via an external commit or external proposal); and can add other clients that share the same user identity (via Add proposals) if the holder's client is already a member of the corresponding MLS group.
 
-  >**TODO**: consider if multiple clients per user are allowed; client replacements.
-
 - `canAddSelf` - the holder of this capability can use an external commit or external proposal to add itself to the participant list.
   (The holder MUST NOT already appear in the participant list).
   Its usage differs slightly based on in which role it appears.
@@ -551,18 +549,17 @@ This is an example set of role policies, which is suitable for friends and famil
       - minimum_participants_constraint = 0
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
-      - maximum_active_participants_constraint = null
+      - maximum_active_participants_constraint = 0
       - authorized_role_changes = `[]`
 
 - banned
    - role_index = 1
-   - authorized capabilities
-      - canJoinWithLink
+   - no capabilities
    - constraints
       - minimum_participants_constraint = 0
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
-      - maximum_active_participants_constraint = null
+      - maximum_active_participants_constraint = 0
       - authorized_role_changes = `[]`
 
 - ordinary_user
@@ -571,30 +568,32 @@ This is an example set of role policies, which is suitable for friends and famil
       - canAddParticipant
       - canRemoveParticipant
       - canAddOwnClient
+      - canRemoveOwnClient
       - canRemoveSelf
-      - canAddSelf
-      - canCreateJoinCode - reserved for future use
-      - canUseJoinCode
-      - canKnock
       - canSendMessage
       - canReceiveMessage
+      - canCopyMessage
       - canReportAbuse
+      - canReplyToMessage
       - canReactToMessage
-      - canEditReaction
-      - canDeleteReaction
+      - canDeleteOwnReaction
       - canEditOwnMessage
       - canDeleteOwnMessage
       - canStartTopic
       - canReplyInTopic
+      - canEditOwnTopic
       - canUploadImage
       - canUploadVideo
+      - canUploadSound
       - canUploadAttachment
       - canDownloadImage
       - canDownloadVideo
+      - canDownloadSound
       - canDownloadAttachment
       - canSendLink
       - canSendLinkPreview
       - canFollowLink
+      - canCopyLink
       - canChangeRoomName
       - canChangeRoomAvatar
       - canChangeRoomSubject
@@ -619,11 +618,9 @@ This is an example set of role policies, which is suitable for friends and famil
       - canKick
       - canRevokeVoice
       - canGrantVoice
-      - canAcceptKnock
       - canChangeUserRole
-      - canDeleteAnyMessage
-      - canEditTopic
-      - (canDeleteUpload)
+      - canDeleteOtherMessage
+      - canEditOtherTopic
       - canChangeRoomDescription
    - constraints
       - minimum_participants_constraint = 1
@@ -638,7 +635,6 @@ This is an example set of role policies, which is suitable for friends and famil
       - (include all the capabilities authorized for a group_admin)
       - canChangeRoomMembershipStyle
       - canChangePreauthorizedUserList
-      - canChangeOtherPolicyAttribute
       - canDestroyRoom
    - constraints
       - minimum_participants_constraint = 0
@@ -655,14 +651,12 @@ This is an example set of role policies, which is suitable for friends and famil
       - canRemoveParticipant
       - canChangeUserRole
       - canBan
-      - canUnban ??
-      - canChangeRoomMembershipStyle
+      - canUnban
       - canChangeRoleDefinitions
       - canChangePreauthorizedUserList
-      - canChangeOtherPolicyAttribute
+      - canChangeMlsOperationalPolicies
       - canDestroyRoom
       - canSendMLSReinitProposal
-      - canSendMLSExternalProposal
    - constraints
       - minimum_participants_constraint = 1
       - maximum_participants_constraint = 2
@@ -681,54 +675,53 @@ This is an example set of role policies, which is suitable for friends and famil
    - role_index = 0
    - authorized capabilities
       - canUseJoinCode
-      - canKnock
    - constraints
       - minimum_participants_constraint = 0
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
-      - maximum_active_participants_constraint = null
+      - maximum_active_participants_constraint = 0
       - authorized_role_changes = `[(0,[2])]`
 
 - banned
    - role_index = 1
-   - authorized capabilities
-      - canRemoveOwnClient
+   - no capabilities
    - constraints
       - minimum_participants_constraint = 0
       - maximum_participants_constraint = null
       - minimum_active_participants_constraint = 0
-      - maximum_active_participants_constraint = null
+      - maximum_active_participants_constraint = 0
       - authorized_role_changes = `[]`
 
 - ordinary_user
    - role_index = 2
    - authorized capabilities
       - canAddOwnClient
-      - canRemoveSelf
       - canAddSelf
+      - canRemoveOwnClient
+      - canRemoveSelf
+      - canChangeOwnRole
       - canSendMessage
       - canReceiveMessage
+      - canCopyMessage
       - canReportAbuse
       - canReactToMessage
-      - canEditReaction
-      - canDeleteReaction
+      - canDeleteOwnReaction
       - canEditOwnMessage
       - canDeleteOwnMessage
       - canStartTopic
       - canReplyInTopic
       - canUploadImage
       - canUploadVideo
+      - canUploadSound
       - canUploadAttachment
       - canDownloadImage
       - canDownloadVideo
+      - canDownloadSound
       - canDownloadAttachment
       - canSendLink
       - canSendLinkPreview
       - canFollowLink
-      - canChangeRoomName
-      - canChangeRoomAvatar
-      - canChangeRoomSubject
-      - canChangeRoomMood
+      - canCopyLink
       - canChangeOwnName
       - canChangeOwnPresence
       - canChangeOwnMood
@@ -751,10 +744,15 @@ This is an example set of role policies, which is suitable for friends and famil
       - canKick
       - canChangeUserRole
       - canCreateJoinCode - reserved for future use
-      - canDeleteAnyMessage
-      - canEditTopic
-      - (canDeleteUpload)
+      - canDeleteOtherReaction
+      - canDeleteOtherMessage
+      - canEditOwnTopic
+      - canEditOtherTopic
       - canChangeRoomDescription
+      - canChangeRoomName
+      - canChangeRoomAvatar
+      - canChangeRoomSubject
+      - canChangeRoomMood
    - constraints
       - minimum_participants_constraint = 1
       - maximum_participants_constraint = null
@@ -767,9 +765,10 @@ This is an example set of role policies, which is suitable for friends and famil
    - authorized capabilities
       - (include all the capabilities authorized for a group_admin)
       - canChangeRoomMembershipStyle
+      - canChangeRoleDefinitions
       - canChangePreauthorizedUserList
-      - canChangeOtherPolicyAttribute
       - canDestroyRoom
+      - canSendMLSReinitProposal
    - constraints
       - minimum_participants_constraint = 0
       - maximum_participants_constraint = null
@@ -785,14 +784,12 @@ This is an example set of role policies, which is suitable for friends and famil
       - canRemoveParticipant
       - canChangeUserRole
       - canBan
-      - canUnban ??
-      - canChangeRoomMembershipStyle
+      - canUnban
       - canChangeRoleDefinitions
       - canChangePreauthorizedUserList
-      - canChangeOtherPolicyAttribute
+      - canChangeMlsOperationalPolicies
       - canDestroyRoom
       - canSendMLSReinitProposal
-      - canSendMLSExternalProposal
    - constraints
       - minimum_participants_constraint = 1
       - maximum_participants_constraint = 2
@@ -803,6 +800,155 @@ This is an example set of role policies, which is suitable for friends and famil
 
 
 ## Moderated room
+
+- no_role
+   - role_index = 0
+   - authorized capabilities
+      - canUseJoinCode
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[2,3])]`
+
+- banned
+   - role_index = 1
+   - no capabilities
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - authorized_role_changes = `[]`
+
+- guest
+   - role_index = 2
+   - authorized capabilities
+      - canRemoveSelf
+      - canReceiveMessage
+      - canCopyMessage
+      - canReactToMessage
+      - canDeleteOwnReaction
+      - canFollowLink
+      - canCopyLink
+      - canDownloadImage
+      - canDownloadVideo
+      - canDownloadSound
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[2]), (2,[0])]`
+
+- attendee
+   - role_index = 3
+   - authorized capabilities
+      - (include all the capabilities authorized for a guest)
+      - canAddOwnClient
+      - canAddSelf
+      - canRemoveOwnClient
+      - canChangeOwnRole
+      - canReportAbuse
+      - canReplyInTopic
+      - canDownloadAttachment
+      - canChangeOwnName
+      - canChangeOwnPresence
+      - canChangeOwnAvatar
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[3]), (3,[0])]`
+
+- speaker
+   - role_index = 4
+   - authorized capabilities
+      - (include all the capabilities authorized for a speaker)
+      - canSendMessage
+      - canEditOwnMessage
+      - canDeleteOwnMessage
+      - canStartTopic
+      - canUploadImage
+      - canUploadVideo
+      - canUploadSound
+      - canUploadAttachment
+      - canSendLink
+      - canSendLinkPreview
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[4]), (4,[0])]`
+
+- moderator
+   - role_index = 5
+   - authorized capabilities
+      - (include all the capabilities authorized for an ordinary_user)
+      - canAddParticipant
+      - canRemoveParticipant
+      - canBan
+      - canUnBan
+      - canKick
+      - canChangeUserRole
+      - canCreateJoinCode - reserved for future use
+      - canDeleteOtherReaction
+      - canDeleteOtherMessage
+      - canEditOwnTopic
+      - canEditOtherTopic
+      - canChangeRoomName
+      - canChangeRoomAvatar
+      - canChangeRoomSubject
+      - canChangeRoomMood
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[1,2,3,4,5]), (1,[0,2,3,4,5]), (2,[0,1,3,4,5]), (3,[0,1,2,4,5]), (4,[0,1,2,3,5]), (5,[0,1,2,3,4])]`
+
+- super_admin
+   - role_index = 6
+   - authorized capabilities
+      - (include all the capabilities authorized for a moderator)
+      - canChangeRoomDescription
+      - canChangeRoomMembershipStyle
+      - canChangeRoleDefinitions
+      - canChangePreauthorizedUserList
+      - canDestroyRoom
+      - canSendMLSReinitProposal
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[1,2,3,4,5,6]), (1,[0,2,3,4,5,6]), (2,[0,1,3,4,5,6]), (3,[0,1,2,4,5,6]), (4,[0,1,2,3,5,6]), (5,[0,1,2,3,4,6]), (6,[0,1,2,3,4,5])]`
+
+
+- policy_enforcer
+   - role_index = 7
+   - capabilities
+      - (does not include any other capabilities)
+      - canRemoveParticipant
+      - canChangeUserRole
+      - canBan
+      - canUnban
+      - canChangeRoleDefinitions
+      - canChangePreauthorizedUserList
+      - canChangeMlsOperationalPolicies
+      - canDestroyRoom
+      - canSendMLSReinitProposal
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = 2
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - authorized_role_changes = `[(0,[1]), (1,[0]), (2,[0,1]), (3,[0,1]), (4,[0,1]), (5, [0,1]), (6, [0,1])]`
+   - Notes: can remove a banned user from the list (cleanup) but not restore them
+
 
 
 ## Multi-organization administered room
