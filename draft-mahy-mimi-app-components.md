@@ -378,7 +378,9 @@ The capabilities below refer to functionality related to the instant messages, f
 
 - `canSendMessage` - the holder can send instant messages to the room. Setting specific message fields may require additional capabilities.
 - `canReceiveMessage` - the holder can receive instant messages from the room.
-- `canReportAbuse` - the holder can report a franked and received instant message as abusive.
+- `canCopyMessage` - the holder can copy content from a received instant
+message.
+- `canReportAbuse` - the holder can report a franked instant message as abusive.
 - `canReplyToMessage` - the holder can send a message replying to another message.
 - `canReactToMessage` - the holder can send a reaction, replying to another message, and using the "reaction" disposition.
 - `canDeleteOwnReaction` - the holder can retract (unlike) it own previous reaction.
@@ -390,44 +392,48 @@ The capabilities below refer to functionality related to the instant messages, f
 - `canReplyInTopic` - the holder can send a message replying to a previous message, using the same topic as the original sender.
 - `canEditOwnTopic` - the holder can change the topic of a previously sent message
 - `canEditOtherTopic` - the holder can change the topic of a message previously sent by another user.
-- `canSendLink` -
-- `canSendLinkPreview`
-- `canFollowLink`
+- `canSendLink` - the holder can send an inline link
+- `canSendLinkPreview` - the holder can send an inline link with an associated
+preview.
+- `canFollowLink` - the holder can open a sent inline link.
+- `canCopyLink` - the holder can copy the URL of a sent inline link.
 
 The Hub can enforce whether a member can send a message. It can also withhold fanout of application messages to clients of a user. The other capabilities in this section can only be enforced by other clients.
 
 
 ## Asset Capabilities
 
-- `canUploadImage`
-- `canDownloadImage`
-- `canUploadVideo`
-- `canDownloadVideo`
-- `canUploadSound`
-- `canDownloadSound`
-- `canUploadAttachment`
-- `canDownloadAttachment`
+- `canUploadAttachment` - the holder can upload a file with the "attachent" disposition.
+- `canDownloadAttachment` - the holder can download a file with the "attachent" disposition.
+- `canUploadImage` - the holder can upload a file with the media type of "image" and the disposition of "render"
+- `canDownloadImage` - the holder can download a file with the media type of "image" and the disposition of "render"
+- `canUploadVideo` - the holder can upload a file with the media type of "video" and the disposition of "render"
+- `canDownloadVideo` - the holder can download a file with the media type of "video" and the disposition of "render"
+- `canUploadSound` - the holder can upload a file with the media type of "audio" and the disposition of "render"
+- `canDownloadSound` - the holder can download a file with the media type of "audio" and the disposition of "render"
 
 
 ## Real-time media
 
-- `canStartCall`
-- `canJoinCall`
-- `canSendAudio`
-- `canReceiveAudio`
-- `canSendVideo`
-- `canReceiveVideo`
-- `canShareScreen`
-- `canViewSharedScreen`
+The MIMI Working has not yet defined requirements for real-time media, however the capabilities below are widely representative of the permissions that would be required.
+
+- `canStartCall` - the holder can initiate a new real-time call/conference
+- `canJoinCall` - the holder can join an existing real-time call/conference
+- `canSendAudio` - the holder is authorized to contribute audio in a call/conference.
+- `canReceiveAudio` - the holder is authorized to receive audio in a call/conference.
+- `canSendVideo` - the holder is authorized to contribute video in a call/conference.
+- `canReceiveVideo` - the holder is authorized to receive video in a call/conference.
+- `canShareScreen` - the holder is authorized to contribute screen sharing in a call/conference
+- `canViewSharedScreen` - the holder is authorized to receive screen sharing in a call/conference
 
 ## Disruptive Policy Changes
 
-- `canChangeRoomMembershipStyle`
-- `canChangeRoleDefinitions`
-- `canChangePreauthorizedUserList`
+- `canChangeRoomMembershipStyle` - the holder is authorized to modify the base room membership style.
+- `canChangeRoleDefinitions` - the holder is authorized to make changes to the definitions of the Roles component.
+- `canChangePreauthorizedUserList` - the holder is authorized to make changes to the Preauthorized Users component.
 - `canChangeOtherPolicyAttribute`
-- `canDestroyRoom`
-- `canReinitGroup`
+- `canDestroyRoom` - the holder is authorized to completely destroy the room.
+- `canReinitGroup` - the holder is authorized to send an MLS ReInit proposal.
 
 
 ## Reserved Capabilities
@@ -481,6 +487,7 @@ canChangeOwnRole
 canCreateSubgroup
 canSendMessage
 canReceiveMessage
+canCopyMessage
 canReportAbuse
 canReactToMessage
 canEditReaction
@@ -502,6 +509,7 @@ canDownloadAttachment
 canSendLink
 canSendLinkPreview
 canFollowLink
+canCopyLink
 canChangeRoomName
 canChangeRoomDescription
 canChangeRoomAvatar
@@ -524,11 +532,7 @@ canChangeRoleDefinitions
 canChangePreauthorizedUserList
 canChangeOtherPolicyAttribute
 canDestroyRoom
-canSendMLSUpdateProposal
 canSendMLSReinitProposal
-canSendMLSPSKProposal
-canSendMLSExternalProposal
-canSendMLSExternalCommit
 ~~~
 
 --- back
@@ -804,8 +808,27 @@ This is an example set of role policies, which is suitable for friends and famil
 
 
 
-
 # Acknowledgments
 {:numbered="false"}
 
 TODO acknowledge.
+
+<!--
+<ol type="a">
+  <li>One</li>
+  <li>Two
+    <ol type="a">
+      <li>Aaa - Roman Army sounds off
+        <ol type="i">
+          <li>aye</li>
+          <li>aye aye</li>
+          <li>aye aye aye</li>
+          <li>aye vee</li>
+          <li>vee</li>
+        </ol></li>
+      <li>Bbb</li>
+      <li>Ccc</li>
+    </ol></li>
+  <li>Three</li>
+</ol>
+-->
