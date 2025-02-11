@@ -953,6 +953,180 @@ This is an example set of role policies, which is suitable for friends and famil
 
 ## Multi-organization administered room
 
+In this example room policy, Alice from organization A is a super admin.
+There are per organization user and admin roles for orgs A, B, and C.
+Organizational admins can only move users to and from their org user role, their org admin role, the no_role; and can ban (but not unban) their own org users.
+The non-host orgs do not have the `canChangeOwnRole` and `canAddSelf`, and are limited to 3 admins per org.
+
+- no_role
+   - role_index = 0
+   - no capabilities
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - authorized_role_changes = `[]`
+
+- banned
+   - role_index = 1
+   - no capabilities
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - authorized_role_changes = `[]`
+
+- org_a_user
+   - role_index = 2
+   - authorized capabilities
+      - (all capabilities of org_b_user)
+      - canChangeOwnRole
+      - canAddSelf
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[2]), (2,[0])]`
+
+- org_b_user
+   - role_index = 3
+   - authorized capabilities
+      - canRemoveSelf
+      - canAddOwnClient
+      - canRemoveOwnClient
+      - canSendMessage
+      - canReceiveMessage
+      - canCopyMessage
+      - canReportAbuse
+      - canReplyInTopic
+      - canReactToMessage
+      - canDeleteOwnReaction
+      - canEditOwnMessage
+      - canSendLink
+      - canSendLinkPreview
+      - canFollowLink
+      - canCopyLink
+      - canDownloadImage
+      - canDownloadVideo
+      - canDownloadSound
+      - canDownloadAttachment
+      - canChangeOwnName
+      - canChangeOwnPresence
+      - canChangeOwnAvatar
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[3]), (3,[0])]`
+
+- org_c_user
+   - role_index = 4
+   - authorized capabilities
+      - (same capabilities as org_b_user)
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[4]), (4,[0])]`
+
+- org_a_admin
+   - role_index = 5
+   - authorized capabilities
+      - (all capabilities of org_b_admin)
+      - canChangeOwnRole
+      - canAddSelf
+   - constraints
+      - minimum_participants_constraint = 0
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[2,5]), (2,[0,1,5]), (5,[0,1,2])]`
+
+- org_b_admin
+   - role_index = 6
+   - authorized capabilities
+      - (all capabilities of org_b_user)
+      - canDeleteOwnMessage
+      - canStartTopic
+      - canUploadImage
+      - canUploadVideo
+      - canUploadSound
+      - canUploadAttachment
+      - canAddParticipant
+      - canRemoveParticipant
+      - canBan
+      - canKick
+      - canChangeUserRole
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = 3
+      - minimum_active_participants_constraint = 1
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[3,6]), (3,[0,1,6]), (6,[0,1,3])]`
+
+- org_c_admin
+   - role_index = 7
+   - authorized capabilities
+      - (all capabilities of org_b_admin)
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = 3
+      - minimum_active_participants_constraint = 1
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[4,7]), (4,[0,1,7]), (7,[0,1,4])]`
+
+- super_admin
+   - role_index = 8
+   - authorized capabilities
+      - (include all the capabilities authorized for org_a_admin)
+      - canUnBan
+      - canDeleteOtherReaction
+      - canDeleteOtherMessage
+      - canEditOwnTopic
+      - canEditOtherTopic
+      - canChangeRoomDescription
+      - canChangeRoomName
+      - canChangeRoomAvatar
+      - canChangeRoomSubject
+      - canChangeRoomMood
+      - canChangeRoomMembershipStyle
+      - canChangeRoleDefinitions
+      - canChangePreauthorizedUserList
+      - canDestroyRoom
+      - canSendMLSReinitProposal
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = null
+      - minimum_active_participants_constraint = 1
+      - maximum_active_participants_constraint = null
+      - authorized_role_changes = `[(0,[1,2,3,4,5,6,7,8]), (1,[0,2,3,4,5,6,7,8]), (2,[0,1,5,8]), (3,[0,1,6]), (4,[0,1,7]), (5,[0,1,2,8]), (6,[0,1,3]), (7,[0,1,4]), (8,[0,1,2,5])]`
+
+- policy_enforcer
+   - role_index = 9
+   - capabilities
+      - (does not include any other capabilities)
+      - canRemoveParticipant
+      - canChangeUserRole
+      - canBan
+      - canUnban
+      - canChangeRoleDefinitions
+      - canChangePreauthorizedUserList
+      - canChangeMlsOperationalPolicies
+      - canDestroyRoom
+      - canSendMLSReinitProposal
+   - constraints
+      - minimum_participants_constraint = 1
+      - maximum_participants_constraint = 2
+      - minimum_active_participants_constraint = 0
+      - maximum_active_participants_constraint = 0
+      - authorized_role_changes = `[(0,[1]), (1,[0]), (3,[0,1]), (4,[0,1]), (5,[0,1]), (6,[0,1]), (7,[0,1]), (8,[0,1])]`
+   - Notes: can remove a banned user from the list (cleanup) but not restore them
+
 
 
 # Acknowledgments
