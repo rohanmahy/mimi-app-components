@@ -4,8 +4,8 @@
 
 More Instant Messaging Interoperability                          R. Mahy
 Internet-Draft                             Rohan Mahy Consulting Service
-Intended status: Informational                           27 January 2025
-Expires: 31 July 2025
+Intended status: Informational                          11 February 2025
+Expires: 15 August 2025
 
 
 Application State Components for More Instant Messaging Interoperability
@@ -51,7 +51,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 July 2025.
+   This Internet-Draft will expire on 15 August 2025.
 
 Copyright Notice
 
@@ -606,8 +606,11 @@ Table of Contents
    *  canReceiveMessage - the holder can receive instant messages from
       the room.
 
-   *  canReportAbuse - the holder can report a franked and received
-      instant message as abusive.
+   *  canCopyMessage - the holder can copy content from a received
+      instant message.
+
+   *  canReportAbuse - the holder can report a franked instant message
+      as abusive.
 
    *  canReplyToMessage - the holder can send a message replying to
       another message.
@@ -641,11 +644,14 @@ Table of Contents
    *  canEditOtherTopic - the holder can change the topic of a message
       previously sent by another user.
 
-   *  canSendLink -
+   *  canSendLink - the holder can send an inline link
 
-   *  canSendLinkPreview
+   *  canSendLinkPreview - the holder can send an inline link with an
+      associated preview.
 
-   *  canFollowLink
+   *  canFollowLink - the holder can open a sent inline link.
+
+   *  canCopyLink - the holder can copy the URL of a sent inline link.
 
    The Hub can enforce whether a member can send a message.  It can also
    withhold fanout of application messages to clients of a user.  The
@@ -654,53 +660,78 @@ Table of Contents
 
 7.4.  Asset Capabilities
 
-   *  canUploadImage
+   *  canUploadAttachment - the holder can upload a file with the
+      "attachent" disposition.
 
-   *  canDownloadImage
+   *  canDownloadAttachment - the holder can download a file with the
+      "attachent" disposition.
 
-   *  canUploadVideo
+   *  canUploadImage - the holder can upload a file with the media type
+      of "image" and the disposition of "render"
 
-   *  canDownloadVideo
+   *  canDownloadImage - the holder can download a file with the media
+      type of "image" and the disposition of "render"
 
-   *  canUploadSound
+   *  canUploadVideo - the holder can upload a file with the media type
+      of "video" and the disposition of "render"
 
-   *  canDownloadSound
+   *  canDownloadVideo - the holder can download a file with the media
+      type of "video" and the disposition of "render"
 
-   *  canUploadAttachment
+   *  canUploadSound - the holder can upload a file with the media type
+      of "audio" and the disposition of "render"
 
-   *  canDownloadAttachment
+   *  canDownloadSound - the holder can download a file with the media
+      type of "audio" and the disposition of "render"
 
 7.5.  Real-time media
 
-   *  canStartCall
+   The MIMI Working has not yet defined requirements for real-time
+   media, however the capabilities below are widely representative of
+   the permissions that would be required.
 
-   *  canJoinCall
+   *  canStartCall - the holder can initiate a new real-time call/
+      conference
 
-   *  canSendAudio
+   *  canJoinCall - the holder can join an existing real-time call/
+      conference
 
-   *  canReceiveAudio
+   *  canSendAudio - the holder is authorized to contribute audio in a
+      call/conference.
 
-   *  canSendVideo
+   *  canReceiveAudio - the holder is authorized to receive audio in a
+      call/conference.
 
-   *  canReceiveVideo
+   *  canSendVideo - the holder is authorized to contribute video in a
+      call/conference.
 
-   *  canShareScreen
+   *  canReceiveVideo - the holder is authorized to receive video in a
+      call/conference.
 
-   *  canViewSharedScreen
+   *  canShareScreen - the holder is authorized to contribute screen
+      sharing in a call/conference
+
+   *  canViewSharedScreen - the holder is authorized to receive screen
+      sharing in a call/conference
 
 7.6.  Disruptive Policy Changes
 
-   *  canChangeRoomMembershipStyle
+   *  canChangeRoomMembershipStyle - the holder is authorized to modify
+      the base room membership style.
 
-   *  canChangeRoleDefinitions
+   *  canChangeRoleDefinitions - the holder is authorized to make
+      changes to the definitions of the Roles component.
 
-   *  canChangePreauthorizedUserList
+   *  canChangePreauthorizedUserList - the holder is authorized to make
+      changes to the Preauthorized Users component.
 
    *  canChangeOtherPolicyAttribute
 
-   *  canDestroyRoom
+   *  canDestroyRoom - the holder is authorized to completely destroy
+      the room.
 
-   *  canReinitGroup
+   *  canReinitGroup - the holder is authorized to send an MLS ReInit
+      proposal.
 
 7.7.  Reserved Capabilities
 
@@ -766,6 +797,7 @@ Table of Contents
    canCreateSubgroup
    canSendMessage
    canReceiveMessage
+   canCopyMessage
    canReportAbuse
    canReactToMessage
    canEditReaction
@@ -787,6 +819,7 @@ Table of Contents
    canSendLink
    canSendLinkPreview
    canFollowLink
+   canCopyLink
    canChangeRoomName
    canChangeRoomDescription
    canChangeRoomAvatar
@@ -809,11 +842,7 @@ Table of Contents
    canChangePreauthorizedUserList
    canChangeOtherPolicyAttribute
    canDestroyRoom
-   canSendMLSUpdateProposal
    canSendMLSReinitProposal
-   canSendMLSPSKProposal
-   canSendMLSExternalProposal
-   canSendMLSExternalCommit
 
 10.  Normative References
 
