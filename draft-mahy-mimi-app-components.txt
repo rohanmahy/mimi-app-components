@@ -449,9 +449,6 @@ Table of Contents
       same user identity (via Add proposals) if the holder's client is
       already a member of the corresponding MLS group.
 
-         *TODO*: consider if multiple clients per user are allowed;
-         client replacements.
-
    *  canAddSelf - the holder of this capability can use an external
       commit or external proposal to add itself to the participant list.
       (The holder MUST NOT already appear in the participant list).  Its
@@ -725,8 +722,6 @@ Table of Contents
    *  canChangePreauthorizedUserList - the holder is authorized to make
       changes to the Preauthorized Users component.
 
-   *  canChangeOtherPolicyAttribute
-
    *  canDestroyRoom - the holder is authorized to completely destroy
       the room.
 
@@ -758,6 +753,10 @@ Table of Contents
    *  canChangeOwnAvatar
 
    *  canCreateRoom
+
+   *  canChangeMlsOperationalPolicies
+
+   *  canChangeOtherPolicyAttribute
 
    *  MLS specific
 
@@ -840,7 +839,7 @@ Table of Contents
    canChangeRoomMembershipStyle
    canChangeRoleDefinitions
    canChangePreauthorizedUserList
-   canChangeOtherPolicyAttribute
+   canChangeMlsOperationalPolicies
    canDestroyRoom
    canSendMLSReinitProposal
 
@@ -912,7 +911,7 @@ A.1.  Cooperatively administered room
 
          o  minimum_active_participants_constraint = 0
 
-         o  maximum_active_participants_constraint = null
+         o  maximum_active_participants_constraint = 0
 
          o  authorized_role_changes = []
 
@@ -920,9 +919,7 @@ A.1.  Cooperatively administered room
 
       -  role_index = 1
 
-      -  authorized capabilities
-
-         o  canJoinWithLink
+      -  no capabilities
 
       -  constraints
 
@@ -932,7 +929,7 @@ A.1.  Cooperatively administered room
 
          o  minimum_active_participants_constraint = 0
 
-         o  maximum_active_participants_constraint = null
+         o  maximum_active_participants_constraint = 0
 
          o  authorized_role_changes = []
 
@@ -948,27 +945,23 @@ A.1.  Cooperatively administered room
 
          o  canAddOwnClient
 
+         o  canRemoveOwnClient
+
          o  canRemoveSelf
-
-         o  canAddSelf
-
-         o  canCreateJoinCode - reserved for future use
-
-         o  canUseJoinCode
-
-         o  canKnock
 
          o  canSendMessage
 
          o  canReceiveMessage
 
+         o  canCopyMessage
+
          o  canReportAbuse
+
+         o  canReplyToMessage
 
          o  canReactToMessage
 
-         o  canEditReaction
-
-         o  canDeleteReaction
+         o  canDeleteOwnReaction
 
          o  canEditOwnMessage
 
@@ -978,15 +971,21 @@ A.1.  Cooperatively administered room
 
          o  canReplyInTopic
 
+         o  canEditOwnTopic
+
          o  canUploadImage
 
          o  canUploadVideo
+
+         o  canUploadSound
 
          o  canUploadAttachment
 
          o  canDownloadImage
 
          o  canDownloadVideo
+
+         o  canDownloadSound
 
          o  canDownloadAttachment
 
@@ -995,6 +994,8 @@ A.1.  Cooperatively administered room
          o  canSendLinkPreview
 
          o  canFollowLink
+
+         o  canCopyLink
 
          o  canChangeRoomName
 
@@ -1043,15 +1044,11 @@ A.1.  Cooperatively administered room
 
          o  canGrantVoice
 
-         o  canAcceptKnock
-
          o  canChangeUserRole
 
-         o  canDeleteAnyMessage
+         o  canDeleteOtherMessage
 
-         o  canEditTopic
-
-         o  (canDeleteUpload)
+         o  canEditOtherTopic
 
          o  canChangeRoomDescription
 
@@ -1079,8 +1076,6 @@ A.1.  Cooperatively administered room
          o  canChangeRoomMembershipStyle
 
          o  canChangePreauthorizedUserList
-
-         o  canChangeOtherPolicyAttribute
 
          o  canDestroyRoom
 
@@ -1111,21 +1106,17 @@ A.1.  Cooperatively administered room
 
          o  canBan
 
-         o  canUnban ??
-
-         o  canChangeRoomMembershipStyle
+         o  canUnban
 
          o  canChangeRoleDefinitions
 
          o  canChangePreauthorizedUserList
 
-         o  canChangeOtherPolicyAttribute
+         o  canChangeMlsOperationalPolicies
 
          o  canDestroyRoom
 
          o  canSendMLSReinitProposal
-
-         o  canSendMLSExternalProposal
 
       -  constraints
 
@@ -1157,8 +1148,6 @@ A.2.  Strictly administered room
 
          o  canUseJoinCode
 
-         o  canKnock
-
       -  constraints
 
          o  minimum_participants_constraint = 0
@@ -1167,7 +1156,7 @@ A.2.  Strictly administered room
 
          o  minimum_active_participants_constraint = 0
 
-         o  maximum_active_participants_constraint = null
+         o  maximum_active_participants_constraint = 0
 
          o  authorized_role_changes = [(0,[2])]
 
@@ -1175,9 +1164,7 @@ A.2.  Strictly administered room
 
       -  role_index = 1
 
-      -  authorized capabilities
-
-         o  canRemoveOwnClient
+      -  no capabilities
 
       -  constraints
 
@@ -1187,7 +1174,7 @@ A.2.  Strictly administered room
 
          o  minimum_active_participants_constraint = 0
 
-         o  maximum_active_participants_constraint = null
+         o  maximum_active_participants_constraint = 0
 
          o  authorized_role_changes = []
 
@@ -1199,21 +1186,25 @@ A.2.  Strictly administered room
 
          o  canAddOwnClient
 
+         o  canAddSelf
+
+         o  canRemoveOwnClient
+
          o  canRemoveSelf
 
-         o  canAddSelf
+         o  canChangeOwnRole
 
          o  canSendMessage
 
          o  canReceiveMessage
 
+         o  canCopyMessage
+
          o  canReportAbuse
 
          o  canReactToMessage
 
-         o  canEditReaction
-
-         o  canDeleteReaction
+         o  canDeleteOwnReaction
 
          o  canEditOwnMessage
 
@@ -1227,11 +1218,15 @@ A.2.  Strictly administered room
 
          o  canUploadVideo
 
+         o  canUploadSound
+
          o  canUploadAttachment
 
          o  canDownloadImage
 
          o  canDownloadVideo
+
+         o  canDownloadSound
 
          o  canDownloadAttachment
 
@@ -1241,13 +1236,7 @@ A.2.  Strictly administered room
 
          o  canFollowLink
 
-         o  canChangeRoomName
-
-         o  canChangeRoomAvatar
-
-         o  canChangeRoomSubject
-
-         o  canChangeRoomMood
+         o  canCopyLink
 
          o  canChangeOwnName
 
@@ -1292,13 +1281,23 @@ A.2.  Strictly administered room
 
          o  canCreateJoinCode - reserved for future use
 
-         o  canDeleteAnyMessage
+         o  canDeleteOtherReaction
 
-         o  canEditTopic
+         o  canDeleteOtherMessage
 
-         o  (canDeleteUpload)
+         o  canEditOwnTopic
+
+         o  canEditOtherTopic
 
          o  canChangeRoomDescription
+
+         o  canChangeRoomName
+
+         o  canChangeRoomAvatar
+
+         o  canChangeRoomSubject
+
+         o  canChangeRoomMood
 
       -  constraints
 
@@ -1323,11 +1322,13 @@ A.2.  Strictly administered room
 
          o  canChangeRoomMembershipStyle
 
+         o  canChangeRoleDefinitions
+
          o  canChangePreauthorizedUserList
 
-         o  canChangeOtherPolicyAttribute
-
          o  canDestroyRoom
+
+         o  canSendMLSReinitProposal
 
       -  constraints
 
@@ -1356,21 +1357,17 @@ A.2.  Strictly administered room
 
          o  canBan
 
-         o  canUnban ??
-
-         o  canChangeRoomMembershipStyle
+         o  canUnban
 
          o  canChangeRoleDefinitions
 
          o  canChangePreauthorizedUserList
 
-         o  canChangeOtherPolicyAttribute
+         o  canChangeMlsOperationalPolicies
 
          o  canDestroyRoom
 
          o  canSendMLSReinitProposal
-
-         o  canSendMLSExternalProposal
 
       -  constraints
 
@@ -1390,7 +1387,626 @@ A.2.  Strictly administered room
 
 A.3.  Moderated room
 
+   *  no_role
+
+      -  role_index = 0
+
+      -  authorized capabilities
+
+         o  canUseJoinCode
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[2,3])]
+
+   *  banned
+
+      -  role_index = 1
+
+      -  no capabilities
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = 0
+
+         o  authorized_role_changes = []
+
+   *  guest
+
+      -  role_index = 2
+
+      -  authorized capabilities
+
+         o  canRemoveSelf
+
+         o  canReceiveMessage
+
+         o  canCopyMessage
+
+         o  canReactToMessage
+
+         o  canDeleteOwnReaction
+
+         o  canFollowLink
+
+         o  canCopyLink
+
+         o  canDownloadImage
+
+         o  canDownloadVideo
+
+         o  canDownloadSound
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[2]), (2,[0])]
+
+   *  attendee
+
+      -  role_index = 3
+
+      -  authorized capabilities
+
+         o  (include all the capabilities authorized for a guest)
+
+         o  canAddOwnClient
+
+         o  canAddSelf
+
+         o  canRemoveOwnClient
+
+         o  canChangeOwnRole
+
+         o  canReportAbuse
+
+         o  canReplyInTopic
+
+         o  canDownloadAttachment
+
+         o  canChangeOwnName
+
+         o  canChangeOwnPresence
+
+         o  canChangeOwnAvatar
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[3]), (3,[0])]
+
+   *  speaker
+
+      -  role_index = 4
+
+      -  authorized capabilities
+
+         o  (include all the capabilities authorized for a speaker)
+
+         o  canSendMessage
+
+         o  canEditOwnMessage
+
+         o  canDeleteOwnMessage
+
+         o  canStartTopic
+
+         o  canUploadImage
+
+         o  canUploadVideo
+
+         o  canUploadSound
+
+         o  canUploadAttachment
+
+         o  canSendLink
+
+         o  canSendLinkPreview
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[4]), (4,[0])]
+
+   *  moderator
+
+      -  role_index = 5
+
+      -  authorized capabilities
+
+         o  (include all the capabilities authorized for an
+            ordinary_user)
+
+         o  canAddParticipant
+
+         o  canRemoveParticipant
+
+         o  canBan
+
+         o  canUnBan
+
+         o  canKick
+
+         o  canChangeUserRole
+
+         o  canCreateJoinCode - reserved for future use
+
+         o  canDeleteOtherReaction
+
+         o  canDeleteOtherMessage
+
+         o  canEditOwnTopic
+
+         o  canEditOtherTopic
+
+         o  canChangeRoomName
+
+         o  canChangeRoomAvatar
+
+         o  canChangeRoomSubject
+
+         o  canChangeRoomMood
+
+      -  constraints
+
+         o  minimum_participants_constraint = 1
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[1,2,3,4,5]), (1,[0,2,3,4,5]),
+            (2,[0,1,3,4,5]), (3,[0,1,2,4,5]), (4,[0,1,2,3,5]),
+            (5,[0,1,2,3,4])]
+
+   *  super_admin
+
+      -  role_index = 6
+
+      -  authorized capabilities
+
+         o  (include all the capabilities authorized for a moderator)
+
+         o  canChangeRoomDescription
+
+         o  canChangeRoomMembershipStyle
+
+         o  canChangeRoleDefinitions
+
+         o  canChangePreauthorizedUserList
+
+         o  canDestroyRoom
+
+         o  canSendMLSReinitProposal
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[1,2,3,4,5,6]),
+            (1,[0,2,3,4,5,6]), (2,[0,1,3,4,5,6]), (3,[0,1,2,4,5,6]),
+            (4,[0,1,2,3,5,6]), (5,[0,1,2,3,4,6]), (6,[0,1,2,3,4,5])]
+
+   *  policy_enforcer
+
+      -  role_index = 7
+
+      -  capabilities
+
+         o  (does not include any other capabilities)
+
+         o  canRemoveParticipant
+
+         o  canChangeUserRole
+
+         o  canBan
+
+         o  canUnban
+
+         o  canChangeRoleDefinitions
+
+         o  canChangePreauthorizedUserList
+
+         o  canChangeMlsOperationalPolicies
+
+         o  canDestroyRoom
+
+         o  canSendMLSReinitProposal
+
+      -  constraints
+
+         o  minimum_participants_constraint = 1
+
+         o  maximum_participants_constraint = 2
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = 0
+
+         o  authorized_role_changes = [(0,[1]), (1,[0]), (2,[0,1]),
+            (3,[0,1]), (4,[0,1]), (5, [0,1]), (6, [0,1])]
+
+      -  Notes: can remove a banned user from the list (cleanup) but not
+         restore them
+
 A.4.  Multi-organization administered room
+
+   In this example room policy, Alice from organization A is a super
+   admin.  There are per organization user and admin roles for orgs A,
+   B, and C.  Organizational admins can only move users to and from
+   their org user role, their org admin role, the no_role; and can ban
+   (but not unban) their own org users.  The non-host orgs do not have
+   the canChangeOwnRole and canAddSelf, and are limited to 3 admins per
+   org.
+
+   *  no_role
+
+      -  role_index = 0
+
+      -  no capabilities
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = 0
+
+         o  authorized_role_changes = []
+
+   *  banned
+
+      -  role_index = 1
+
+      -  no capabilities
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = 0
+
+         o  authorized_role_changes = []
+
+   *  org_a_user
+
+      -  role_index = 2
+
+      -  authorized capabilities
+
+         o  (all capabilities of org_b_user)
+
+         o  canChangeOwnRole
+
+         o  canAddSelf
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[2]), (2,[0])]
+
+   *  org_b_user
+
+      -  role_index = 3
+
+      -  authorized capabilities
+
+         o  canRemoveSelf
+
+         o  canAddOwnClient
+
+         o  canRemoveOwnClient
+
+         o  canSendMessage
+
+         o  canReceiveMessage
+
+         o  canCopyMessage
+
+         o  canReportAbuse
+
+         o  canReplyInTopic
+
+         o  canReactToMessage
+
+         o  canDeleteOwnReaction
+
+         o  canEditOwnMessage
+
+         o  canSendLink
+
+         o  canSendLinkPreview
+
+         o  canFollowLink
+
+         o  canCopyLink
+
+         o  canDownloadImage
+
+         o  canDownloadVideo
+
+         o  canDownloadSound
+
+         o  canDownloadAttachment
+
+         o  canChangeOwnName
+
+         o  canChangeOwnPresence
+
+         o  canChangeOwnAvatar
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[3]), (3,[0])]
+
+   *  org_c_user
+
+      -  role_index = 4
+
+      -  authorized capabilities
+
+         o  (same capabilities as org_b_user)
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[4]), (4,[0])]
+
+   *  org_a_admin
+
+      -  role_index = 5
+
+      -  authorized capabilities
+
+         o  (all capabilities of org_b_admin)
+
+         o  canChangeOwnRole
+
+         o  canAddSelf
+
+      -  constraints
+
+         o  minimum_participants_constraint = 0
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[2,5]), (2,[0,1,5]),
+            (5,[0,1,2])]
+
+   *  org_b_admin
+
+      -  role_index = 6
+
+      -  authorized capabilities
+
+         o  (all capabilities of org_b_user)
+
+         o  canDeleteOwnMessage
+
+         o  canStartTopic
+
+         o  canUploadImage
+
+         o  canUploadVideo
+
+         o  canUploadSound
+
+         o  canUploadAttachment
+
+         o  canAddParticipant
+
+         o  canRemoveParticipant
+
+         o  canBan
+
+         o  canKick
+
+         o  canChangeUserRole
+
+      -  constraints
+
+         o  minimum_participants_constraint = 1
+
+         o  maximum_participants_constraint = 3
+
+         o  minimum_active_participants_constraint = 1
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[3,6]), (3,[0,1,6]),
+            (6,[0,1,3])]
+
+   *  org_c_admin
+
+      -  role_index = 7
+
+      -  authorized capabilities
+
+         o  (all capabilities of org_b_admin)
+
+      -  constraints
+
+         o  minimum_participants_constraint = 1
+
+         o  maximum_participants_constraint = 3
+
+         o  minimum_active_participants_constraint = 1
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[4,7]), (4,[0,1,7]),
+            (7,[0,1,4])]
+
+   *  super_admin
+
+      -  role_index = 8
+
+      -  authorized capabilities
+
+         o  (include all the capabilities authorized for org_a_admin)
+
+         o  canUnBan
+
+         o  canDeleteOtherReaction
+
+         o  canDeleteOtherMessage
+
+         o  canEditOwnTopic
+
+         o  canEditOtherTopic
+
+         o  canChangeRoomDescription
+
+         o  canChangeRoomName
+
+         o  canChangeRoomAvatar
+
+         o  canChangeRoomSubject
+
+         o  canChangeRoomMood
+
+         o  canChangeRoomMembershipStyle
+
+         o  canChangeRoleDefinitions
+
+         o  canChangePreauthorizedUserList
+
+         o  canDestroyRoom
+
+         o  canSendMLSReinitProposal
+
+      -  constraints
+
+         o  minimum_participants_constraint = 1
+
+         o  maximum_participants_constraint = null
+
+         o  minimum_active_participants_constraint = 1
+
+         o  maximum_active_participants_constraint = null
+
+         o  authorized_role_changes = [(0,[1,2,3,4,5,6,7,8]),
+            (1,[0,2,3,4,5,6,7,8]), (2,[0,1,5,8]), (3,[0,1,6]),
+            (4,[0,1,7]), (5,[0,1,2,8]), (6,[0,1,3]), (7,[0,1,4]),
+            (8,[0,1,2,5])]
+
+   *  policy_enforcer
+
+      -  role_index = 9
+
+      -  capabilities
+
+         o  (does not include any other capabilities)
+
+         o  canRemoveParticipant
+
+         o  canChangeUserRole
+
+         o  canBan
+
+         o  canUnban
+
+         o  canChangeRoleDefinitions
+
+         o  canChangePreauthorizedUserList
+
+         o  canChangeMlsOperationalPolicies
+
+         o  canDestroyRoom
+
+         o  canSendMLSReinitProposal
+
+      -  constraints
+
+         o  minimum_participants_constraint = 1
+
+         o  maximum_participants_constraint = 2
+
+         o  minimum_active_participants_constraint = 0
+
+         o  maximum_active_participants_constraint = 0
+
+         o  authorized_role_changes = [(0,[1]), (1,[0]), (3,[0,1]),
+            (4,[0,1]), (5,[0,1]), (6,[0,1]), (7,[0,1]), (8,[0,1])]
+
+      -  Notes: can remove a banned user from the list (cleanup) but not
+         restore them
 
 Acknowledgments
 

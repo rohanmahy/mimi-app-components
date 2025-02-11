@@ -1498,11 +1498,6 @@ When the participant list addition for the target role is authorized, the holder
 </li>
           <li class="normal" id="section-7.1-2.2">
             <p id="section-7.1-2.2.1"><code>canAddOwnClient</code> - a holder of this capability that is in the participant list, can add its own client (via an external commit or external proposal); and can add other clients that share the same user identity (via Add proposals) if the holder's client is already a member of the corresponding MLS group.<a href="#section-7.1-2.2.1" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-7.1-2.2.2.1">
-                <p id="section-7.1-2.2.2.1.1"><strong>TODO</strong>: consider if multiple clients per user are allowed; client replacements.<a href="#section-7.1-2.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
 </li>
           <li class="normal" id="section-7.1-2.3">
             <p id="section-7.1-2.3.1"><code>canAddSelf</code> - the holder of this capability can use an external commit or external proposal to add itself to the participant list.
@@ -1751,13 +1746,10 @@ preview.<a href="#section-7.3-2.17.1" class="pilcrow">¶</a></p>
             <p id="section-7.6-1.3.1"><code>canChangePreauthorizedUserList</code> - the holder is authorized to make changes to the Preauthorized Users component.<a href="#section-7.6-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.6-1.4">
-            <p id="section-7.6-1.4.1"><code>canChangeOtherPolicyAttribute</code><a href="#section-7.6-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-7.6-1.4.1"><code>canDestroyRoom</code> - the holder is authorized to completely destroy the room.<a href="#section-7.6-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.6-1.5">
-            <p id="section-7.6-1.5.1"><code>canDestroyRoom</code> - the holder is authorized to completely destroy the room.<a href="#section-7.6-1.5.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-7.6-1.6">
-            <p id="section-7.6-1.6.1"><code>canReinitGroup</code> - the holder is authorized to send an MLS ReInit proposal.<a href="#section-7.6-1.6.1" class="pilcrow">¶</a></p>
+            <p id="section-7.6-1.5.1"><code>canReinitGroup</code> - the holder is authorized to send an MLS ReInit proposal.<a href="#section-7.6-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1803,19 +1795,25 @@ preview.<a href="#section-7.3-2.17.1" class="pilcrow">¶</a></p>
             <p id="section-7.7-2.11.1"><code>canCreateRoom</code><a href="#section-7.7-2.11.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.7-2.12">
-            <p id="section-7.7-2.12.1">MLS specific<a href="#section-7.7-2.12.1" class="pilcrow">¶</a></p>
+            <p id="section-7.7-2.12.1"><code>canChangeMlsOperationalPolicies</code><a href="#section-7.7-2.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.7-2.13">
+            <p id="section-7.7-2.13.1"><code>canChangeOtherPolicyAttribute</code><a href="#section-7.7-2.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.7-2.14">
+            <p id="section-7.7-2.14.1">MLS specific<a href="#section-7.7-2.14.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.7-2.12.2.1">
-                <p id="section-7.7-2.12.2.1.1">update - update policy<a href="#section-7.7-2.12.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-7.7-2.14.2.1">
+                <p id="section-7.7-2.14.2.1.1">update - update policy<a href="#section-7.7-2.14.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-7.7-2.12.2.2">
-                <p id="section-7.7-2.12.2.2.1">PSK - psk policy<a href="#section-7.7-2.12.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-7.7-2.14.2.2">
+                <p id="section-7.7-2.14.2.2.1">PSK - psk policy<a href="#section-7.7-2.14.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-7.7-2.12.2.3">
-                <p id="section-7.7-2.12.2.3.1">external proposal - general operational policy rules<a href="#section-7.7-2.12.2.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-7.7-2.14.2.3">
+                <p id="section-7.7-2.14.2.3.1">external proposal - general operational policy rules<a href="#section-7.7-2.14.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-7.7-2.12.2.4">
-                <p id="section-7.7-2.12.2.4.1">external commit - general operational policy rules<a href="#section-7.7-2.12.2.4.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-7.7-2.14.2.4">
+                <p id="section-7.7-2.14.2.4.1">external commit - general operational policy rules<a href="#section-7.7-2.14.2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1905,7 +1903,7 @@ canViewSharedScreen
 canChangeRoomMembershipStyle
 canChangeRoleDefinitions
 canChangePreauthorizedUserList
-canChangeOtherPolicyAttribute
+canChangeMlsOperationalPolicies
 canDestroyRoom
 canSendMLSReinitProposal
 </pre><a href="#section-9.1-2" class="pilcrow">¶</a>
@@ -1985,7 +1983,7 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.1.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.1-2.1.2.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.1.2.3.2.4">
-                    <p id="appendix-A.1-2.1.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.1-2.1.2.3.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.1.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.1-2.1.2.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.1.2.3.2.5">
                     <p id="appendix-A.1-2.1.2.3.2.5.1">authorized_role_changes = <code>[]</code><a href="#appendix-A.1-2.1.2.3.2.5.1" class="pilcrow">¶</a></p>
@@ -2001,12 +1999,7 @@ canSendMLSReinitProposal
                 <p id="appendix-A.1-2.2.2.1.1">role_index = 1<a href="#appendix-A.1-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.1-2.2.2.2">
-                <p id="appendix-A.1-2.2.2.2.1">authorized capabilities<a href="#appendix-A.1-2.2.2.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.1-2.2.2.2.2.1">
-                    <p id="appendix-A.1-2.2.2.2.2.1.1">canJoinWithLink<a href="#appendix-A.1-2.2.2.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                </ul>
+                <p id="appendix-A.1-2.2.2.2.1">no capabilities<a href="#appendix-A.1-2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.1-2.2.2.3">
                 <p id="appendix-A.1-2.2.2.3.1">constraints<a href="#appendix-A.1-2.2.2.3.1" class="pilcrow">¶</a></p>
@@ -2021,7 +2014,7 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.2.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.1-2.2.2.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.2.2.3.2.4">
-                    <p id="appendix-A.1-2.2.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.1-2.2.2.3.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.2.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.1-2.2.2.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.2.2.3.2.5">
                     <p id="appendix-A.1-2.2.2.3.2.5.1">authorized_role_changes = <code>[]</code><a href="#appendix-A.1-2.2.2.3.2.5.1" class="pilcrow">¶</a></p>
@@ -2049,55 +2042,55 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.3.2.2.2.3.1">canAddOwnClient<a href="#appendix-A.1-2.3.2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.4">
-                    <p id="appendix-A.1-2.3.2.2.2.4.1">canRemoveSelf<a href="#appendix-A.1-2.3.2.2.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.4.1">canRemoveOwnClient<a href="#appendix-A.1-2.3.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.5">
-                    <p id="appendix-A.1-2.3.2.2.2.5.1">canAddSelf<a href="#appendix-A.1-2.3.2.2.2.5.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.5.1">canRemoveSelf<a href="#appendix-A.1-2.3.2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.6">
-                    <p id="appendix-A.1-2.3.2.2.2.6.1">canCreateJoinCode - reserved for future use<a href="#appendix-A.1-2.3.2.2.2.6.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.6.1">canSendMessage<a href="#appendix-A.1-2.3.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.7">
-                    <p id="appendix-A.1-2.3.2.2.2.7.1">canUseJoinCode<a href="#appendix-A.1-2.3.2.2.2.7.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.7.1">canReceiveMessage<a href="#appendix-A.1-2.3.2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.8">
-                    <p id="appendix-A.1-2.3.2.2.2.8.1">canKnock<a href="#appendix-A.1-2.3.2.2.2.8.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.8.1">canCopyMessage<a href="#appendix-A.1-2.3.2.2.2.8.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.9">
-                    <p id="appendix-A.1-2.3.2.2.2.9.1">canSendMessage<a href="#appendix-A.1-2.3.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.9.1">canReportAbuse<a href="#appendix-A.1-2.3.2.2.2.9.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.10">
-                    <p id="appendix-A.1-2.3.2.2.2.10.1">canReceiveMessage<a href="#appendix-A.1-2.3.2.2.2.10.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.10.1">canReplyToMessage<a href="#appendix-A.1-2.3.2.2.2.10.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.11">
-                    <p id="appendix-A.1-2.3.2.2.2.11.1">canReportAbuse<a href="#appendix-A.1-2.3.2.2.2.11.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.11.1">canReactToMessage<a href="#appendix-A.1-2.3.2.2.2.11.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.12">
-                    <p id="appendix-A.1-2.3.2.2.2.12.1">canReactToMessage<a href="#appendix-A.1-2.3.2.2.2.12.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.12.1">canDeleteOwnReaction<a href="#appendix-A.1-2.3.2.2.2.12.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.13">
-                    <p id="appendix-A.1-2.3.2.2.2.13.1">canEditReaction<a href="#appendix-A.1-2.3.2.2.2.13.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.13.1">canEditOwnMessage<a href="#appendix-A.1-2.3.2.2.2.13.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.14">
-                    <p id="appendix-A.1-2.3.2.2.2.14.1">canDeleteReaction<a href="#appendix-A.1-2.3.2.2.2.14.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.14.1">canDeleteOwnMessage<a href="#appendix-A.1-2.3.2.2.2.14.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.15">
-                    <p id="appendix-A.1-2.3.2.2.2.15.1">canEditOwnMessage<a href="#appendix-A.1-2.3.2.2.2.15.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.15.1">canStartTopic<a href="#appendix-A.1-2.3.2.2.2.15.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.16">
-                    <p id="appendix-A.1-2.3.2.2.2.16.1">canDeleteOwnMessage<a href="#appendix-A.1-2.3.2.2.2.16.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.16.1">canReplyInTopic<a href="#appendix-A.1-2.3.2.2.2.16.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.17">
-                    <p id="appendix-A.1-2.3.2.2.2.17.1">canStartTopic<a href="#appendix-A.1-2.3.2.2.2.17.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.17.1">canEditOwnTopic<a href="#appendix-A.1-2.3.2.2.2.17.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.18">
-                    <p id="appendix-A.1-2.3.2.2.2.18.1">canReplyInTopic<a href="#appendix-A.1-2.3.2.2.2.18.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.18.1">canUploadImage<a href="#appendix-A.1-2.3.2.2.2.18.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.19">
-                    <p id="appendix-A.1-2.3.2.2.2.19.1">canUploadImage<a href="#appendix-A.1-2.3.2.2.2.19.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.19.1">canUploadVideo<a href="#appendix-A.1-2.3.2.2.2.19.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.20">
-                    <p id="appendix-A.1-2.3.2.2.2.20.1">canUploadVideo<a href="#appendix-A.1-2.3.2.2.2.20.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.20.1">canUploadSound<a href="#appendix-A.1-2.3.2.2.2.20.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.21">
                     <p id="appendix-A.1-2.3.2.2.2.21.1">canUploadAttachment<a href="#appendix-A.1-2.3.2.2.2.21.1" class="pilcrow">¶</a></p>
@@ -2109,40 +2102,46 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.3.2.2.2.23.1">canDownloadVideo<a href="#appendix-A.1-2.3.2.2.2.23.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.24">
-                    <p id="appendix-A.1-2.3.2.2.2.24.1">canDownloadAttachment<a href="#appendix-A.1-2.3.2.2.2.24.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.24.1">canDownloadSound<a href="#appendix-A.1-2.3.2.2.2.24.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.25">
-                    <p id="appendix-A.1-2.3.2.2.2.25.1">canSendLink<a href="#appendix-A.1-2.3.2.2.2.25.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.25.1">canDownloadAttachment<a href="#appendix-A.1-2.3.2.2.2.25.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.26">
-                    <p id="appendix-A.1-2.3.2.2.2.26.1">canSendLinkPreview<a href="#appendix-A.1-2.3.2.2.2.26.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.26.1">canSendLink<a href="#appendix-A.1-2.3.2.2.2.26.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.27">
-                    <p id="appendix-A.1-2.3.2.2.2.27.1">canFollowLink<a href="#appendix-A.1-2.3.2.2.2.27.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.27.1">canSendLinkPreview<a href="#appendix-A.1-2.3.2.2.2.27.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.28">
-                    <p id="appendix-A.1-2.3.2.2.2.28.1">canChangeRoomName<a href="#appendix-A.1-2.3.2.2.2.28.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.28.1">canFollowLink<a href="#appendix-A.1-2.3.2.2.2.28.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.29">
-                    <p id="appendix-A.1-2.3.2.2.2.29.1">canChangeRoomAvatar<a href="#appendix-A.1-2.3.2.2.2.29.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.29.1">canCopyLink<a href="#appendix-A.1-2.3.2.2.2.29.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.30">
-                    <p id="appendix-A.1-2.3.2.2.2.30.1">canChangeRoomSubject<a href="#appendix-A.1-2.3.2.2.2.30.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.30.1">canChangeRoomName<a href="#appendix-A.1-2.3.2.2.2.30.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.31">
-                    <p id="appendix-A.1-2.3.2.2.2.31.1">canChangeRoomMood<a href="#appendix-A.1-2.3.2.2.2.31.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.31.1">canChangeRoomAvatar<a href="#appendix-A.1-2.3.2.2.2.31.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.32">
-                    <p id="appendix-A.1-2.3.2.2.2.32.1">canChangeOwnName<a href="#appendix-A.1-2.3.2.2.2.32.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.32.1">canChangeRoomSubject<a href="#appendix-A.1-2.3.2.2.2.32.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.33">
-                    <p id="appendix-A.1-2.3.2.2.2.33.1">canChangeOwnPresence<a href="#appendix-A.1-2.3.2.2.2.33.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.33.1">canChangeRoomMood<a href="#appendix-A.1-2.3.2.2.2.33.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.34">
-                    <p id="appendix-A.1-2.3.2.2.2.34.1">canChangeOwnMood<a href="#appendix-A.1-2.3.2.2.2.34.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.34.1">canChangeOwnName<a href="#appendix-A.1-2.3.2.2.2.34.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.3.2.2.2.35">
-                    <p id="appendix-A.1-2.3.2.2.2.35.1">canChangeOwnAvatar<a href="#appendix-A.1-2.3.2.2.2.35.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.3.2.2.2.35.1">canChangeOwnPresence<a href="#appendix-A.1-2.3.2.2.2.35.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.1-2.3.2.2.2.36">
+                    <p id="appendix-A.1-2.3.2.2.2.36.1">canChangeOwnMood<a href="#appendix-A.1-2.3.2.2.2.36.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.1-2.3.2.2.2.37">
+                    <p id="appendix-A.1-2.3.2.2.2.37.1">canChangeOwnAvatar<a href="#appendix-A.1-2.3.2.2.2.37.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2196,22 +2195,16 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.4.2.2.2.6.1">canGrantVoice<a href="#appendix-A.1-2.4.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.4.2.2.2.7">
-                    <p id="appendix-A.1-2.4.2.2.2.7.1">canAcceptKnock<a href="#appendix-A.1-2.4.2.2.2.7.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.4.2.2.2.7.1">canChangeUserRole<a href="#appendix-A.1-2.4.2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.4.2.2.2.8">
-                    <p id="appendix-A.1-2.4.2.2.2.8.1">canChangeUserRole<a href="#appendix-A.1-2.4.2.2.2.8.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.4.2.2.2.8.1">canDeleteOtherMessage<a href="#appendix-A.1-2.4.2.2.2.8.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.4.2.2.2.9">
-                    <p id="appendix-A.1-2.4.2.2.2.9.1">canDeleteAnyMessage<a href="#appendix-A.1-2.4.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.4.2.2.2.9.1">canEditOtherTopic<a href="#appendix-A.1-2.4.2.2.2.9.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.4.2.2.2.10">
-                    <p id="appendix-A.1-2.4.2.2.2.10.1">canEditTopic<a href="#appendix-A.1-2.4.2.2.2.10.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.1-2.4.2.2.2.11">
-                    <p id="appendix-A.1-2.4.2.2.2.11.1">(canDeleteUpload)<a href="#appendix-A.1-2.4.2.2.2.11.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.1-2.4.2.2.2.12">
-                    <p id="appendix-A.1-2.4.2.2.2.12.1">canChangeRoomDescription<a href="#appendix-A.1-2.4.2.2.2.12.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.4.2.2.2.10.1">canChangeRoomDescription<a href="#appendix-A.1-2.4.2.2.2.10.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2256,10 +2249,7 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.5.2.2.2.3.1">canChangePreauthorizedUserList<a href="#appendix-A.1-2.5.2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.5.2.2.2.4">
-                    <p id="appendix-A.1-2.5.2.2.2.4.1">canChangeOtherPolicyAttribute<a href="#appendix-A.1-2.5.2.2.2.4.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.1-2.5.2.2.2.5">
-                    <p id="appendix-A.1-2.5.2.2.2.5.1">canDestroyRoom<a href="#appendix-A.1-2.5.2.2.2.5.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.5.2.2.2.4.1">canDestroyRoom<a href="#appendix-A.1-2.5.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2307,28 +2297,22 @@ canSendMLSReinitProposal
                     <p id="appendix-A.1-2.6.2.2.2.4.1">canBan<a href="#appendix-A.1-2.6.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.6.2.2.2.5">
-                    <p id="appendix-A.1-2.6.2.2.2.5.1">canUnban ??<a href="#appendix-A.1-2.6.2.2.2.5.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.6.2.2.2.5.1">canUnban<a href="#appendix-A.1-2.6.2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.6.2.2.2.6">
-                    <p id="appendix-A.1-2.6.2.2.2.6.1">canChangeRoomMembershipStyle<a href="#appendix-A.1-2.6.2.2.2.6.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.6.2.2.2.6.1">canChangeRoleDefinitions<a href="#appendix-A.1-2.6.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.6.2.2.2.7">
-                    <p id="appendix-A.1-2.6.2.2.2.7.1">canChangeRoleDefinitions<a href="#appendix-A.1-2.6.2.2.2.7.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.6.2.2.2.7.1">canChangePreauthorizedUserList<a href="#appendix-A.1-2.6.2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.6.2.2.2.8">
-                    <p id="appendix-A.1-2.6.2.2.2.8.1">canChangePreauthorizedUserList<a href="#appendix-A.1-2.6.2.2.2.8.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.6.2.2.2.8.1">canChangeMlsOperationalPolicies<a href="#appendix-A.1-2.6.2.2.2.8.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.6.2.2.2.9">
-                    <p id="appendix-A.1-2.6.2.2.2.9.1">canChangeOtherPolicyAttribute<a href="#appendix-A.1-2.6.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.6.2.2.2.9.1">canDestroyRoom<a href="#appendix-A.1-2.6.2.2.2.9.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.1-2.6.2.2.2.10">
-                    <p id="appendix-A.1-2.6.2.2.2.10.1">canDestroyRoom<a href="#appendix-A.1-2.6.2.2.2.10.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.1-2.6.2.2.2.11">
-                    <p id="appendix-A.1-2.6.2.2.2.11.1">canSendMLSReinitProposal<a href="#appendix-A.1-2.6.2.2.2.11.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.1-2.6.2.2.2.12">
-                    <p id="appendix-A.1-2.6.2.2.2.12.1">canSendMLSExternalProposal<a href="#appendix-A.1-2.6.2.2.2.12.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.1-2.6.2.2.2.10.1">canSendMLSReinitProposal<a href="#appendix-A.1-2.6.2.2.2.10.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2379,9 +2363,6 @@ canSendMLSReinitProposal
 <li class="normal" id="appendix-A.2-2.1.2.2.2.1">
                     <p id="appendix-A.2-2.1.2.2.2.1.1">canUseJoinCode<a href="#appendix-A.2-2.1.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="normal" id="appendix-A.2-2.1.2.2.2.2">
-                    <p id="appendix-A.2-2.1.2.2.2.2.1">canKnock<a href="#appendix-A.2-2.1.2.2.2.2.1" class="pilcrow">¶</a></p>
-</li>
                 </ul>
 </li>
               <li class="normal" id="appendix-A.2-2.1.2.3">
@@ -2397,7 +2378,7 @@ canSendMLSReinitProposal
                     <p id="appendix-A.2-2.1.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.2-2.1.2.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.1.2.3.2.4">
-                    <p id="appendix-A.2-2.1.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.2-2.1.2.3.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.1.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.2-2.1.2.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.1.2.3.2.5">
                     <p id="appendix-A.2-2.1.2.3.2.5.1">authorized_role_changes = <code>[(0,[2])]</code><a href="#appendix-A.2-2.1.2.3.2.5.1" class="pilcrow">¶</a></p>
@@ -2413,12 +2394,7 @@ canSendMLSReinitProposal
                 <p id="appendix-A.2-2.2.2.1.1">role_index = 1<a href="#appendix-A.2-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.2-2.2.2.2">
-                <p id="appendix-A.2-2.2.2.2.1">authorized capabilities<a href="#appendix-A.2-2.2.2.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.2-2.2.2.2.2.1">
-                    <p id="appendix-A.2-2.2.2.2.2.1.1">canRemoveOwnClient<a href="#appendix-A.2-2.2.2.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                </ul>
+                <p id="appendix-A.2-2.2.2.2.1">no capabilities<a href="#appendix-A.2-2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.2-2.2.2.3">
                 <p id="appendix-A.2-2.2.2.3.1">constraints<a href="#appendix-A.2-2.2.2.3.1" class="pilcrow">¶</a></p>
@@ -2433,7 +2409,7 @@ canSendMLSReinitProposal
                     <p id="appendix-A.2-2.2.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.2-2.2.2.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.2.2.3.2.4">
-                    <p id="appendix-A.2-2.2.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.2-2.2.2.3.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.2.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.2-2.2.2.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.2.2.3.2.5">
                     <p id="appendix-A.2-2.2.2.3.2.5.1">authorized_role_changes = <code>[]</code><a href="#appendix-A.2-2.2.2.3.2.5.1" class="pilcrow">¶</a></p>
@@ -2455,91 +2431,94 @@ canSendMLSReinitProposal
                     <p id="appendix-A.2-2.3.2.2.2.1.1">canAddOwnClient<a href="#appendix-A.2-2.3.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.2">
-                    <p id="appendix-A.2-2.3.2.2.2.2.1">canRemoveSelf<a href="#appendix-A.2-2.3.2.2.2.2.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.2.1">canAddSelf<a href="#appendix-A.2-2.3.2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.3">
-                    <p id="appendix-A.2-2.3.2.2.2.3.1">canAddSelf<a href="#appendix-A.2-2.3.2.2.2.3.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.3.1">canRemoveOwnClient<a href="#appendix-A.2-2.3.2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.4">
-                    <p id="appendix-A.2-2.3.2.2.2.4.1">canSendMessage<a href="#appendix-A.2-2.3.2.2.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.4.1">canRemoveSelf<a href="#appendix-A.2-2.3.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.5">
-                    <p id="appendix-A.2-2.3.2.2.2.5.1">canReceiveMessage<a href="#appendix-A.2-2.3.2.2.2.5.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.5.1">canChangeOwnRole<a href="#appendix-A.2-2.3.2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.6">
-                    <p id="appendix-A.2-2.3.2.2.2.6.1">canReportAbuse<a href="#appendix-A.2-2.3.2.2.2.6.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.6.1">canSendMessage<a href="#appendix-A.2-2.3.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.7">
-                    <p id="appendix-A.2-2.3.2.2.2.7.1">canReactToMessage<a href="#appendix-A.2-2.3.2.2.2.7.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.7.1">canReceiveMessage<a href="#appendix-A.2-2.3.2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.8">
-                    <p id="appendix-A.2-2.3.2.2.2.8.1">canEditReaction<a href="#appendix-A.2-2.3.2.2.2.8.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.8.1">canCopyMessage<a href="#appendix-A.2-2.3.2.2.2.8.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.9">
-                    <p id="appendix-A.2-2.3.2.2.2.9.1">canDeleteReaction<a href="#appendix-A.2-2.3.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.9.1">canReportAbuse<a href="#appendix-A.2-2.3.2.2.2.9.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.10">
-                    <p id="appendix-A.2-2.3.2.2.2.10.1">canEditOwnMessage<a href="#appendix-A.2-2.3.2.2.2.10.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.10.1">canReactToMessage<a href="#appendix-A.2-2.3.2.2.2.10.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.11">
-                    <p id="appendix-A.2-2.3.2.2.2.11.1">canDeleteOwnMessage<a href="#appendix-A.2-2.3.2.2.2.11.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.11.1">canDeleteOwnReaction<a href="#appendix-A.2-2.3.2.2.2.11.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.12">
-                    <p id="appendix-A.2-2.3.2.2.2.12.1">canStartTopic<a href="#appendix-A.2-2.3.2.2.2.12.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.12.1">canEditOwnMessage<a href="#appendix-A.2-2.3.2.2.2.12.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.13">
-                    <p id="appendix-A.2-2.3.2.2.2.13.1">canReplyInTopic<a href="#appendix-A.2-2.3.2.2.2.13.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.13.1">canDeleteOwnMessage<a href="#appendix-A.2-2.3.2.2.2.13.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.14">
-                    <p id="appendix-A.2-2.3.2.2.2.14.1">canUploadImage<a href="#appendix-A.2-2.3.2.2.2.14.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.14.1">canStartTopic<a href="#appendix-A.2-2.3.2.2.2.14.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.15">
-                    <p id="appendix-A.2-2.3.2.2.2.15.1">canUploadVideo<a href="#appendix-A.2-2.3.2.2.2.15.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.15.1">canReplyInTopic<a href="#appendix-A.2-2.3.2.2.2.15.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.16">
-                    <p id="appendix-A.2-2.3.2.2.2.16.1">canUploadAttachment<a href="#appendix-A.2-2.3.2.2.2.16.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.16.1">canUploadImage<a href="#appendix-A.2-2.3.2.2.2.16.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.17">
-                    <p id="appendix-A.2-2.3.2.2.2.17.1">canDownloadImage<a href="#appendix-A.2-2.3.2.2.2.17.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.17.1">canUploadVideo<a href="#appendix-A.2-2.3.2.2.2.17.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.18">
-                    <p id="appendix-A.2-2.3.2.2.2.18.1">canDownloadVideo<a href="#appendix-A.2-2.3.2.2.2.18.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.18.1">canUploadSound<a href="#appendix-A.2-2.3.2.2.2.18.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.19">
-                    <p id="appendix-A.2-2.3.2.2.2.19.1">canDownloadAttachment<a href="#appendix-A.2-2.3.2.2.2.19.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.19.1">canUploadAttachment<a href="#appendix-A.2-2.3.2.2.2.19.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.20">
-                    <p id="appendix-A.2-2.3.2.2.2.20.1">canSendLink<a href="#appendix-A.2-2.3.2.2.2.20.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.20.1">canDownloadImage<a href="#appendix-A.2-2.3.2.2.2.20.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.21">
-                    <p id="appendix-A.2-2.3.2.2.2.21.1">canSendLinkPreview<a href="#appendix-A.2-2.3.2.2.2.21.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.21.1">canDownloadVideo<a href="#appendix-A.2-2.3.2.2.2.21.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.22">
-                    <p id="appendix-A.2-2.3.2.2.2.22.1">canFollowLink<a href="#appendix-A.2-2.3.2.2.2.22.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.22.1">canDownloadSound<a href="#appendix-A.2-2.3.2.2.2.22.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.23">
-                    <p id="appendix-A.2-2.3.2.2.2.23.1">canChangeRoomName<a href="#appendix-A.2-2.3.2.2.2.23.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.23.1">canDownloadAttachment<a href="#appendix-A.2-2.3.2.2.2.23.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.24">
-                    <p id="appendix-A.2-2.3.2.2.2.24.1">canChangeRoomAvatar<a href="#appendix-A.2-2.3.2.2.2.24.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.24.1">canSendLink<a href="#appendix-A.2-2.3.2.2.2.24.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.25">
-                    <p id="appendix-A.2-2.3.2.2.2.25.1">canChangeRoomSubject<a href="#appendix-A.2-2.3.2.2.2.25.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.25.1">canSendLinkPreview<a href="#appendix-A.2-2.3.2.2.2.25.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.26">
-                    <p id="appendix-A.2-2.3.2.2.2.26.1">canChangeRoomMood<a href="#appendix-A.2-2.3.2.2.2.26.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.26.1">canFollowLink<a href="#appendix-A.2-2.3.2.2.2.26.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.27">
-                    <p id="appendix-A.2-2.3.2.2.2.27.1">canChangeOwnName<a href="#appendix-A.2-2.3.2.2.2.27.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.27.1">canCopyLink<a href="#appendix-A.2-2.3.2.2.2.27.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.28">
-                    <p id="appendix-A.2-2.3.2.2.2.28.1">canChangeOwnPresence<a href="#appendix-A.2-2.3.2.2.2.28.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.28.1">canChangeOwnName<a href="#appendix-A.2-2.3.2.2.2.28.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.29">
-                    <p id="appendix-A.2-2.3.2.2.2.29.1">canChangeOwnMood<a href="#appendix-A.2-2.3.2.2.2.29.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.29.1">canChangeOwnPresence<a href="#appendix-A.2-2.3.2.2.2.29.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.3.2.2.2.30">
-                    <p id="appendix-A.2-2.3.2.2.2.30.1">canChangeOwnAvatar<a href="#appendix-A.2-2.3.2.2.2.30.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.3.2.2.2.30.1">canChangeOwnMood<a href="#appendix-A.2-2.3.2.2.2.30.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.3.2.2.2.31">
+                    <p id="appendix-A.2-2.3.2.2.2.31.1">canChangeOwnAvatar<a href="#appendix-A.2-2.3.2.2.2.31.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2599,16 +2578,31 @@ canSendMLSReinitProposal
                     <p id="appendix-A.2-2.4.2.2.2.8.1">canCreateJoinCode - reserved for future use<a href="#appendix-A.2-2.4.2.2.2.8.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.4.2.2.2.9">
-                    <p id="appendix-A.2-2.4.2.2.2.9.1">canDeleteAnyMessage<a href="#appendix-A.2-2.4.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.4.2.2.2.9.1">canDeleteOtherReaction<a href="#appendix-A.2-2.4.2.2.2.9.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.4.2.2.2.10">
-                    <p id="appendix-A.2-2.4.2.2.2.10.1">canEditTopic<a href="#appendix-A.2-2.4.2.2.2.10.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.4.2.2.2.10.1">canDeleteOtherMessage<a href="#appendix-A.2-2.4.2.2.2.10.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.4.2.2.2.11">
-                    <p id="appendix-A.2-2.4.2.2.2.11.1">(canDeleteUpload)<a href="#appendix-A.2-2.4.2.2.2.11.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.4.2.2.2.11.1">canEditOwnTopic<a href="#appendix-A.2-2.4.2.2.2.11.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.4.2.2.2.12">
-                    <p id="appendix-A.2-2.4.2.2.2.12.1">canChangeRoomDescription<a href="#appendix-A.2-2.4.2.2.2.12.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.4.2.2.2.12.1">canEditOtherTopic<a href="#appendix-A.2-2.4.2.2.2.12.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.4.2.2.2.13">
+                    <p id="appendix-A.2-2.4.2.2.2.13.1">canChangeRoomDescription<a href="#appendix-A.2-2.4.2.2.2.13.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.4.2.2.2.14">
+                    <p id="appendix-A.2-2.4.2.2.2.14.1">canChangeRoomName<a href="#appendix-A.2-2.4.2.2.2.14.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.4.2.2.2.15">
+                    <p id="appendix-A.2-2.4.2.2.2.15.1">canChangeRoomAvatar<a href="#appendix-A.2-2.4.2.2.2.15.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.4.2.2.2.16">
+                    <p id="appendix-A.2-2.4.2.2.2.16.1">canChangeRoomSubject<a href="#appendix-A.2-2.4.2.2.2.16.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.4.2.2.2.17">
+                    <p id="appendix-A.2-2.4.2.2.2.17.1">canChangeRoomMood<a href="#appendix-A.2-2.4.2.2.2.17.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2650,13 +2644,16 @@ canSendMLSReinitProposal
                     <p id="appendix-A.2-2.5.2.2.2.2.1">canChangeRoomMembershipStyle<a href="#appendix-A.2-2.5.2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.5.2.2.2.3">
-                    <p id="appendix-A.2-2.5.2.2.2.3.1">canChangePreauthorizedUserList<a href="#appendix-A.2-2.5.2.2.2.3.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.5.2.2.2.3.1">canChangeRoleDefinitions<a href="#appendix-A.2-2.5.2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.5.2.2.2.4">
-                    <p id="appendix-A.2-2.5.2.2.2.4.1">canChangeOtherPolicyAttribute<a href="#appendix-A.2-2.5.2.2.2.4.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.5.2.2.2.4.1">canChangePreauthorizedUserList<a href="#appendix-A.2-2.5.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.5.2.2.2.5">
                     <p id="appendix-A.2-2.5.2.2.2.5.1">canDestroyRoom<a href="#appendix-A.2-2.5.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.2-2.5.2.2.2.6">
+                    <p id="appendix-A.2-2.5.2.2.2.6.1">canSendMLSReinitProposal<a href="#appendix-A.2-2.5.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2704,28 +2701,22 @@ canSendMLSReinitProposal
                     <p id="appendix-A.2-2.6.2.2.2.4.1">canBan<a href="#appendix-A.2-2.6.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.6.2.2.2.5">
-                    <p id="appendix-A.2-2.6.2.2.2.5.1">canUnban ??<a href="#appendix-A.2-2.6.2.2.2.5.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.6.2.2.2.5.1">canUnban<a href="#appendix-A.2-2.6.2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.6.2.2.2.6">
-                    <p id="appendix-A.2-2.6.2.2.2.6.1">canChangeRoomMembershipStyle<a href="#appendix-A.2-2.6.2.2.2.6.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.6.2.2.2.6.1">canChangeRoleDefinitions<a href="#appendix-A.2-2.6.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.6.2.2.2.7">
-                    <p id="appendix-A.2-2.6.2.2.2.7.1">canChangeRoleDefinitions<a href="#appendix-A.2-2.6.2.2.2.7.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.6.2.2.2.7.1">canChangePreauthorizedUserList<a href="#appendix-A.2-2.6.2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.6.2.2.2.8">
-                    <p id="appendix-A.2-2.6.2.2.2.8.1">canChangePreauthorizedUserList<a href="#appendix-A.2-2.6.2.2.2.8.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.6.2.2.2.8.1">canChangeMlsOperationalPolicies<a href="#appendix-A.2-2.6.2.2.2.8.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.6.2.2.2.9">
-                    <p id="appendix-A.2-2.6.2.2.2.9.1">canChangeOtherPolicyAttribute<a href="#appendix-A.2-2.6.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.6.2.2.2.9.1">canDestroyRoom<a href="#appendix-A.2-2.6.2.2.2.9.1" class="pilcrow">¶</a></p>
 </li>
                   <li class="normal" id="appendix-A.2-2.6.2.2.2.10">
-                    <p id="appendix-A.2-2.6.2.2.2.10.1">canDestroyRoom<a href="#appendix-A.2-2.6.2.2.2.10.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.2-2.6.2.2.2.11">
-                    <p id="appendix-A.2-2.6.2.2.2.11.1">canSendMLSReinitProposal<a href="#appendix-A.2-2.6.2.2.2.11.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="normal" id="appendix-A.2-2.6.2.2.2.12">
-                    <p id="appendix-A.2-2.6.2.2.2.12.1">canSendMLSExternalProposal<a href="#appendix-A.2-2.6.2.2.2.12.1" class="pilcrow">¶</a></p>
+                    <p id="appendix-A.2-2.6.2.2.2.10.1">canSendMLSReinitProposal<a href="#appendix-A.2-2.6.2.2.2.10.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
@@ -2761,14 +2752,1018 @@ canSendMLSReinitProposal
 <section id="appendix-A.3">
         <h3 id="name-moderated-room">
 <a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-moderated-room" class="section-name selfRef">Moderated room</a>
-      </h3>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.1">
+            <p id="appendix-A.3-1.1.1">no_role<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.1.2.1">
+                <p id="appendix-A.3-1.1.2.1.1">role_index = 0<a href="#appendix-A.3-1.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.1.2.2">
+                <p id="appendix-A.3-1.1.2.2.1">authorized capabilities<a href="#appendix-A.3-1.1.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.1.2.2.2.1">
+                    <p id="appendix-A.3-1.1.2.2.2.1.1">canUseJoinCode<a href="#appendix-A.3-1.1.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.1.2.3">
+                <p id="appendix-A.3-1.1.2.3.1">constraints<a href="#appendix-A.3-1.1.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.1.2.3.2.1">
+                    <p id="appendix-A.3-1.1.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.3-1.1.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.1.2.3.2.2">
+                    <p id="appendix-A.3-1.1.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.1.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.1.2.3.2.3">
+                    <p id="appendix-A.3-1.1.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.1.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.1.2.3.2.4">
+                    <p id="appendix-A.3-1.1.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.3-1.1.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.1.2.3.2.5">
+                    <p id="appendix-A.3-1.1.2.3.2.5.1">authorized_role_changes = <code>[(0,[2,3])]</code><a href="#appendix-A.3-1.1.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.2">
+            <p id="appendix-A.3-1.2.1">banned<a href="#appendix-A.3-1.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.2.2.1">
+                <p id="appendix-A.3-1.2.2.1.1">role_index = 1<a href="#appendix-A.3-1.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.2.2.2">
+                <p id="appendix-A.3-1.2.2.2.1">no capabilities<a href="#appendix-A.3-1.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.2.2.3">
+                <p id="appendix-A.3-1.2.2.3.1">constraints<a href="#appendix-A.3-1.2.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.2.2.3.2.1">
+                    <p id="appendix-A.3-1.2.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.3-1.2.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.2.2.3.2.2">
+                    <p id="appendix-A.3-1.2.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.2.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.2.2.3.2.3">
+                    <p id="appendix-A.3-1.2.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.2.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.2.2.3.2.4">
+                    <p id="appendix-A.3-1.2.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.3-1.2.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.2.2.3.2.5">
+                    <p id="appendix-A.3-1.2.2.3.2.5.1">authorized_role_changes = <code>[]</code><a href="#appendix-A.3-1.2.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.3">
+            <p id="appendix-A.3-1.3.1">guest<a href="#appendix-A.3-1.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.3.2.1">
+                <p id="appendix-A.3-1.3.2.1.1">role_index = 2<a href="#appendix-A.3-1.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.3.2.2">
+                <p id="appendix-A.3-1.3.2.2.1">authorized capabilities<a href="#appendix-A.3-1.3.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.3.2.2.2.1">
+                    <p id="appendix-A.3-1.3.2.2.2.1.1">canRemoveSelf<a href="#appendix-A.3-1.3.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.2">
+                    <p id="appendix-A.3-1.3.2.2.2.2.1">canReceiveMessage<a href="#appendix-A.3-1.3.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.3">
+                    <p id="appendix-A.3-1.3.2.2.2.3.1">canCopyMessage<a href="#appendix-A.3-1.3.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.4">
+                    <p id="appendix-A.3-1.3.2.2.2.4.1">canReactToMessage<a href="#appendix-A.3-1.3.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.5">
+                    <p id="appendix-A.3-1.3.2.2.2.5.1">canDeleteOwnReaction<a href="#appendix-A.3-1.3.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.6">
+                    <p id="appendix-A.3-1.3.2.2.2.6.1">canFollowLink<a href="#appendix-A.3-1.3.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.7">
+                    <p id="appendix-A.3-1.3.2.2.2.7.1">canCopyLink<a href="#appendix-A.3-1.3.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.8">
+                    <p id="appendix-A.3-1.3.2.2.2.8.1">canDownloadImage<a href="#appendix-A.3-1.3.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.9">
+                    <p id="appendix-A.3-1.3.2.2.2.9.1">canDownloadVideo<a href="#appendix-A.3-1.3.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.2.2.10">
+                    <p id="appendix-A.3-1.3.2.2.2.10.1">canDownloadSound<a href="#appendix-A.3-1.3.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.3.2.3">
+                <p id="appendix-A.3-1.3.2.3.1">constraints<a href="#appendix-A.3-1.3.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.3.2.3.2.1">
+                    <p id="appendix-A.3-1.3.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.3-1.3.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.3.2.2">
+                    <p id="appendix-A.3-1.3.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.3.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.3.2.3">
+                    <p id="appendix-A.3-1.3.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.3.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.3.2.4">
+                    <p id="appendix-A.3-1.3.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.3-1.3.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.3.2.3.2.5">
+                    <p id="appendix-A.3-1.3.2.3.2.5.1">authorized_role_changes = <code>[(0,[2]), (2,[0])]</code><a href="#appendix-A.3-1.3.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.4">
+            <p id="appendix-A.3-1.4.1">attendee<a href="#appendix-A.3-1.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.4.2.1">
+                <p id="appendix-A.3-1.4.2.1.1">role_index = 3<a href="#appendix-A.3-1.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.4.2.2">
+                <p id="appendix-A.3-1.4.2.2.1">authorized capabilities<a href="#appendix-A.3-1.4.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.4.2.2.2.1">
+                    <p id="appendix-A.3-1.4.2.2.2.1.1">(include all the capabilities authorized for a guest)<a href="#appendix-A.3-1.4.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.2">
+                    <p id="appendix-A.3-1.4.2.2.2.2.1">canAddOwnClient<a href="#appendix-A.3-1.4.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.3">
+                    <p id="appendix-A.3-1.4.2.2.2.3.1">canAddSelf<a href="#appendix-A.3-1.4.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.4">
+                    <p id="appendix-A.3-1.4.2.2.2.4.1">canRemoveOwnClient<a href="#appendix-A.3-1.4.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.5">
+                    <p id="appendix-A.3-1.4.2.2.2.5.1">canChangeOwnRole<a href="#appendix-A.3-1.4.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.6">
+                    <p id="appendix-A.3-1.4.2.2.2.6.1">canReportAbuse<a href="#appendix-A.3-1.4.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.7">
+                    <p id="appendix-A.3-1.4.2.2.2.7.1">canReplyInTopic<a href="#appendix-A.3-1.4.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.8">
+                    <p id="appendix-A.3-1.4.2.2.2.8.1">canDownloadAttachment<a href="#appendix-A.3-1.4.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.9">
+                    <p id="appendix-A.3-1.4.2.2.2.9.1">canChangeOwnName<a href="#appendix-A.3-1.4.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.10">
+                    <p id="appendix-A.3-1.4.2.2.2.10.1">canChangeOwnPresence<a href="#appendix-A.3-1.4.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.2.2.11">
+                    <p id="appendix-A.3-1.4.2.2.2.11.1">canChangeOwnAvatar<a href="#appendix-A.3-1.4.2.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.4.2.3">
+                <p id="appendix-A.3-1.4.2.3.1">constraints<a href="#appendix-A.3-1.4.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.4.2.3.2.1">
+                    <p id="appendix-A.3-1.4.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.3-1.4.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.3.2.2">
+                    <p id="appendix-A.3-1.4.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.4.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.3.2.3">
+                    <p id="appendix-A.3-1.4.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.4.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.3.2.4">
+                    <p id="appendix-A.3-1.4.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.3-1.4.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.4.2.3.2.5">
+                    <p id="appendix-A.3-1.4.2.3.2.5.1">authorized_role_changes = <code>[(0,[3]), (3,[0])]</code><a href="#appendix-A.3-1.4.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.5">
+            <p id="appendix-A.3-1.5.1">speaker<a href="#appendix-A.3-1.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.5.2.1">
+                <p id="appendix-A.3-1.5.2.1.1">role_index = 4<a href="#appendix-A.3-1.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.5.2.2">
+                <p id="appendix-A.3-1.5.2.2.1">authorized capabilities<a href="#appendix-A.3-1.5.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.5.2.2.2.1">
+                    <p id="appendix-A.3-1.5.2.2.2.1.1">(include all the capabilities authorized for a speaker)<a href="#appendix-A.3-1.5.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.2">
+                    <p id="appendix-A.3-1.5.2.2.2.2.1">canSendMessage<a href="#appendix-A.3-1.5.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.3">
+                    <p id="appendix-A.3-1.5.2.2.2.3.1">canEditOwnMessage<a href="#appendix-A.3-1.5.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.4">
+                    <p id="appendix-A.3-1.5.2.2.2.4.1">canDeleteOwnMessage<a href="#appendix-A.3-1.5.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.5">
+                    <p id="appendix-A.3-1.5.2.2.2.5.1">canStartTopic<a href="#appendix-A.3-1.5.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.6">
+                    <p id="appendix-A.3-1.5.2.2.2.6.1">canUploadImage<a href="#appendix-A.3-1.5.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.7">
+                    <p id="appendix-A.3-1.5.2.2.2.7.1">canUploadVideo<a href="#appendix-A.3-1.5.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.8">
+                    <p id="appendix-A.3-1.5.2.2.2.8.1">canUploadSound<a href="#appendix-A.3-1.5.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.9">
+                    <p id="appendix-A.3-1.5.2.2.2.9.1">canUploadAttachment<a href="#appendix-A.3-1.5.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.10">
+                    <p id="appendix-A.3-1.5.2.2.2.10.1">canSendLink<a href="#appendix-A.3-1.5.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.2.2.11">
+                    <p id="appendix-A.3-1.5.2.2.2.11.1">canSendLinkPreview<a href="#appendix-A.3-1.5.2.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.5.2.3">
+                <p id="appendix-A.3-1.5.2.3.1">constraints<a href="#appendix-A.3-1.5.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.5.2.3.2.1">
+                    <p id="appendix-A.3-1.5.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.3-1.5.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.3.2.2">
+                    <p id="appendix-A.3-1.5.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.5.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.3.2.3">
+                    <p id="appendix-A.3-1.5.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.5.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.3.2.4">
+                    <p id="appendix-A.3-1.5.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.3-1.5.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.5.2.3.2.5">
+                    <p id="appendix-A.3-1.5.2.3.2.5.1">authorized_role_changes = <code>[(0,[4]), (4,[0])]</code><a href="#appendix-A.3-1.5.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.6">
+            <p id="appendix-A.3-1.6.1">moderator<a href="#appendix-A.3-1.6.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.6.2.1">
+                <p id="appendix-A.3-1.6.2.1.1">role_index = 5<a href="#appendix-A.3-1.6.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.6.2.2">
+                <p id="appendix-A.3-1.6.2.2.1">authorized capabilities<a href="#appendix-A.3-1.6.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.6.2.2.2.1">
+                    <p id="appendix-A.3-1.6.2.2.2.1.1">(include all the capabilities authorized for an ordinary_user)<a href="#appendix-A.3-1.6.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.2">
+                    <p id="appendix-A.3-1.6.2.2.2.2.1">canAddParticipant<a href="#appendix-A.3-1.6.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.3">
+                    <p id="appendix-A.3-1.6.2.2.2.3.1">canRemoveParticipant<a href="#appendix-A.3-1.6.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.4">
+                    <p id="appendix-A.3-1.6.2.2.2.4.1">canBan<a href="#appendix-A.3-1.6.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.5">
+                    <p id="appendix-A.3-1.6.2.2.2.5.1">canUnBan<a href="#appendix-A.3-1.6.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.6">
+                    <p id="appendix-A.3-1.6.2.2.2.6.1">canKick<a href="#appendix-A.3-1.6.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.7">
+                    <p id="appendix-A.3-1.6.2.2.2.7.1">canChangeUserRole<a href="#appendix-A.3-1.6.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.8">
+                    <p id="appendix-A.3-1.6.2.2.2.8.1">canCreateJoinCode - reserved for future use<a href="#appendix-A.3-1.6.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.9">
+                    <p id="appendix-A.3-1.6.2.2.2.9.1">canDeleteOtherReaction<a href="#appendix-A.3-1.6.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.10">
+                    <p id="appendix-A.3-1.6.2.2.2.10.1">canDeleteOtherMessage<a href="#appendix-A.3-1.6.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.11">
+                    <p id="appendix-A.3-1.6.2.2.2.11.1">canEditOwnTopic<a href="#appendix-A.3-1.6.2.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.12">
+                    <p id="appendix-A.3-1.6.2.2.2.12.1">canEditOtherTopic<a href="#appendix-A.3-1.6.2.2.2.12.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.13">
+                    <p id="appendix-A.3-1.6.2.2.2.13.1">canChangeRoomName<a href="#appendix-A.3-1.6.2.2.2.13.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.14">
+                    <p id="appendix-A.3-1.6.2.2.2.14.1">canChangeRoomAvatar<a href="#appendix-A.3-1.6.2.2.2.14.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.15">
+                    <p id="appendix-A.3-1.6.2.2.2.15.1">canChangeRoomSubject<a href="#appendix-A.3-1.6.2.2.2.15.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.2.2.16">
+                    <p id="appendix-A.3-1.6.2.2.2.16.1">canChangeRoomMood<a href="#appendix-A.3-1.6.2.2.2.16.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.6.2.3">
+                <p id="appendix-A.3-1.6.2.3.1">constraints<a href="#appendix-A.3-1.6.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.6.2.3.2.1">
+                    <p id="appendix-A.3-1.6.2.3.2.1.1">minimum_participants_constraint = 1<a href="#appendix-A.3-1.6.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.3.2.2">
+                    <p id="appendix-A.3-1.6.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.6.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.3.2.3">
+                    <p id="appendix-A.3-1.6.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.6.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.3.2.4">
+                    <p id="appendix-A.3-1.6.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.3-1.6.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.6.2.3.2.5">
+                    <p id="appendix-A.3-1.6.2.3.2.5.1">authorized_role_changes = <code>[(0,[1,2,3,4,5]), (1,[0,2,3,4,5]), (2,[0,1,3,4,5]), (3,[0,1,2,4,5]), (4,[0,1,2,3,5]), (5,[0,1,2,3,4])]</code><a href="#appendix-A.3-1.6.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.7">
+            <p id="appendix-A.3-1.7.1">super_admin<a href="#appendix-A.3-1.7.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.7.2.1">
+                <p id="appendix-A.3-1.7.2.1.1">role_index = 6<a href="#appendix-A.3-1.7.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.7.2.2">
+                <p id="appendix-A.3-1.7.2.2.1">authorized capabilities<a href="#appendix-A.3-1.7.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.7.2.2.2.1">
+                    <p id="appendix-A.3-1.7.2.2.2.1.1">(include all the capabilities authorized for a moderator)<a href="#appendix-A.3-1.7.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.2.2.2">
+                    <p id="appendix-A.3-1.7.2.2.2.2.1">canChangeRoomDescription<a href="#appendix-A.3-1.7.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.2.2.3">
+                    <p id="appendix-A.3-1.7.2.2.2.3.1">canChangeRoomMembershipStyle<a href="#appendix-A.3-1.7.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.2.2.4">
+                    <p id="appendix-A.3-1.7.2.2.2.4.1">canChangeRoleDefinitions<a href="#appendix-A.3-1.7.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.2.2.5">
+                    <p id="appendix-A.3-1.7.2.2.2.5.1">canChangePreauthorizedUserList<a href="#appendix-A.3-1.7.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.2.2.6">
+                    <p id="appendix-A.3-1.7.2.2.2.6.1">canDestroyRoom<a href="#appendix-A.3-1.7.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.2.2.7">
+                    <p id="appendix-A.3-1.7.2.2.2.7.1">canSendMLSReinitProposal<a href="#appendix-A.3-1.7.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.7.2.3">
+                <p id="appendix-A.3-1.7.2.3.1">constraints<a href="#appendix-A.3-1.7.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.7.2.3.2.1">
+                    <p id="appendix-A.3-1.7.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.3-1.7.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.3.2.2">
+                    <p id="appendix-A.3-1.7.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.3-1.7.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.3.2.3">
+                    <p id="appendix-A.3-1.7.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.7.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.3.2.4">
+                    <p id="appendix-A.3-1.7.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.3-1.7.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.7.2.3.2.5">
+                    <p id="appendix-A.3-1.7.2.3.2.5.1">authorized_role_changes = <code>[(0,[1,2,3,4,5,6]), (1,[0,2,3,4,5,6]), (2,[0,1,3,4,5,6]), (3,[0,1,2,4,5,6]), (4,[0,1,2,3,5,6]), (5,[0,1,2,3,4,6]), (6,[0,1,2,3,4,5])]</code><a href="#appendix-A.3-1.7.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.3-1.8">
+            <p id="appendix-A.3-1.8.1">policy_enforcer<a href="#appendix-A.3-1.8.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.8.2.1">
+                <p id="appendix-A.3-1.8.2.1.1">role_index = 7<a href="#appendix-A.3-1.8.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.3-1.8.2.2">
+                <p id="appendix-A.3-1.8.2.2.1">capabilities<a href="#appendix-A.3-1.8.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.8.2.2.2.1">
+                    <p id="appendix-A.3-1.8.2.2.2.1.1">(does not include any other capabilities)<a href="#appendix-A.3-1.8.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.2">
+                    <p id="appendix-A.3-1.8.2.2.2.2.1">canRemoveParticipant<a href="#appendix-A.3-1.8.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.3">
+                    <p id="appendix-A.3-1.8.2.2.2.3.1">canChangeUserRole<a href="#appendix-A.3-1.8.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.4">
+                    <p id="appendix-A.3-1.8.2.2.2.4.1">canBan<a href="#appendix-A.3-1.8.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.5">
+                    <p id="appendix-A.3-1.8.2.2.2.5.1">canUnban<a href="#appendix-A.3-1.8.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.6">
+                    <p id="appendix-A.3-1.8.2.2.2.6.1">canChangeRoleDefinitions<a href="#appendix-A.3-1.8.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.7">
+                    <p id="appendix-A.3-1.8.2.2.2.7.1">canChangePreauthorizedUserList<a href="#appendix-A.3-1.8.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.8">
+                    <p id="appendix-A.3-1.8.2.2.2.8.1">canChangeMlsOperationalPolicies<a href="#appendix-A.3-1.8.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.9">
+                    <p id="appendix-A.3-1.8.2.2.2.9.1">canDestroyRoom<a href="#appendix-A.3-1.8.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.2.2.10">
+                    <p id="appendix-A.3-1.8.2.2.2.10.1">canSendMLSReinitProposal<a href="#appendix-A.3-1.8.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.8.2.3">
+                <p id="appendix-A.3-1.8.2.3.1">constraints<a href="#appendix-A.3-1.8.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.8.2.3.2.1">
+                    <p id="appendix-A.3-1.8.2.3.2.1.1">minimum_participants_constraint = 1<a href="#appendix-A.3-1.8.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.3.2.2">
+                    <p id="appendix-A.3-1.8.2.3.2.2.1">maximum_participants_constraint = 2<a href="#appendix-A.3-1.8.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.3.2.3">
+                    <p id="appendix-A.3-1.8.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.3-1.8.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.3.2.4">
+                    <p id="appendix-A.3-1.8.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.3-1.8.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.3-1.8.2.3.2.5">
+                    <p id="appendix-A.3-1.8.2.3.2.5.1">authorized_role_changes = <code>[(0,[1]), (1,[0]), (2,[0,1]), (3,[0,1]), (4,[0,1]), (5, [0,1]), (6, [0,1])]</code><a href="#appendix-A.3-1.8.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.3-1.8.2.4">
+                <p id="appendix-A.3-1.8.2.4.1">Notes: can remove a banned user from the list (cleanup) but not restore them<a href="#appendix-A.3-1.8.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
 </section>
 </div>
 <div id="multi-organization-administered-room">
 <section id="appendix-A.4">
         <h3 id="name-multi-organization-administ">
 <a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-multi-organization-administ" class="section-name selfRef">Multi-organization administered room</a>
-      </h3>
+        </h3>
+<p id="appendix-A.4-1">In this example room policy, Alice from organization A is a super admin.
+There are per organization user and admin roles for orgs A, B, and C.
+Organizational admins can only move users to and from their org user role, their org admin role, the no_role; and can ban (but not unban) their own org users.
+The non-host orgs do not have the <code>canChangeOwnRole</code> and <code>canAddSelf</code>, and are limited to 3 admins per org.<a href="#appendix-A.4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.1">
+            <p id="appendix-A.4-2.1.1">no_role<a href="#appendix-A.4-2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.1.2.1">
+                <p id="appendix-A.4-2.1.2.1.1">role_index = 0<a href="#appendix-A.4-2.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.1.2.2">
+                <p id="appendix-A.4-2.1.2.2.1">no capabilities<a href="#appendix-A.4-2.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.1.2.3">
+                <p id="appendix-A.4-2.1.2.3.1">constraints<a href="#appendix-A.4-2.1.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.1.2.3.2.1">
+                    <p id="appendix-A.4-2.1.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.4-2.1.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.1.2.3.2.2">
+                    <p id="appendix-A.4-2.1.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.1.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.1.2.3.2.3">
+                    <p id="appendix-A.4-2.1.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.1.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.1.2.3.2.4">
+                    <p id="appendix-A.4-2.1.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.4-2.1.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.1.2.3.2.5">
+                    <p id="appendix-A.4-2.1.2.3.2.5.1">authorized_role_changes = <code>[]</code><a href="#appendix-A.4-2.1.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.2">
+            <p id="appendix-A.4-2.2.1">banned<a href="#appendix-A.4-2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.2.2.1">
+                <p id="appendix-A.4-2.2.2.1.1">role_index = 1<a href="#appendix-A.4-2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.2.2.2">
+                <p id="appendix-A.4-2.2.2.2.1">no capabilities<a href="#appendix-A.4-2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.2.2.3">
+                <p id="appendix-A.4-2.2.2.3.1">constraints<a href="#appendix-A.4-2.2.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.2.2.3.2.1">
+                    <p id="appendix-A.4-2.2.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.4-2.2.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.2.2.3.2.2">
+                    <p id="appendix-A.4-2.2.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.2.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.2.2.3.2.3">
+                    <p id="appendix-A.4-2.2.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.2.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.2.2.3.2.4">
+                    <p id="appendix-A.4-2.2.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.4-2.2.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.2.2.3.2.5">
+                    <p id="appendix-A.4-2.2.2.3.2.5.1">authorized_role_changes = <code>[]</code><a href="#appendix-A.4-2.2.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.3">
+            <p id="appendix-A.4-2.3.1">org_a_user<a href="#appendix-A.4-2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.3.2.1">
+                <p id="appendix-A.4-2.3.2.1.1">role_index = 2<a href="#appendix-A.4-2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.3.2.2">
+                <p id="appendix-A.4-2.3.2.2.1">authorized capabilities<a href="#appendix-A.4-2.3.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.3.2.2.2.1">
+                    <p id="appendix-A.4-2.3.2.2.2.1.1">(all capabilities of org_b_user)<a href="#appendix-A.4-2.3.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.3.2.2.2.2">
+                    <p id="appendix-A.4-2.3.2.2.2.2.1">canChangeOwnRole<a href="#appendix-A.4-2.3.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.3.2.2.2.3">
+                    <p id="appendix-A.4-2.3.2.2.2.3.1">canAddSelf<a href="#appendix-A.4-2.3.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.3.2.3">
+                <p id="appendix-A.4-2.3.2.3.1">constraints<a href="#appendix-A.4-2.3.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.3.2.3.2.1">
+                    <p id="appendix-A.4-2.3.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.4-2.3.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.3.2.3.2.2">
+                    <p id="appendix-A.4-2.3.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.3.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.3.2.3.2.3">
+                    <p id="appendix-A.4-2.3.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.3.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.3.2.3.2.4">
+                    <p id="appendix-A.4-2.3.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.3.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.3.2.3.2.5">
+                    <p id="appendix-A.4-2.3.2.3.2.5.1">authorized_role_changes = <code>[(0,[2]), (2,[0])]</code><a href="#appendix-A.4-2.3.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.4">
+            <p id="appendix-A.4-2.4.1">org_b_user<a href="#appendix-A.4-2.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.4.2.1">
+                <p id="appendix-A.4-2.4.2.1.1">role_index = 3<a href="#appendix-A.4-2.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.4.2.2">
+                <p id="appendix-A.4-2.4.2.2.1">authorized capabilities<a href="#appendix-A.4-2.4.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.4.2.2.2.1">
+                    <p id="appendix-A.4-2.4.2.2.2.1.1">canRemoveSelf<a href="#appendix-A.4-2.4.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.2">
+                    <p id="appendix-A.4-2.4.2.2.2.2.1">canAddOwnClient<a href="#appendix-A.4-2.4.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.3">
+                    <p id="appendix-A.4-2.4.2.2.2.3.1">canRemoveOwnClient<a href="#appendix-A.4-2.4.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.4">
+                    <p id="appendix-A.4-2.4.2.2.2.4.1">canSendMessage<a href="#appendix-A.4-2.4.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.5">
+                    <p id="appendix-A.4-2.4.2.2.2.5.1">canReceiveMessage<a href="#appendix-A.4-2.4.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.6">
+                    <p id="appendix-A.4-2.4.2.2.2.6.1">canCopyMessage<a href="#appendix-A.4-2.4.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.7">
+                    <p id="appendix-A.4-2.4.2.2.2.7.1">canReportAbuse<a href="#appendix-A.4-2.4.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.8">
+                    <p id="appendix-A.4-2.4.2.2.2.8.1">canReplyInTopic<a href="#appendix-A.4-2.4.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.9">
+                    <p id="appendix-A.4-2.4.2.2.2.9.1">canReactToMessage<a href="#appendix-A.4-2.4.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.10">
+                    <p id="appendix-A.4-2.4.2.2.2.10.1">canDeleteOwnReaction<a href="#appendix-A.4-2.4.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.11">
+                    <p id="appendix-A.4-2.4.2.2.2.11.1">canEditOwnMessage<a href="#appendix-A.4-2.4.2.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.12">
+                    <p id="appendix-A.4-2.4.2.2.2.12.1">canSendLink<a href="#appendix-A.4-2.4.2.2.2.12.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.13">
+                    <p id="appendix-A.4-2.4.2.2.2.13.1">canSendLinkPreview<a href="#appendix-A.4-2.4.2.2.2.13.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.14">
+                    <p id="appendix-A.4-2.4.2.2.2.14.1">canFollowLink<a href="#appendix-A.4-2.4.2.2.2.14.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.15">
+                    <p id="appendix-A.4-2.4.2.2.2.15.1">canCopyLink<a href="#appendix-A.4-2.4.2.2.2.15.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.16">
+                    <p id="appendix-A.4-2.4.2.2.2.16.1">canDownloadImage<a href="#appendix-A.4-2.4.2.2.2.16.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.17">
+                    <p id="appendix-A.4-2.4.2.2.2.17.1">canDownloadVideo<a href="#appendix-A.4-2.4.2.2.2.17.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.18">
+                    <p id="appendix-A.4-2.4.2.2.2.18.1">canDownloadSound<a href="#appendix-A.4-2.4.2.2.2.18.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.19">
+                    <p id="appendix-A.4-2.4.2.2.2.19.1">canDownloadAttachment<a href="#appendix-A.4-2.4.2.2.2.19.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.20">
+                    <p id="appendix-A.4-2.4.2.2.2.20.1">canChangeOwnName<a href="#appendix-A.4-2.4.2.2.2.20.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.21">
+                    <p id="appendix-A.4-2.4.2.2.2.21.1">canChangeOwnPresence<a href="#appendix-A.4-2.4.2.2.2.21.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.2.2.22">
+                    <p id="appendix-A.4-2.4.2.2.2.22.1">canChangeOwnAvatar<a href="#appendix-A.4-2.4.2.2.2.22.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.4.2.3">
+                <p id="appendix-A.4-2.4.2.3.1">constraints<a href="#appendix-A.4-2.4.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.4.2.3.2.1">
+                    <p id="appendix-A.4-2.4.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.4-2.4.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.3.2.2">
+                    <p id="appendix-A.4-2.4.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.4.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.3.2.3">
+                    <p id="appendix-A.4-2.4.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.4.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.3.2.4">
+                    <p id="appendix-A.4-2.4.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.4.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.4.2.3.2.5">
+                    <p id="appendix-A.4-2.4.2.3.2.5.1">authorized_role_changes = <code>[(0,[3]), (3,[0])]</code><a href="#appendix-A.4-2.4.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.5">
+            <p id="appendix-A.4-2.5.1">org_c_user<a href="#appendix-A.4-2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.5.2.1">
+                <p id="appendix-A.4-2.5.2.1.1">role_index = 4<a href="#appendix-A.4-2.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.5.2.2">
+                <p id="appendix-A.4-2.5.2.2.1">authorized capabilities<a href="#appendix-A.4-2.5.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.5.2.2.2.1">
+                    <p id="appendix-A.4-2.5.2.2.2.1.1">(same capabilities as org_b_user)<a href="#appendix-A.4-2.5.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.5.2.3">
+                <p id="appendix-A.4-2.5.2.3.1">constraints<a href="#appendix-A.4-2.5.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.5.2.3.2.1">
+                    <p id="appendix-A.4-2.5.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.4-2.5.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.5.2.3.2.2">
+                    <p id="appendix-A.4-2.5.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.5.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.5.2.3.2.3">
+                    <p id="appendix-A.4-2.5.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.5.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.5.2.3.2.4">
+                    <p id="appendix-A.4-2.5.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.5.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.5.2.3.2.5">
+                    <p id="appendix-A.4-2.5.2.3.2.5.1">authorized_role_changes = <code>[(0,[4]), (4,[0])]</code><a href="#appendix-A.4-2.5.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.6">
+            <p id="appendix-A.4-2.6.1">org_a_admin<a href="#appendix-A.4-2.6.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.6.2.1">
+                <p id="appendix-A.4-2.6.2.1.1">role_index = 5<a href="#appendix-A.4-2.6.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.6.2.2">
+                <p id="appendix-A.4-2.6.2.2.1">authorized capabilities<a href="#appendix-A.4-2.6.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.6.2.2.2.1">
+                    <p id="appendix-A.4-2.6.2.2.2.1.1">(all capabilities of org_b_admin)<a href="#appendix-A.4-2.6.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.6.2.2.2.2">
+                    <p id="appendix-A.4-2.6.2.2.2.2.1">canChangeOwnRole<a href="#appendix-A.4-2.6.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.6.2.2.2.3">
+                    <p id="appendix-A.4-2.6.2.2.2.3.1">canAddSelf<a href="#appendix-A.4-2.6.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.6.2.3">
+                <p id="appendix-A.4-2.6.2.3.1">constraints<a href="#appendix-A.4-2.6.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.6.2.3.2.1">
+                    <p id="appendix-A.4-2.6.2.3.2.1.1">minimum_participants_constraint = 0<a href="#appendix-A.4-2.6.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.6.2.3.2.2">
+                    <p id="appendix-A.4-2.6.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.6.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.6.2.3.2.3">
+                    <p id="appendix-A.4-2.6.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.6.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.6.2.3.2.4">
+                    <p id="appendix-A.4-2.6.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.6.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.6.2.3.2.5">
+                    <p id="appendix-A.4-2.6.2.3.2.5.1">authorized_role_changes = <code>[(0,[2,5]), (2,[0,1,5]), (5,[0,1,2])]</code><a href="#appendix-A.4-2.6.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.7">
+            <p id="appendix-A.4-2.7.1">org_b_admin<a href="#appendix-A.4-2.7.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.7.2.1">
+                <p id="appendix-A.4-2.7.2.1.1">role_index = 6<a href="#appendix-A.4-2.7.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.7.2.2">
+                <p id="appendix-A.4-2.7.2.2.1">authorized capabilities<a href="#appendix-A.4-2.7.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.7.2.2.2.1">
+                    <p id="appendix-A.4-2.7.2.2.2.1.1">(all capabilities of org_b_user)<a href="#appendix-A.4-2.7.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.2">
+                    <p id="appendix-A.4-2.7.2.2.2.2.1">canDeleteOwnMessage<a href="#appendix-A.4-2.7.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.3">
+                    <p id="appendix-A.4-2.7.2.2.2.3.1">canStartTopic<a href="#appendix-A.4-2.7.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.4">
+                    <p id="appendix-A.4-2.7.2.2.2.4.1">canUploadImage<a href="#appendix-A.4-2.7.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.5">
+                    <p id="appendix-A.4-2.7.2.2.2.5.1">canUploadVideo<a href="#appendix-A.4-2.7.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.6">
+                    <p id="appendix-A.4-2.7.2.2.2.6.1">canUploadSound<a href="#appendix-A.4-2.7.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.7">
+                    <p id="appendix-A.4-2.7.2.2.2.7.1">canUploadAttachment<a href="#appendix-A.4-2.7.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.8">
+                    <p id="appendix-A.4-2.7.2.2.2.8.1">canAddParticipant<a href="#appendix-A.4-2.7.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.9">
+                    <p id="appendix-A.4-2.7.2.2.2.9.1">canRemoveParticipant<a href="#appendix-A.4-2.7.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.10">
+                    <p id="appendix-A.4-2.7.2.2.2.10.1">canBan<a href="#appendix-A.4-2.7.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.11">
+                    <p id="appendix-A.4-2.7.2.2.2.11.1">canKick<a href="#appendix-A.4-2.7.2.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.2.2.12">
+                    <p id="appendix-A.4-2.7.2.2.2.12.1">canChangeUserRole<a href="#appendix-A.4-2.7.2.2.2.12.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.7.2.3">
+                <p id="appendix-A.4-2.7.2.3.1">constraints<a href="#appendix-A.4-2.7.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.7.2.3.2.1">
+                    <p id="appendix-A.4-2.7.2.3.2.1.1">minimum_participants_constraint = 1<a href="#appendix-A.4-2.7.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.3.2.2">
+                    <p id="appendix-A.4-2.7.2.3.2.2.1">maximum_participants_constraint = 3<a href="#appendix-A.4-2.7.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.3.2.3">
+                    <p id="appendix-A.4-2.7.2.3.2.3.1">minimum_active_participants_constraint = 1<a href="#appendix-A.4-2.7.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.3.2.4">
+                    <p id="appendix-A.4-2.7.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.7.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.7.2.3.2.5">
+                    <p id="appendix-A.4-2.7.2.3.2.5.1">authorized_role_changes = <code>[(0,[3,6]), (3,[0,1,6]), (6,[0,1,3])]</code><a href="#appendix-A.4-2.7.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.8">
+            <p id="appendix-A.4-2.8.1">org_c_admin<a href="#appendix-A.4-2.8.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.8.2.1">
+                <p id="appendix-A.4-2.8.2.1.1">role_index = 7<a href="#appendix-A.4-2.8.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.8.2.2">
+                <p id="appendix-A.4-2.8.2.2.1">authorized capabilities<a href="#appendix-A.4-2.8.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.8.2.2.2.1">
+                    <p id="appendix-A.4-2.8.2.2.2.1.1">(all capabilities of org_b_admin)<a href="#appendix-A.4-2.8.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.8.2.3">
+                <p id="appendix-A.4-2.8.2.3.1">constraints<a href="#appendix-A.4-2.8.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.8.2.3.2.1">
+                    <p id="appendix-A.4-2.8.2.3.2.1.1">minimum_participants_constraint = 1<a href="#appendix-A.4-2.8.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.8.2.3.2.2">
+                    <p id="appendix-A.4-2.8.2.3.2.2.1">maximum_participants_constraint = 3<a href="#appendix-A.4-2.8.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.8.2.3.2.3">
+                    <p id="appendix-A.4-2.8.2.3.2.3.1">minimum_active_participants_constraint = 1<a href="#appendix-A.4-2.8.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.8.2.3.2.4">
+                    <p id="appendix-A.4-2.8.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.8.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.8.2.3.2.5">
+                    <p id="appendix-A.4-2.8.2.3.2.5.1">authorized_role_changes = <code>[(0,[4,7]), (4,[0,1,7]), (7,[0,1,4])]</code><a href="#appendix-A.4-2.8.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.9">
+            <p id="appendix-A.4-2.9.1">super_admin<a href="#appendix-A.4-2.9.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.9.2.1">
+                <p id="appendix-A.4-2.9.2.1.1">role_index = 8<a href="#appendix-A.4-2.9.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.9.2.2">
+                <p id="appendix-A.4-2.9.2.2.1">authorized capabilities<a href="#appendix-A.4-2.9.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.9.2.2.2.1">
+                    <p id="appendix-A.4-2.9.2.2.2.1.1">(include all the capabilities authorized for org_a_admin)<a href="#appendix-A.4-2.9.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.2">
+                    <p id="appendix-A.4-2.9.2.2.2.2.1">canUnBan<a href="#appendix-A.4-2.9.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.3">
+                    <p id="appendix-A.4-2.9.2.2.2.3.1">canDeleteOtherReaction<a href="#appendix-A.4-2.9.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.4">
+                    <p id="appendix-A.4-2.9.2.2.2.4.1">canDeleteOtherMessage<a href="#appendix-A.4-2.9.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.5">
+                    <p id="appendix-A.4-2.9.2.2.2.5.1">canEditOwnTopic<a href="#appendix-A.4-2.9.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.6">
+                    <p id="appendix-A.4-2.9.2.2.2.6.1">canEditOtherTopic<a href="#appendix-A.4-2.9.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.7">
+                    <p id="appendix-A.4-2.9.2.2.2.7.1">canChangeRoomDescription<a href="#appendix-A.4-2.9.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.8">
+                    <p id="appendix-A.4-2.9.2.2.2.8.1">canChangeRoomName<a href="#appendix-A.4-2.9.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.9">
+                    <p id="appendix-A.4-2.9.2.2.2.9.1">canChangeRoomAvatar<a href="#appendix-A.4-2.9.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.10">
+                    <p id="appendix-A.4-2.9.2.2.2.10.1">canChangeRoomSubject<a href="#appendix-A.4-2.9.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.11">
+                    <p id="appendix-A.4-2.9.2.2.2.11.1">canChangeRoomMood<a href="#appendix-A.4-2.9.2.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.12">
+                    <p id="appendix-A.4-2.9.2.2.2.12.1">canChangeRoomMembershipStyle<a href="#appendix-A.4-2.9.2.2.2.12.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.13">
+                    <p id="appendix-A.4-2.9.2.2.2.13.1">canChangeRoleDefinitions<a href="#appendix-A.4-2.9.2.2.2.13.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.14">
+                    <p id="appendix-A.4-2.9.2.2.2.14.1">canChangePreauthorizedUserList<a href="#appendix-A.4-2.9.2.2.2.14.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.15">
+                    <p id="appendix-A.4-2.9.2.2.2.15.1">canDestroyRoom<a href="#appendix-A.4-2.9.2.2.2.15.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.2.2.16">
+                    <p id="appendix-A.4-2.9.2.2.2.16.1">canSendMLSReinitProposal<a href="#appendix-A.4-2.9.2.2.2.16.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.9.2.3">
+                <p id="appendix-A.4-2.9.2.3.1">constraints<a href="#appendix-A.4-2.9.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.9.2.3.2.1">
+                    <p id="appendix-A.4-2.9.2.3.2.1.1">minimum_participants_constraint = 1<a href="#appendix-A.4-2.9.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.3.2.2">
+                    <p id="appendix-A.4-2.9.2.3.2.2.1">maximum_participants_constraint = null<a href="#appendix-A.4-2.9.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.3.2.3">
+                    <p id="appendix-A.4-2.9.2.3.2.3.1">minimum_active_participants_constraint = 1<a href="#appendix-A.4-2.9.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.3.2.4">
+                    <p id="appendix-A.4-2.9.2.3.2.4.1">maximum_active_participants_constraint = null<a href="#appendix-A.4-2.9.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.9.2.3.2.5">
+                    <p id="appendix-A.4-2.9.2.3.2.5.1">authorized_role_changes = <code>[(0,[1,2,3,4,5,6,7,8]), (1,[0,2,3,4,5,6,7,8]), (2,[0,1,5,8]), (3,[0,1,6]), (4,[0,1,7]), (5,[0,1,2,8]), (6,[0,1,3]), (7,[0,1,4]), (8,[0,1,2,5])]</code><a href="#appendix-A.4-2.9.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="appendix-A.4-2.10">
+            <p id="appendix-A.4-2.10.1">policy_enforcer<a href="#appendix-A.4-2.10.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.10.2.1">
+                <p id="appendix-A.4-2.10.2.1.1">role_index = 9<a href="#appendix-A.4-2.10.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.4-2.10.2.2">
+                <p id="appendix-A.4-2.10.2.2.1">capabilities<a href="#appendix-A.4-2.10.2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.10.2.2.2.1">
+                    <p id="appendix-A.4-2.10.2.2.2.1.1">(does not include any other capabilities)<a href="#appendix-A.4-2.10.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.2">
+                    <p id="appendix-A.4-2.10.2.2.2.2.1">canRemoveParticipant<a href="#appendix-A.4-2.10.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.3">
+                    <p id="appendix-A.4-2.10.2.2.2.3.1">canChangeUserRole<a href="#appendix-A.4-2.10.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.4">
+                    <p id="appendix-A.4-2.10.2.2.2.4.1">canBan<a href="#appendix-A.4-2.10.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.5">
+                    <p id="appendix-A.4-2.10.2.2.2.5.1">canUnban<a href="#appendix-A.4-2.10.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.6">
+                    <p id="appendix-A.4-2.10.2.2.2.6.1">canChangeRoleDefinitions<a href="#appendix-A.4-2.10.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.7">
+                    <p id="appendix-A.4-2.10.2.2.2.7.1">canChangePreauthorizedUserList<a href="#appendix-A.4-2.10.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.8">
+                    <p id="appendix-A.4-2.10.2.2.2.8.1">canChangeMlsOperationalPolicies<a href="#appendix-A.4-2.10.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.9">
+                    <p id="appendix-A.4-2.10.2.2.2.9.1">canDestroyRoom<a href="#appendix-A.4-2.10.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.2.2.10">
+                    <p id="appendix-A.4-2.10.2.2.2.10.1">canSendMLSReinitProposal<a href="#appendix-A.4-2.10.2.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.10.2.3">
+                <p id="appendix-A.4-2.10.2.3.1">constraints<a href="#appendix-A.4-2.10.2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-2.10.2.3.2.1">
+                    <p id="appendix-A.4-2.10.2.3.2.1.1">minimum_participants_constraint = 1<a href="#appendix-A.4-2.10.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.3.2.2">
+                    <p id="appendix-A.4-2.10.2.3.2.2.1">maximum_participants_constraint = 2<a href="#appendix-A.4-2.10.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.3.2.3">
+                    <p id="appendix-A.4-2.10.2.3.2.3.1">minimum_active_participants_constraint = 0<a href="#appendix-A.4-2.10.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.3.2.4">
+                    <p id="appendix-A.4-2.10.2.3.2.4.1">maximum_active_participants_constraint = 0<a href="#appendix-A.4-2.10.2.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.4-2.10.2.3.2.5">
+                    <p id="appendix-A.4-2.10.2.3.2.5.1">authorized_role_changes = <code>[(0,[1]), (1,[0]), (3,[0,1]), (4,[0,1]), (5,[0,1]), (6,[0,1]), (7,[0,1]), (8,[0,1])]</code><a href="#appendix-A.4-2.10.2.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="appendix-A.4-2.10.2.4">
+                <p id="appendix-A.4-2.10.2.4.1">Notes: can remove a banned user from the list (cleanup) but not restore them<a href="#appendix-A.4-2.10.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
 </section>
 </div>
 </section>
