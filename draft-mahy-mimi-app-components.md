@@ -431,7 +431,6 @@ The MIMI Working has not yet defined requirements for real-time media, however t
 - `canChangeRoomMembershipStyle` - the holder is authorized to modify the base room membership style.
 - `canChangeRoleDefinitions` - the holder is authorized to make changes to the definitions of the Roles component.
 - `canChangePreauthorizedUserList` - the holder is authorized to make changes to the Preauthorized Users component.
-- `canChangeOtherPolicyAttribute`
 - `canDestroyRoom` - the holder is authorized to completely destroy the room.
 - `canReinitGroup` - the holder is authorized to send an MLS ReInit proposal.
 
@@ -451,6 +450,8 @@ The following capability names are reserved for possible future use
 - `canChangeOwnMood`
 - `canChangeOwnAvatar`
 - `canCreateRoom`
+- `canChangeMlsOperationalPolicies`
+- `canChangeOtherPolicyAttribute`
 - MLS specific
   - update - update policy
   - PSK - psk policy
@@ -530,7 +531,7 @@ canViewSharedScreen
 canChangeRoomMembershipStyle
 canChangeRoleDefinitions
 canChangePreauthorizedUserList
-canChangeOtherPolicyAttribute
+canChangeMlsOperationalPolicies
 canDestroyRoom
 canSendMLSReinitProposal
 ~~~
